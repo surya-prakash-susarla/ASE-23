@@ -1,2 +1,3 @@
 # ASE-23
-Repo for ASE 23 scripts
+
+Repo to store each of the individual scripts for ASE 23 classwork.
