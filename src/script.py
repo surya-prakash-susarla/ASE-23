@@ -1,5 +1,9 @@
 # FILE TO BUILD CLONE OF "https://github.com/timm/tested/blob/main/src/script.lua"
 
+K_HELP = 'help'
+K_SEED = 'seed'
+K_DEFAULT_SEED_VALUE = 937162211
+
 global_options = {}
 
 class Num:
@@ -41,11 +45,19 @@ def rand_int(n):
     # return int value
     print("TODO - return random number using rand")
 
+def initialize_from_cli():
+    print("TODO - add cli parsing and initialization")
+
+    # initialize default seed value 
+    global_options[K_SEED] = K_DEFAULT_SEED_VALUE
+
 #### MAIN
-def __main__:
+def __main__():
     # TODO:
     # 1. build cli options
+    initialize_from_cli()
     # 2. start up main functions 
     # 3. test framework
 
 __main__()
+
