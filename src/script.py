@@ -3,6 +3,8 @@ import sys
 import math
 import collections
 
+from test import test_rand, test_global_options, test_sym, test_num
+
 K_HELP = 'help'
 K_SEED = 'seed'
 K_DEFAULT_SEED_VALUE = 937162211
@@ -90,11 +92,11 @@ def handle_unknown_cli_option():
     print("Unknown option, please run -h (or) --help for more details.")
 
 def get_option_key_and_value_requirement(key) -> tuple[str, bool]:
-    if key == '-h' or key ==  K_HELP:
+    if key == '-h' or key ==  "--"+K_HELP:
         return (K_HELP, False)
-    elif key == '-s' or key == K_SEED:
+    elif key == '-s' or key == "--"+K_SEED:
         return (K_SEED, True)
-    elif key == '-t' or key == K_TEST:
+    elif key == '-t' or key == "--"+K_TEST:
         return (K_TEST, True)
     else:
         return (K_HELP, False)
@@ -129,13 +131,32 @@ def initialize_from_cli():
     default_cli_options()
     parse_cli_options()
 
+def run_test():
+    test_name = global_options[K_TEST]
+    return_value = (False, "")
+    if test_name == "all":
+        TODO ("run all tests")
+    elif test_name == "rand":
+        return_value = test_rand()
+    elif test_name == "num":
+        return_value = test_num()
+    else:
+        return_value = test_sym()
+
+    return return_value
+
 #### MAIN
 def __main__():
     # TODO:
-    # 1. build cli options
     initialize_from_cli()
-    # 2. start up main functions 
-    # 3. test framework
+    test_results = run_test()
+
+    print("test results : ", test_results)
+
+    if test_results[0] == False:
+        return 1
+    else:
+        return 0
 
 __main__()
 
