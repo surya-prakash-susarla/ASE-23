@@ -17,7 +17,6 @@ class Sym:
         return self.mode
 
     def div(self):
-        print("TODO - return the standard entropy")
         def fun(x):
             return x*math.log(x,2)
         self.entropy = 0
