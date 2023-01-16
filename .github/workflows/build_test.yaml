@@ -21,4 +21,4 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Run tests
         run: |
-          py3 src/script.py -t all
+          py src/script.py -t all
