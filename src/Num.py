@@ -1,7 +1,7 @@
 class Num:
     def __init__(self):
         self.n, self.mu, self.m2 =0, 0, 0
-        self.max, self.min = -100000000000000, 100000000000000
+        self.max, self.min = -1000000000000000, 1000000000000000
     
     def add(self, value):
         if type(value) == int or type(value) == float:
