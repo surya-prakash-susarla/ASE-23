@@ -12,4 +12,4 @@ NCSU Spring 23 ASE Project Repository
 ## Team Members:
 - Surya Prakash Susarla
 - Sushanth Reddy Chilla
-- Kaushik
+- Sai Venkata Kaushik Pillalamarri
