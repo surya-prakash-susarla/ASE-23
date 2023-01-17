@@ -1,4 +1,4 @@
-name: Python Build + Test
+name: Python CI
 
 on: [push]
 
@@ -7,7 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        # Do not use python versions below 3.9 since type annotations are only supported in Python >= 3.9
+        python-version: ["3.9", "3.10"]
 
     steps:
       - uses: actions/checkout@v3
@@ -21,4 +22,4 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Run tests
         run: |
-          py3 src/script.py -t all
+          python src/script.py -t all
