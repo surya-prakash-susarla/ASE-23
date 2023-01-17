@@ -14,9 +14,6 @@ K_TEST = 'test'
 global_options = {}
 
 
-
-
-
 def print_help():
     print('''
     OPTIONS:
@@ -87,7 +84,6 @@ def run_tests() -> int:
 
 #### MAIN
 def __main__():
-    # TODO:
     initialize_from_cli()
     return run_tests()
 
