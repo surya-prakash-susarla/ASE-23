@@ -13,74 +13,9 @@ K_TEST = 'test'
 
 global_options = {}
 
-class Num:
-    def __init__(self):
-        self.n, self.mu, self.m2 =0, 0, 0
-        self.max, self.min = -100000000000000, 100000000000000
-    
-    def add(self, value):
-        if type(value) == int:
-          self.n+=1
-          d = value-self.mu
-          self.mu += d/self.n
-          self.m2 += d*(value-self.mu)
-          self.min = min(value, self.min)
-          self.max = min(value, self.max)
-
-    def mid(self):
-        return self.mu
-    
-    def div(self):
-        if self.m2 < 0 or self.n < 2:
-          return 0
-        else:
-          return ((self.m2)/(self.n -1))**0.5
-
-
-class Sym:
-    def __init__(self):
-        self.n = 0 #total number of elements in the stream
-        self.has = collections.defaultdict(int) #the dictionary which stores values of each alphabet in the stream
-        self.most, self.mode = 0, "" # self.mode contains the alphabet which is recurring the highest number of times and self.most is its count
-        
-    def add(self, value):
-        if value.isalpha():
-            self.n+=1
-            self.has[value]+=1
-            if self.has[value] > self.most:
-                self.most, self.mode = self.has[value], value
-    def mid(self):
-        return self.mode
-
-    def div(self):
-        print("TODO - return the standard entropy")
-        def fun(x):
-            return x*math.log(x,2)
-        self.entropy = 0
-        keys = list(self.has.values())
-        print(keys)
-        for i in keys:
-            self.entropy += fun(i/self.n)
-        return -self.entropy
 
 
 
-def rnd(n, nPlaces):
-    """
-    Rounds of the output to nPlaces places.
-    """
-    if nPlaces:
-        mult = 10**nPlaces
-    else:
-        mult = 10**3
-    return math.floor(n*mult+0.5)/mult
-
-def rand(seed = 937162211, lo = 0, hi=1):
-  seed = 16807*seed % 2147483647
-  return lo+(hi-lo)*seed/2147483647
-
-def rint(lo, hi):
-  return math.floor(0.5+rand(lo,hi))
 
 def print_help():
     print('''
