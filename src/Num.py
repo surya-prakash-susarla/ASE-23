@@ -4,7 +4,7 @@ class Num:
         self.max, self.min = -100000000000000, 100000000000000
     
     def add(self, value):
-        if type(value) == int:
+        if type(value) == int or type(value) == float:
           self.n+=1
           d = value-self.mu
           self.mu += d/self.n
