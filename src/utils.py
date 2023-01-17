@@ -5,8 +5,8 @@ def rnd(n, nPlaces = 3):
     """
     if nPlaces:
         mult = 10**nPlaces
-    #return math.floor(n*mult+0.5)/mult
     return math.floor(n*mult)/mult
+    #return math.floor(n*mult+0.5)/mult
 
 def rand(seed = 937162211, lo = 0, hi=1):
   seed = 16807*seed % 2147483647
