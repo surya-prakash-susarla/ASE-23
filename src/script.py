@@ -4,6 +4,7 @@ import math
 import collections
 
 from test import test_rand, test_global_options, test_sym, test_num
+from test_runner import TestRunner
 
 K_HELP = 'help'
 K_SEED = 'seed'
@@ -102,8 +103,6 @@ def get_option_key_and_value_requirement(key) -> tuple[str, bool]:
         return (K_HELP, False)
 
 def parse_cli_options():
-    print("TODO - parse cli options")
-    print("initial cli : ", sys.argv)
     # skip 0 for script name.
     next_arg_is_value = False
     option_key = ""
@@ -121,42 +120,41 @@ def parse_cli_options():
         else:
             global_options[option_key] = arg
             next_arg_is_value = False
-    print("Final options status : " , global_options)
 
 def default_cli_options():
     # initialize default seed value 
     global_options[K_SEED] = K_DEFAULT_SEED_VALUE
+    # initalize to run all tests if unspecified
+    global_options[K_TEST] = ""
 
 def initialize_from_cli():
     default_cli_options()
     parse_cli_options()
 
-def run_test():
-    test_name = global_options[K_TEST]
-    return_value = (False, "")
-    if test_name == "all":
-        TODO ("run all tests")
-    elif test_name == "rand":
-        return_value = test_rand()
-    elif test_name == "num":
-        return_value = test_num()
-    else:
-        return_value = test_sym()
+def run_tests() -> int:
+    # List of all test and test bodies. Empty string evaluates to running all tests.
+    tests = {
+            'rand': test_rand,
+            'num': test_num,
+            'sym': test_sym,
+            'opt': test_global_options
+            }
 
-    return return_value
+    test_runner: TestRunner = TestRunner(tests)
+    # Empty string is indicator to run all tests.
+    test_name = "" if global_options[K_TEST] == "all" else global_options[K_TEST]
+    results: tuple[bool, list[str]] = test_runner.run(test_name)
+
+    if len(results[1]) != 0:
+        print("Failed tests : {}", ",".join([i for i in results[1]]))
+        return 1
+    return 0
 
 #### MAIN
 def __main__():
     # TODO:
     initialize_from_cli()
-    test_results = run_test()
-
-    print("test results : ", test_results)
-
-    if test_results[0] == False:
-        return 1
-    else:
-        return 0
+    return run_tests()
 
 __main__()
 
