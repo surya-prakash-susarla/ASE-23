@@ -1,5 +1,5 @@
-from Sym import Sym
-from Num import Num
+from sym import Sym
+from num import Num
 from utils import rand ,rint, rnd
 def test_global_options() -> bool:
     return True
