@@ -7,10 +7,12 @@ def test_global_options() -> bool:
 def test_rand() -> bool:
     num1 = Num()
     num2 = Num()
+    num1.add(rand(0,1,937162211))
     for i in range(1000):
-        num1.add(rand(937162211,0,1))
+        num1.add(rand(0,1))
+    num2.add(rand(0,1,937162211))
     for i in range(1000):
-        num2.add(rand(937162211,0,1))
+        num2.add(rand(0,1))
     m1= rnd(num1.mid(),10)
     m2= rnd(num2.mid(),10)
     return m1==m2 and .5 == rnd(m1,1)
