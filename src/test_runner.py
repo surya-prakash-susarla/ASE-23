@@ -21,10 +21,11 @@ class TestRunner:
             failed_tests = []
             for test_name, test_func in self.mapping.items():
                 print("Running test : ", test_name)
-                if test_func() == False:
+                result = test_func()
+                if result == False:
                     failed_tests.append(test_name)
                     test_result = False
-                self.print_status(test_result)
+                self.print_status(result)
             return (test_result, failed_tests)
         else:
             if test_name in self.mapping:

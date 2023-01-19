@@ -5,14 +5,10 @@ import collections
 
 from test import test_rand, test_global_options, test_sym, test_num
 from test_runner import TestRunner
+from config import global_options, K_SEED, K_DEFAULT_SEED_VALUE
 
 K_HELP = 'help'
-K_SEED = 'seed'
-K_DEFAULT_SEED_VALUE = 937162211
 K_TEST = 'test'
-
-global_options = {}
-
 
 def print_help():
     print('''
