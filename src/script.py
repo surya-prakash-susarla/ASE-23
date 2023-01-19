@@ -85,7 +85,10 @@ def run_tests() -> int:
 #### MAIN
 def __main__():
     initialize_from_cli()
-    return run_tests()
+    return_value = run_tests()
+    print("return value : ", return_value)
+    return return_value
 
-__main__()
+return_value = __main__()
+sys.exit(return_value)
 
