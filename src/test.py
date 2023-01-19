@@ -15,9 +15,6 @@ def test_rand() -> bool:
         num2.add(rand(0,1))
     m1= rnd(num1.mid(),10)
     m2= rnd(num2.mid(),10)
-    print("m1 : ", m1)
-    print("m2 : ", m2)
-    print(rnd(m1,1))
     return m1==m2 and .5 == rnd(m1,1)
 
 def test_num() -> bool:
