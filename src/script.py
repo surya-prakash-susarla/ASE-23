@@ -83,5 +83,5 @@ def __main__():
     initialize_from_cli()
     return run_tests()
 
-__main__()
+sys.exit(__main__())
 
