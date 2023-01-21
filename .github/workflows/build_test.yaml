@@ -9,6 +9,7 @@ jobs:
       matrix:
         # Do not use python versions below 3.9 since type annotations are only supported in Python >= 3.9
         python-version: ["3.9", "3.10"]
+        script: ["src/hw01/script.py -t all"]
 
     steps:
       - uses: actions/checkout@v3
@@ -22,4 +23,4 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Run tests
         run: |
-          python src/hw01/script.py -t all
+          python ${{ matrix.script }}
