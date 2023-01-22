@@ -1,6 +1,6 @@
 import math
 
-from config import global_options, K_SEED, K_DEFAULT_SEED_VALUE
+from globals import global_options, K_SEED, K_DEFAULT_SEED_VALUE
 
 def rnd(n, nPlaces = 3):
     """
