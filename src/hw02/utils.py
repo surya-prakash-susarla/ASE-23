@@ -21,3 +21,19 @@ def rand( lo = 0, hi=1, default_seed=math.inf):
 
 def rint(lo, hi):
   return math.floor(0.5+rand(lo,hi))
+
+def extract_entities_from_csv_row(row: str) -> []:
+    return row.split(",")
+
+def is_name_numeric_header(name: str) -> bool:
+    return name[0] in range(ord('A'), ord('Z')+1)
+
+def is_name_symbolic_header(name: str) -> bool:
+    return not is_name_numeric_header(name)
+
+def is_goal_header(name: str) -> bool:
+    return name[-1] in ['!', '+', '-']
+
+def should_exclude_header(name: str) -> bool:
+    return name[-1] == 'X'
+

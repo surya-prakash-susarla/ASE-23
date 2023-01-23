@@ -1,29 +1,41 @@
-# TODO: data class goes here.
-
-from csv import CSV_Reader
+from csv import get_csv_rows
+from cols import Cols
 
 class Data:
-    def __init__(self, source_file = None, _source_rows = None):
+    def __init__(self, source_file = None, source_rows = None):
         self.rows = []
         self.cols = None
 
         if source_file != None:
-            print("TODO: PASS FILENAME TO CSV AND GET STUFF INSERTED")
-        else:
-            print("TODO: ADD ROWS TO THE CURRENT OBJECT HERE")
+            for row in get_csv_rows(source_file):
+                self.add_row(row)
+
+        if source_rows != None:
+            try:
+                for row in rows:
+                    self.add_row(row)
+            except:
+                print("Error - Could not parse non-source file data for addition to data")
 
     def add_row(self, row):
-        print("Adding contents to the data object")
         if self.cols != None:
-            print("TODO: ADD INCOMING ROW TO ROWS OBJECT")
-            print("TODO: UPDATE COLS WITH STATS OF INCOMING DATA")
+            self.rows.append(row)
+            self.cols.add(row)
         else:
-            print("TODO: INITIALIZE COLS OF CURRENT OBJECT")
+            self.cols = Cols(row)
 
-    def clone(self):
-        print("TODO: IMPLEMENT CLONE")
+    def clone(self, new_rows) -> Data:
+        new_data = Data(source_rows=self.cols.original)
+        for row in new_rows:
+            new_data.add_row(row)
+        return new_data
 
-    def stats(self):
-        print("TODO: IMPLEMENT STATS")
-            
+    def stats(self, nPlaces: int, cols: [] = None, is_mid = True): 
+        results = []
+        if cols != None:
+            for col in cols:
+                results.push(self.cols.rnd(self.cols.get_statistic_for_column(col, is_mid)))
+        else:
+            results = self.cols.get_y_value_statistics(is_mid)
+        return results
 
