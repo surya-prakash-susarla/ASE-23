@@ -1,0 +1,14 @@
+python3 src/hw01/script.py -t all
+
+Running test :  rand
+Result : ✅
+
+Running test :  num
+Result : ✅
+
+Running test :  sym
+[4, 2, 1]
+Result : ✅
+
+Running test :  opt
+Result : ✅
