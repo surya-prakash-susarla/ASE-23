@@ -1,7 +1,8 @@
 import collections
 import math
 class Sym:
-    def __init__(self):
+    def __init__(self, at=0, txt = ""):
+        self.at, self.txt = at, txt
         self.n = 0 #total number of elements in the stream
         self.has = collections.defaultdict(int) #the dictionary which stores values of each alphabet in the stream
         self.most, self.mode = 0, "" # self.mode contains the alphabet which is recurring the highest number of times and self.most is its count
@@ -13,10 +14,10 @@ class Sym:
             if self.has[value] > self.most:
                 self.most, self.mode = self.has[value], value
     
-    def mid(self):
+    def mid(self, value=0):
         return self.mode
 
-    def div(self):
+    def div(self, value = 0, entropy =0):
         def fun(x):
             return x*math.log(x,2)
         self.entropy = 0
@@ -25,3 +26,6 @@ class Sym:
         for i in keys:
             self.entropy += fun(i/self.n)
         return -self.entropy
+    
+    def rnd(self,value, nPlaces):
+        return value
