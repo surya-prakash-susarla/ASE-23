@@ -1,5 +1,8 @@
+from utils import rnd
 class Num:
-    def __init__(self):
+  
+    def __init__(self, at=0, txt = ""):
+        self.at, self.txt = at, txt
         self.n, self.mu, self.m2 =0, 0, 0
         self.max, self.min = -1000000000000000, 1000000000000000
     
@@ -20,3 +23,5 @@ class Num:
           return 0
         else:
           return ((self.m2)/(self.n -1))**0.5
+    def rnd(self, value, nPlaces):
+        return rnd(value, nPlaces)
