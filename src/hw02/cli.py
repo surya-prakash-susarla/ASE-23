@@ -1,13 +1,13 @@
 import sys
 
-from globals import global_options, K_SEED, K_DEFAULT_SEED_VALUE, K_HELP, K_TEST, K_FILE
+from globals import global_options, K_SEED, K_DEFAULT_SEED_VALUE, K_HELP, K_TEST, K_FILE, K_DEFAULT_DATA_FILE
 
 def default_cli_options():
     # initialize default seed value 
     global_options[K_SEED] = K_DEFAULT_SEED_VALUE
     # initalize to run all tests if unspecified
     global_options[K_TEST] = ""
-    global_options[K_FILE]= "./../etc/data/auto93.csv"
+    global_options[K_FILE]= K_DEFAULT_DATA_FILE 
 
 def initialize_from_cli():
     default_cli_options()

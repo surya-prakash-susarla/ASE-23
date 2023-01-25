@@ -1,10 +1,10 @@
 from sym import Sym
 from num import Num
 from utils import rand ,rint, rnd
-from data import Data, stats
-from globals import filepath
+from data import Data
 from csv import get_csv_rows
 from globals import global_options, K_FILE
+
 def test_global_options() -> bool:
     return True
 

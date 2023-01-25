@@ -1,9 +1,9 @@
 from csv import get_csv_rows
 from cols import Cols
-from globals import global_options, K_FILE
+from globals import global_options, K_FILE, K_DEFAULT_DATA_FILE
 
 class Data:
-    def __init__(self, source_file = global_options[K_FILE], source_rows = None):
+    def __init__(self, source_file = K_DEFAULT_DATA_FILE, source_rows = None):
         self.rows = []
         self.cols = None
 
@@ -25,7 +25,7 @@ class Data:
         else:
             self.cols = Cols(row)
 
-    def clone(self, new_rows) ->Data:
+    def clone(self, new_rows):
         new_data = Data(source_rows=self.cols.original)
         for row in new_rows:
             new_data.add_row(row)
