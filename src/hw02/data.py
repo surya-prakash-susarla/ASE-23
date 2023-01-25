@@ -35,7 +35,7 @@ class Data:
         results = []
         if cols != None:
             for col in cols:
-                results.append(self.cols.rnd(self.cols.get_statistic_for_column(col, is_mid)))
+                results.append(col.rnd(self.cols.get_statistic_for_column(col, is_mid)[1], nPlaces))
         else:
             results = self.cols.get_y_value_statistics(is_mid)
         return results

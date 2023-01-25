@@ -8,7 +8,6 @@ def rnd(n, nPlaces = 3):
     """
     if nPlaces:
         mult = 10**nPlaces
-    # return math.floor(n*mult)/mult
     return math.floor(n*mult+0.5)/mult
 
 def rand( lo = 0, hi=1, default_seed=math.inf):
@@ -22,11 +21,12 @@ def rand( lo = 0, hi=1, default_seed=math.inf):
 def rint(lo, hi):
   return math.floor(0.5+rand(lo,hi))
 
-def extract_entities_from_csv_row(row: str) -> []:
-    return row.split(",")
+def extract_entities_from_csv_row(row) -> []:
+    # NOTE: Splitting completed at parse run.
+    return row
 
 def is_name_numeric_header(name: str) -> bool:
-    return name[0] in range(ord('A'), ord('Z')+1)
+    return ord(name[0]) in range(ord('A'), ord('Z')+1)
 
 def is_name_symbolic_header(name: str) -> bool:
     return not is_name_numeric_header(name)
