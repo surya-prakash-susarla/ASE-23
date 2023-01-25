@@ -1,6 +1,10 @@
 from sym import Sym
 from num import Num
 from utils import rand ,rint, rnd
+from data import Data, stats
+from globals import filepath
+from csv import get_csv_rows
+from globals import global_options, K_FILE
 def test_global_options() -> bool:
     return True
 
@@ -31,3 +35,19 @@ def test_sym() -> bool:
     for s in symbols:
         sym.add(s)
     return ("a"==sym.mid() and 1.379 == rnd(sym.div()))
+
+def test_read_from_csv():
+    
+    rows = get_csv_rows(global_options[K_FILE])
+    total_rows = 1+ len(rows) # header contributes a row
+    total_columns = len(rows[0])
+
+    return total_columns*total_rows==8*399
+
+
+def test_read_data_csv():
+    data = Data(global_options[K_FILE])
+    return (len(data.rows)==398) and (data.cols.y[1].wt==-1) and (data.cols.x[1].at==1) and (len(data.cols.x)==4)
+
+
+

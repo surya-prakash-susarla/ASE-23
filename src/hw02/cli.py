@@ -1,12 +1,13 @@
 import sys
 
-from globals import global_options, K_SEED, K_DEFAULT_SEED_VALUE, K_HELP, K_TEST
+from globals import global_options, K_SEED, K_DEFAULT_SEED_VALUE, K_HELP, K_TEST, K_FILE
 
 def default_cli_options():
     # initialize default seed value 
     global_options[K_SEED] = K_DEFAULT_SEED_VALUE
     # initalize to run all tests if unspecified
     global_options[K_TEST] = ""
+    global_options[K_FILE]= "../../etc/data/auto93.csv"
 
 def initialize_from_cli():
     default_cli_options()
@@ -19,6 +20,8 @@ def get_option_key_and_value_requirement(key) -> tuple[str, bool]:
         return (K_SEED, True)
     elif key == '-t' or key == "--"+K_TEST:
         return (K_TEST, True)
+    elif key == '-f' or key == "--"+K_FILE:
+        return (K_FILE, True)
     else:
         return (K_HELP, False)
 
@@ -26,6 +29,7 @@ def print_help():
     print('''
     OPTIONS:
     -h or --help            -> Show this message.
+    -f or --file            -> Name of file
     -s or --seed            -> Set seed value for random number generator.
     ''')
 
