@@ -6,7 +6,7 @@ def coerce(s):
     return s
 
 def get_csv_rows(filepath: str) -> []:
-        filepath = Path(filepath);
+        filepath = (Path.cwd() / filepath).resolve()
         print("Exists criteria : ", filepath.exists())
         print("suffix : ", filepath.suffix)
 
@@ -20,6 +20,6 @@ def get_csv_rows(filepath: str) -> []:
                 row = list(map(coerce, line.strip().split(',')))
                 rows.append(row)
 
-        print("Found {} rows in the file", len(rows))
+        print("Found {} rows in the file".format(len(rows)))
 
         return rows

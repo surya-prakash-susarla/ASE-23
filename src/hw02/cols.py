@@ -48,14 +48,14 @@ class Cols:
         return result
 
     def get_statistic_for_column(self, col, is_mid):
+        val = None
         if (is_mid):
             val = col.mid()
         else:
             val = col.div()
-        return [col.txt,val]
-
-
+        return [col.txt, val]
 
     def rnd(self, value):
         print("TODO - IMPLEMENT RND FUNCTION")
+        return value
 

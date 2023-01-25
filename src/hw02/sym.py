@@ -8,11 +8,11 @@ class Sym:
         self.most, self.mode = 0, "" # self.mode contains the alphabet which is recurring the highest number of times and self.most is its count
         
     def add(self, value):
-        if value.isalpha():
-            self.n+=1
-            self.has[value]+=1
-            if self.has[value] > self.most:
-                self.most, self.mode = self.has[value], value
+        # TODO: CLEANUP - if value.isalpha():
+        self.n+=1
+        self.has[value]+=1
+        if self.has[value] > self.most:
+            self.most, self.mode = self.has[value], value
     
     def mid(self, value=0):
         return self.mode
