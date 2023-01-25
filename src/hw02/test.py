@@ -7,6 +7,7 @@ from globals import global_options, K_FILE
 from collections import OrderedDict
 
 def test_global_options() -> bool:
+    print(global_options)
     return True
 
 def test_num() -> bool:
