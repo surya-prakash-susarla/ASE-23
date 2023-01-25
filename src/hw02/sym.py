@@ -6,8 +6,7 @@ class Sym:
         self.n = 0 #total number of elements in the stream
         self.has = collections.defaultdict(int) #the dictionary which stores values of each alphabet in the stream
         self.most, self.mode = 0, "" # self.mode contains the alphabet which is recurring the highest number of times and self.most is its count
-        if txt:
-            self.wt = -1 if txt[-1] == '-' else 1
+        
     def add(self, value):
         
         self.n+=1
@@ -23,7 +22,6 @@ class Sym:
             return x*math.log(x,2)
         self.entropy = 0
         keys = list(self.has.values())
-        print(keys)
         for i in keys:
             self.entropy += fun(i/self.n)
         return -self.entropy

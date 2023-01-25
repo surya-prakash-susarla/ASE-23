@@ -2,7 +2,10 @@ from utils import rnd
 class Num:
   
     def __init__(self, at=0, txt = ""):
-        # TODO: introduce wt
+        if txt and txt[-1] == '-':
+          self.wt = -1
+        elif txt and txt[-1] != '-':
+          self.wt = 1
         self.at, self.txt = at, txt
         self.n, self.mu, self.m2 =0, 0, 0
         self.max, self.min = -1000000000000000, 1000000000000000
