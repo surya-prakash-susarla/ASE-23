@@ -7,7 +7,7 @@ def default_cli_options():
     global_options[K_SEED] = K_DEFAULT_SEED_VALUE
     # initalize to run all tests if unspecified
     global_options[K_TEST] = ""
-    global_options[K_FILE]= "../../etc/data/auto93.csv"
+    global_options[K_FILE]= "./../etc/data/auto93.csv"
 
 def initialize_from_cli():
     default_cli_options()
