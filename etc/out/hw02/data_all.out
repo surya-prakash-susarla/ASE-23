@@ -1,0 +1,27 @@
+➜  hw02 git:(fix-hw2) ✗ py3 main.py -g all
+Running test :  num
+Result : ✅
+Running test :  sym
+Result : ✅
+Running test :  opt
+{'seed': 937162211, 'go': 'all', 'file': '../../../etc/data/auto93.csv', 'help': False}
+Result : ✅
+Running test :  stats
+Exists criteria :  True
+suffix :  .csv
+x
+x 	 mid 	 {'Clndrs': 5.45, 'Model': 76.01, 'Volume': 193.43, 'origin': 1.0}
+  	 div 	 {'Clndrs': 1.7, 'Model': 3.7, 'Volume': 104.27, 'origin': 1.3273558482394003}
+y
+y 	 mid 	 {'Acc+': 15.57, 'Lbs-': 2970.42, 'Mpg+': 23.84}
+  	 div 	 {'Acc+': 2.76, 'Lbs-': 846.84, 'Mpg+': 8.34}
+Result : ✅
+Running test :  csv_read
+Exists criteria :  True
+suffix :  .csv
+Result : ✅
+Running test :  data_read
+Exists criteria :  True
+suffix :  .csv
+Result : ✅
+➜  hw02 git:(fix-hw2) ✗

@@ -1,0 +1,9 @@
+➜  hw02 git:(fix-hw2) py3 main.py -t
+
+    OPTIONS:
+    -h or --help            -> Show this message.
+    -f or --file            -> Name of file = 'data/auto93.csv'
+    -s or --seed            -> Set seed value for random number generator. = '937162211'
+    -g or --go              -> Default action = 'data'
+
+➜  hw02 git:(fix-hw2)
