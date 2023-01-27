@@ -34,5 +34,5 @@ class TestRunner:
                 self.print_status(result)
                 return (result, "" if result == True else test_name)
             else:
-                return (False, "{} not availble in test mapping, available tests: \n{}".format(test_name, self.mapping))
+                return (False, test_name)
 
