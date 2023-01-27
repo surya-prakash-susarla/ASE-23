@@ -2,6 +2,26 @@ import sys
 
 from globals import global_options, K_SEED, K_DEFAULT_SEED_VALUE, K_HELP, K_START_ACTION, K_FILE, K_DEFAULT_DATA_FILE, K_DEFAULT_START_ACTION
 
+def get_full_option_for_short_version(option) -> str:
+    if option == 's':
+        return K_SEED
+    elif option == 'S':
+        return K_SAMPLE
+    elif option == 'g':
+        return K_START_ACTION
+    elif option == 'h':
+        return K_HELP
+    elif option == 'f':
+        return K_FILE
+    elif option == 'F':
+        return K_FARAWAY
+    elif option == 'm':
+        return K_MIN
+    elif option == 'p':
+        return K_DISTANCE_COEF
+    print("ERROR - UNKNOWN SHORT OPTION : {}".format(option))
+    return None
+
 def default_cli_options():
     # initialize default seed value 
     global_options[K_SEED] = K_DEFAULT_SEED_VALUE
@@ -12,19 +32,26 @@ def default_cli_options():
     # initialize 'help' to false.
     global_options[K_HELP] = False
 
+    # cluster options initialization
+    global_options[K_FARAWAY] = K_DEFAULT_FARAWAY_VALUE
+    global_options[K_MIN] = K_DEFAULT_MIN_VALUE
+    global_options[K_DISTANCE_COEF] = K_DEFAULT_DISTANCE_COEF
+    global_options[K_SAMPLE] = K_DEFAULT_SAMPLE_VALUE
+
 def initialize_from_cli():
     default_cli_options()
     parse_cli_options()
 
 def get_option_key_and_value_requirement(key) -> tuple[str, bool]:
-    if key == '-h' or key ==  "--"+K_HELP:
-        return (K_HELP, False)
-    elif key == '-s' or key == "--"+K_SEED:
-        return (K_SEED, True)
-    elif key == '-g' or key == "--"+K_START_ACTION:
-        return (K_START_ACTION, True)
-    elif key == '-f' or key == "--"+K_FILE:
-        return (K_FILE, True)
+    full_options_with_value = [K_SEED, K_START_ACTION, K_FILE, K_FARAWAY, K_MIN, K_DISTANCE_COEF, K_SAMPLE]
+    short_options_with_value = ['s', 'g', 'f', 'F', 'm', 'p', 'S']
+    
+    key = key[2:] if key[1] == '-' else key[0:]
+    
+    if key in full_options_with_value:
+        return (key, True)
+    elif key in short_options_with_value:
+        return (get_full_option_for_short_version(key), True)
     else:
         return (K_HELP, False)
 
