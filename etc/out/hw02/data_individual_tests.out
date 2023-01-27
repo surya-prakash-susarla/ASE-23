@@ -1,0 +1,11 @@
+➜  hw02 git:(fix-hw2) py3 main.py -g opt
+Running test :  opt
+{'seed': 937162211, 'go': 'opt', 'file': '../../../etc/data/auto93.csv', 'help': False}
+Result : ✅
+➜  hw02 git:(fix-hw2) py3 main.py -g sym
+Running test :  sym
+Result : ✅
+➜  hw02 git:(fix-hw2) py3 main.py -g num
+Running test :  num
+Result : ✅
+➜  hw02 git:(fix-hw2)
