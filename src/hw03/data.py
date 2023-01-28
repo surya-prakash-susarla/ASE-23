@@ -43,3 +43,21 @@ class Data:
             results = self.cols.get_y_value_statistics(is_mid)
         return results
 
+    def better(self, row_1, row_2):
+        print("TODO - IMPLEMENT DATA.BETTER")
+
+    def dist(self, row_1, row_2):
+        print("TODO - IMPLEMENT DATA.DIST")
+
+    def around(self, row):
+        print("TODO - IMPLEMENT DATA.AROUND")
+
+    def half(self, row):
+        print("TODO - IMPLEMENT DATA.HALF")
+
+    def cluster(self):
+        print("TODO - IMPLEMENT DATA.CLUSTER")
+
+    def sway(self):
+        print("TODO - IMPLEMENT DATA.SWAY")
+

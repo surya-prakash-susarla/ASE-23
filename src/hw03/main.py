@@ -2,7 +2,7 @@ import sys
 import math
 import collections
 
-from test import test_global_options, test_sym, test_num, test_get_stats, test_read_from_csv, test_read_data_csv
+from test import *
 from test_runner import TestRunner
 from cli import initialize_from_cli, print_help
 from globals import global_options, K_HELP, K_START_ACTION
@@ -15,7 +15,11 @@ def run_tests() -> int:
         'opt': test_global_options,
         'stats': test_get_stats,
         'csv_read': test_read_from_csv,
-        'data_read': test_read_data_csv
+        'data_read': test_read_data_csv,
+        'around': test_around,
+        'half': test_half,
+        'cluster': test_cluster,
+        'optimize': test_optimize
     }
 
     test_runner: TestRunner = TestRunner(tests)

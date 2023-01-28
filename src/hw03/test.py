@@ -78,3 +78,19 @@ def test_read_data_csv():
     data = Data(global_options[K_FILE])
     return (len(data.rows)==398) and (data.cols.x[0].at==0) and (len(data.cols.x)==4) and (data.cols.y[0].wt==-1) 
 
+def test_around():
+    print("TODO - IMPLEMENT test_around")
+    return True
+
+def test_half():
+    print("TODO - IMPLEMENT test_half")
+    return True
+
+def test_cluster():
+    print("TODO - IMPLEMENT test_cluster")
+    return True
+
+def test_optimize():
+    print("TODO - IMPLEMENT test_optimize")
+    return True
+

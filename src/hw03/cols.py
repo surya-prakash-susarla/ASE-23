@@ -1,6 +1,7 @@
-from utils import extract_entities_from_csv_row,is_name_numeric_header,is_name_symbolic_header,should_exclude_header,is_goal_header
+from utils import *
 from num import Num
 from sym import Sym
+
 class Cols:
     def __init__(self, header_row):
         # Required during clone where original data is re-parsed.
@@ -14,7 +15,7 @@ class Cols:
 
     def _parse_header_row(self, header_row):
         col_names= extract_entities_from_csv_row (header_row)
-        #iterating over the column names
+        # iterating over the column names
         for i in range(len(col_names)):
             if(is_name_numeric_header(col_names[i])):
                 col = Num(i,col_names[i])

@@ -27,5 +27,13 @@ class Num:
           return 0
         else:
           return ((self.m2)/(self.n -1))**0.5
+
     def rnd(self, value, nPlaces):
         return rnd(value, nPlaces)
+    
+    def norm(self, n):
+        print("TODO - IMPLEMENT NORM FOR NUM")
+
+    def dist(self, n_1, n_2):
+        print("TODO - IMPLEMENT DIST FOR NUM")
+
