@@ -1,6 +1,7 @@
 import math
 
 from globals import global_options, K_SEED, K_DEFAULT_SEED_VALUE
+from node import Node
 
 def rnd(n, nPlaces = 3):
     """
@@ -43,6 +44,13 @@ def cosine(a, b, c) -> tuple[int, int]:
     y = (a*a - x2*x2)**(0.5)
     return (x2, y)
 
-def show(node, what, cols, nPlaces):
-    print("TODO - IMPLEMENT SHOW FUNCTION")
+def show(node, cols, nPlaces, level = 0, is_mid=True):
+    if node != None:
+        print('|'*level, end=' ')
+        if node.left != None or level == 0:
+            print(node.data.stats(nPlaces, node.data.cols.y, is_mid))
+        else:
+            print("")
+        show(node.left, cols, nPlaces, level+1, is_mid)
+        show(node.right, cols, nPlaces, level+1, is_mid)
 

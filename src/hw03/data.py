@@ -4,7 +4,7 @@ import math
 from globals import *
 from csv import get_csv_rows
 from cols import Cols
-from Row import row
+from row import Row
 
 class Data:
     def __init__(self, source_file = K_DEFAULT_DATA_FILE, source_rows = None):
