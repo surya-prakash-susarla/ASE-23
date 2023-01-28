@@ -1,6 +1,9 @@
+import math
+
 from csv import get_csv_rows
 from cols import Cols
 from globals import global_options, K_FILE, K_DEFAULT_DATA_FILE
+from Row import row
 
 class Data:
     def __init__(self, source_file = K_DEFAULT_DATA_FILE, source_rows = None):
@@ -43,8 +46,19 @@ class Data:
             results = self.cols.get_y_value_statistics(is_mid)
         return results
 
-    def better(self, row_1, row_2):
-        print("TODO - IMPLEMENT DATA.BETTER")
+    def better(self, row_1: Row, row_2: Row):
+        s1 = 0
+        s2 = 0
+        ys = self.cols.y
+        x = None
+        y = None
+        l = len(ys)
+        for col in ys:
+            x = col.norm(row_1.cells[col.at])
+            y = col.norm(row_2.cells[col.at])
+            s1 = s1 - (math.e**(math.log(col.wt*((x-y)/l), 10)))
+            s2 = s2 - (math.e**(math.log(col.wt*((y-x)/l), 10)))
+        return (s1/l) < (s2/l)
 
     def dist(self, row_1, row_2):
         print("TODO - IMPLEMENT DATA.DIST")

@@ -31,4 +31,3 @@ class Sym:
     def dist(self, symbol_1, symbol_2):
         print("TODO - IMPLEMENT DIST FOR SYM")
 
-
