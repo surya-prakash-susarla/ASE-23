@@ -1,8 +1,8 @@
 import math
 
+from globals import *
 from csv import get_csv_rows
 from cols import Cols
-from globals import global_options, K_FILE, K_DEFAULT_DATA_FILE
 from Row import row
 
 class Data:
@@ -60,8 +60,13 @@ class Data:
             s2 = s2 - (math.e**(math.log(col.wt*((y-x)/l), 10)))
         return (s1/l) < (s2/l)
 
-    def dist(self, row_1, row_2):
-        print("TODO - IMPLEMENT DATA.DIST")
+    def dist(self, row_1, row_2, cols = self.cols.x):
+        n = 0
+        d = 0
+        for col in cols:
+            n = n + 1
+            d = d + (col.dist(row_1.cells[col.at], row_2.cells[col.at])**global_options[K_DISTANCE_COEF])
+        return (d/n)**(1/global_options[K_DISTANCE_COEF])
 
     def around(self, row):
         print("TODO - IMPLEMENT DATA.AROUND")
