@@ -37,8 +37,11 @@ def is_goal_header(name: str) -> bool:
 def should_exclude_header(name: str) -> bool:
     return name[-1] == 'X'
 
-def cosine(a, b, c):
-    print('TODO - IMPLEMENT COSINE')
+def cosine(a, b, c) -> tuple[int, int]:
+    x1 = (a*a + c*c - b*b) / (2*c)
+    x2 = math.max(0, math.min(1, x1))
+    y = (a*a - x2*x2)**(0.5)
+    return (x2, y)
 
 def show(node, what, cols, nPlaces):
     print("TODO - IMPLEMENT SHOW FUNCTION")
