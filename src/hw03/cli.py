@@ -1,6 +1,6 @@
 import sys
 
-from globals import global_options, K_SEED, K_DEFAULT_SEED_VALUE, K_HELP, K_START_ACTION, K_FILE, K_DEFAULT_DATA_FILE, K_DEFAULT_START_ACTION
+from globals import *
 
 def get_full_option_for_short_version(option) -> str:
     if option == 's':
@@ -46,7 +46,7 @@ def get_option_key_and_value_requirement(key) -> tuple[str, bool]:
     full_options_with_value = [K_SEED, K_START_ACTION, K_FILE, K_FARAWAY, K_MIN, K_DISTANCE_COEF, K_SAMPLE]
     short_options_with_value = ['s', 'g', 'f', 'F', 'm', 'p', 'S']
     
-    key = key[2:] if key[1] == '-' else key[0:]
+    key = key[2:] if key[1] == '-' else key[1:]
     
     if key in full_options_with_value:
         return (key, True)
