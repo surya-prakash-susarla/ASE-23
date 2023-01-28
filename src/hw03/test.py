@@ -6,6 +6,8 @@ from csv import get_csv_rows
 from globals import global_options, K_FILE
 from collections import OrderedDict
 
+# __all__ = ['test_global_options', 'test_num', 'test_sym', 'test_get_stats', 'read_from_csv', 'read_data_csv', 'test_around', 'test_half', 'test_cluster', 'test_optimize' ]
+
 def test_global_options() -> bool:
     print(global_options)
     return True

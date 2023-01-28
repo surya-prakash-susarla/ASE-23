@@ -61,7 +61,9 @@ class Data:
             s2 = s2 - (math.e**(math.log(col.wt*((y-x)/l), 10)))
         return (s1/l) < (s2/l)
 
-    def dist(self, row_1, row_2, cols = self.cols.x):
+    def dist(self, row_1, row_2, cols = None):
+        if cols == None:
+            cols = self.cols.x
         n = 0
         d = 0
         for col in cols:
