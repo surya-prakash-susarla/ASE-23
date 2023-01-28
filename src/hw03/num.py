@@ -32,8 +32,9 @@ class Num:
         return rnd(value, nPlaces)
     
     def norm(self, n):
-        print("TODO - IMPLEMENT NORM FOR NUM")
+        return (n-self.min)/(self.max - self.min+0.00001)
 
     def dist(self, n_1, n_2):
-        print("TODO - IMPLEMENT DIST FOR NUM")
+        n1, n2 = self.norm(n_1), self.norm(n_2)
+        return(abs(n_1 - n_2))
 
