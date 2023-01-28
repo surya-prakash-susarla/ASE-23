@@ -1,3 +1,4 @@
+import copy
 import math
 
 from globals import *
@@ -68,8 +69,9 @@ class Data:
             d = d + (col.dist(row_1.cells[col.at], row_2.cells[col.at])**global_options[K_DISTANCE_COEF])
         return (d/n)**(1/global_options[K_DISTANCE_COEF])
 
-    def around(self, row):
-        print("TODO - IMPLEMENT DATA.AROUND")
+    def around(self, row_1):
+        row_copy = copy.deepcopy(self.rows)
+        return sorted(row_copy, key=lambda row: self.dist(row_1, row))
 
     def half(self, row):
         print("TODO - IMPLEMENT DATA.HALF")
