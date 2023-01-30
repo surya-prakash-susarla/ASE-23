@@ -5,4 +5,5 @@ class Node:
         self.mid = None
         # Data object
         self.data = None
-
+        self.A = None
+        self.B - None
