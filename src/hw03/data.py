@@ -5,6 +5,7 @@ from globals import *
 from csv import get_csv_rows
 from cols import Cols
 from row import Row
+from node import Node
 
 class Data:
     def __init__(self, source_file = K_DEFAULT_DATA_FILE, source_rows = None):
@@ -78,8 +79,20 @@ class Data:
     def half(self, row):
         print("TODO - IMPLEMENT DATA.HALF")
 
-    def cluster(self):
-        print("TODO - IMPLEMENT DATA.CLUSTER")
+    def cluster(self, rows = None, min = None, cols = None, above = None):
+        if rows == None:
+            rows = self.rows
+        if min == None:
+            min = len(rows)**K_MIN
+        if cols == None:
+            cols = self.cols.x
+        node = Node()
+        node.data = self.clone(rows)
+        if len(rows) > 2*min:
+            left, right, node.A, node.B, node.mid = self.half(rows, cols, above)
+            node.left  = self.cluster(left,  min, cols, node.A)
+            node.right = self.cluster(right, min, cols, node.B)
+        return node
 
     def sway(self):
         print("TODO - IMPLEMENT DATA.SWAY")
