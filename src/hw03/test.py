@@ -90,13 +90,13 @@ def test_half():
 
 def test_cluster():
     """ N-Level bi-Clustering """
-    data = Data(K_DEFAULT_DATA_FILE)
+    data = Data(global_options[K_FILE])
     show(data.cluster(), cols =  data.cols.y, nPlaces = 1, is_mid = True)
     return True
 
 def test_optimize():
     """ Semi-Supervised Optimization"""
-    data = Data(K_DEFAULT_DATA_FILE)
+    data = Data(global_options[K_FILE])
     show(data.sway(), cols = data.cols.y, nPlaces = 1, is_mid = True)
     return True
 
