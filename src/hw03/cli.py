@@ -58,10 +58,15 @@ def get_option_key_and_value_requirement(key) -> tuple[str, bool]:
 def print_help():
     print('''
     OPTIONS:
+    -d or --dump            -> on crash, dump stack   = false
     -h or --help            -> Show this message.
+    -F or --Far             -> distance to "faraway"  = .95
     -f or --file            -> Name of file = 'data/auto93.csv'
-    -s or --seed            -> Set seed value for random number generator. = '937162211'
     -g or --go              -> Default action = 'data'
+    -m or --min             -> stop clusters at N^min = .5
+    -p or --p               -> distance coefficient   = 2
+    -s or --seed            -> random number seed     = 937162211
+    -S or --Sample          -> sampling data size     = 512
     ''')
 
 def handle_unknown_cli_option():
