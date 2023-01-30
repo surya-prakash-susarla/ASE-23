@@ -83,7 +83,7 @@ class Data:
         if rows == None:
             rows = self.rows
         if min == None:
-            min = len(rows)**K_MIN
+            min = len(rows)**K_DEFAULT_MIN_VALUE
         if cols == None:
             cols = self.cols.x
         node = Node()
