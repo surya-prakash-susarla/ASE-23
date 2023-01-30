@@ -5,7 +5,8 @@ from globals import *
 from csv import get_csv_rows
 from cols import Cols
 from row import Row
-
+from utils import rint, cosine 
+from node import Node 
 class Data:
     def __init__(self, source_file = K_DEFAULT_DATA_FILE, source_rows = None):
         self.rows = []
@@ -71,16 +72,54 @@ class Data:
             d = d + (col.dist(row_1.cells[col.at], row_2.cells[col.at])**global_options[K_DISTANCE_COEF])
         return (d/n)**(1/global_options[K_DISTANCE_COEF])
 
-    def around(self, row_1):
-        row_copy = copy.deepcopy(self.rows)
-        return sorted(row_copy, key=lambda row: self.dist(row_1, row))
+    def around(self, row_1,rows = None ):
+        if rows==None:
+            rows = copy.deepcopy(self.rows)
+        return sorted(rows, key=lambda row: self.dist(row_1, row))
 
-    def half(self, row):
-        print("TODO - IMPLEMENT DATA.HALF")
+    def half(self,  cols, above,rows=None):
+        if rows == None:
+            rows = copy.deepcopy(self.rows)
+        some = self.many(rows)
+        A = above if above != None else some[rint(len(some))]
+        B = self.around(A,some)[(global_options[K_DEFAULT_FARAWAY_VALUE]*len(rows))//1]
+        c = self.dist(A,B,cols)
+        sorted(rows ,key = lambda row: cosine(self.dist(row,A,cols), self.dist(row,B,cols),c))
+        left=[]
+        right=[]
+        for i in range (len(rows)):
+            if i < len(rows)//2:
+                left.append(rows[i])
+                mid = rows[i]
+            else:
+                right.append(rows[i])
+        return left, right, A,B, mid,c
+
+    def many(self, row):
+        row_len= len(row)
+        rows=[]
+        for i in range(global_options[K_DEFAULT_SAMPLE_VALUE]):
+            j = rint(0,row_len)
+            rows.append(row[i])
+        return rows
 
     def cluster(self):
         print("TODO - IMPLEMENT DATA.CLUSTER")
 
-    def sway(self):
+    def sway(self, rows,min,cols,above):
+        if rows == None :
+            rows = self.rows
+        if min == None:
+            min = len(rows)* global_options[K_DEFAULT_MIN_VALUE]
+        if cols == None:
+            cols = self.cols.x
+        node = Node()
+        node.data =  self.clone(rows)
+        if len(rows)> 2*min:
+            left,right,node.A,node.B,node.mid = self.half(rows,cols,above)
+            if (self.better(node.A,node.B)):
+                left,right,node.A,node.B = right,left,node.B,node.A 
+            node.left = self.sway(left,min,cols,node.A)
+        return node
         print("TODO - IMPLEMENT DATA.SWAY")
 
