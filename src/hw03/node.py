@@ -6,4 +6,4 @@ class Node:
         # Data object
         self.data = None
         self.A = None
-        self.B - None
+        self.B = None
