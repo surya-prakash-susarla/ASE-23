@@ -100,13 +100,26 @@ class Data:
         rows=[]
         for i in range(global_options[K_DEFAULT_SAMPLE_VALUE]):
             j = rint(0,row_len)
-            rows.append(row[i])
+            rows.append(row[j])
         return rows
 
-    def cluster(self):
-        print("TODO - IMPLEMENT DATA.CLUSTER")
+    def cluster(self, rows = None, min = None, cols = None, above = None):
+            
+        if rows == None:
+            rows = self.rows
+        if min == None:
+            min = len(rows)**K_DEFAULT_MIN_VALUE
+        if cols == None:
+            cols = self.cols.x
+        node = Node()
+        node.data = self.clone(rows)
+        if len(rows) > 2*min:
+            left, right, node.A, node.B, node.mid = self.half(rows, cols, above)
+            node.left  = self.cluster(left,  min, cols, node.A)
+            node.right = self.cluster(right, min, cols, node.B)
+        return node
 
-    def sway(self, rows,min,cols,above):
+    def sway(self, rows = None, min = None, cols = None, above = None):
         if rows == None :
             rows = self.rows
         if min == None:
@@ -121,5 +134,5 @@ class Data:
                 left,right,node.A,node.B = right,left,node.B,node.A 
             node.left = self.sway(left,min,cols,node.A)
         return node
-        print("TODO - IMPLEMENT DATA.SWAY")
+        
 
