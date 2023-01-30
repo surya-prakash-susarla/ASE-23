@@ -99,7 +99,7 @@ class Data:
     def many(self, row):
         row_len= len(row)
         rows=[]
-        for i in range(global_options[K_DEFAULT_SAMPLE_VALUE]):
+        for i in range(global_options[K_SAMPLE]):
             j = rint(0,row_len)
             rows.append(row[i])
         return rows
