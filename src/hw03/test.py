@@ -1,12 +1,12 @@
 from sym import Sym
 from num import Num
-from utils import rand ,rint, rnd
+from utils import rand ,rint, rnd, show
 from data import Data
 from csv import get_csv_rows
-from globals import global_options, K_FILE
+from globals import global_options, K_FILE, K_DEFAULT_DATA_FILE
 from collections import OrderedDict
 
-# __all__ = ['test_global_options', 'test_num', 'test_sym', 'test_get_stats', 'read_from_csv', 'read_data_csv', 'test_around', 'test_half', 'test_cluster', 'test_optimize' ]
+# _all_ = ['test_global_options', 'test_num', 'test_sym', 'test_get_stats', 'read_from_csv', 'read_data_csv', 'test_around', 'test_half', 'test_cluster', 'test_optimize' ]
 
 def test_global_options() -> bool:
     print(global_options)
@@ -82,17 +82,30 @@ def test_read_data_csv():
 
 def test_around():
     print("TODO - IMPLEMENT test_around")
+    data = Data(global_options[K_FILE])
+    print(data.rows[0])
+    A = data.around(data.rows[0])
+    for i in range(len(A)):
+        if i%50 == 0 :
+            print(i, rnd( data.dist(A[i],data.rows[0]),2), A[i])
     return True
 
 def test_half():
-    print("TODO - IMPLEMENT test_half")
+    data = Data(global_options[K_FILE])
+    left,right,A,B,mid,c = data.half()
+    print(A,c)
+    print(mid)
+    print(B)
     return True
 
 def test_cluster():
-    print("TODO - IMPLEMENT test_cluster")
+    """ N-Level bi-Clustering """
+    data = Data(global_options[K_FILE])
+    show(data.cluster(), cols =  data.cols.y, nPlaces = 1, is_mid = True)
     return True
 
 def test_optimize():
-    print("TODO - IMPLEMENT test_optimize")
+    """ Semi-Supervised Optimization"""
+    data = Data(global_options[K_FILE])
+    show(data.sway(), cols = data.cols.y, nPlaces = 1, is_mid = True)
     return True
-

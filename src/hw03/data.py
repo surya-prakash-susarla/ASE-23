@@ -17,11 +17,13 @@ class Data:
                 self.add_row(row)
 
         if source_rows != None:
+            
             try:
-                for row in rows:
+                for row in source_rows:
                     self.add_row(row)
             except:
                 print("Error - Could not parse non-source file data for addition to data")
+        
 
     def add_row(self, row):
         if self.cols != None:
@@ -31,7 +33,7 @@ class Data:
             self.cols = Cols(row)
 
     def clone(self, new_rows):
-        new_data = Data(source_rows=self.cols.original)
+        new_data = Data(source_rows=[self.cols.original])
         for row in new_rows:
             new_data.add_row(row)
         return new_data
@@ -69,7 +71,7 @@ class Data:
         d = 0
         for col in cols:
             n = n + 1
-            d = d + (col.dist(row_1.cells[col.at], row_2.cells[col.at])**global_options[K_DISTANCE_COEF])
+            d = d + (col.dist(row_1[col.at], row_2[col.at])**global_options[K_DISTANCE_COEF])
         return (d/n)**(1/global_options[K_DISTANCE_COEF])
 
     def around(self, row_1,rows = None ):
@@ -77,12 +79,14 @@ class Data:
             rows = copy.deepcopy(self.rows)
         return sorted(rows, key=lambda row: self.dist(row_1, row))
 
-    def half(self,  cols, above,rows=None):
+    def half(self,  rows=None, cols=None, above=None):
         if rows == None:
             rows = copy.deepcopy(self.rows)
         some = self.many(rows)
-        A = above if above != None else some[rint(len(some))]
-        B = self.around(A,some)[(global_options[K_DEFAULT_FARAWAY_VALUE]*len(rows))//1]
+        total_length = len(rows)
+        A = above if above != None else some[rint(0,len(some))]
+        far_point = math.floor(total_length*K_DEFAULT_FARAWAY_VALUE)
+        B = self.around(A,some)[far_point]
         c = self.dist(A,B,cols)
         sorted(rows ,key = lambda row: cosine(self.dist(row,A,cols), self.dist(row,B,cols),c))
         left=[]
@@ -97,29 +101,44 @@ class Data:
 
     def many(self, row):
         row_len= len(row)
-        rows=[]
-        for i in range(global_options[K_DEFAULT_SAMPLE_VALUE]):
-            j = rint(0,row_len)
-            rows.append(row[i])
-        return rows
+        sample_size = 512
+        temp=[]
+        
+        for i in range(sample_size):
+            j = rint(0,row_len-1)
+            temp.append(row[j])
+        return temp
 
-    def cluster(self):
-        print("TODO - IMPLEMENT DATA.CLUSTER")
+    def cluster(self, rows = None, min = None, cols = None, above = None):
+        if rows == None:
+            rows = self.rows
+        if min == None:
+            min = len(rows)**K_DEFAULT_MIN_VALUE
+        if cols == None:
+            cols = self.cols.x
+        node = Node()
+        
+        node.data = self.clone(rows)
+        if len(rows) > 2*min:
+            left, right, node.A, node.B, node.mid,c = self.half(rows, cols, above)
+            node.left  = self.cluster(left,  min, cols, node.A)
+            node.right = self.cluster(right, min, cols, node.B)
+        return node
 
-    def sway(self, rows,min,cols,above):
+    def sway(self, rows=None,min=None,cols=None,above=None):
         if rows == None :
             rows = self.rows
         if min == None:
-            min = len(rows)* global_options[K_DEFAULT_MIN_VALUE]
+            min = len(rows)*K_DEFAULT_MIN_VALUE
         if cols == None:
             cols = self.cols.x
         node = Node()
         node.data =  self.clone(rows)
         if len(rows)> 2*min:
-            left,right,node.A,node.B,node.mid = self.half(rows,cols,above)
-            if (self.better(node.A,node.B)):
+            left,right,node.A,node.B,node.mid,c = self.half(rows,cols,above)
+            if (self.better(node.B,node.A)):
                 left,right,node.A,node.B = right,left,node.B,node.A 
             node.left = self.sway(left,min,cols,node.A)
         return node
-        print("TODO - IMPLEMENT DATA.SWAY")
+        
 
