@@ -7,8 +7,8 @@ def coerce(s):
 
 def get_csv_rows(filepath: str) -> []:
         filepath = (Path(__file__) / filepath).resolve()
-        print("Exists criteria : ", filepath.exists())
-        print("suffix : ", filepath.suffix)
+        # print("Exists criteria : ", filepath.exists())
+        # print("suffix : ", filepath.suffix)
 
         if not filepath.exists() or filepath.suffix != '.csv':
             print("File path does not exist OR File not csv, given path: ", filepath.absolute())
