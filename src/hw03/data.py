@@ -60,8 +60,8 @@ class Data:
         for col in ys:
             x = col.norm(row_1.cells[col.at])
             y = col.norm(row_2.cells[col.at])
-            s1 = s1 - (math.e**(math.log(col.wt*((x-y)/l), 10)))
-            s2 = s2 - (math.e**(math.log(col.wt*((y-x)/l), 10)))
+            s1 = s1 - (math.exp(col.wt*((x-y)/l)))
+            s2 = s2 - (math.exp(col.wt*((y-x)/l)))
         return (s1/l) < (s2/l)
 
     def dist(self, row_1, row_2, cols = None):
@@ -92,7 +92,7 @@ class Data:
         left=[]
         right=[]
         for i in range (len(rows)):
-            if i < len(rows)//2:
+            if i <= len(rows)//2:
                 left.append(rows[i])
                 mid = rows[i]
             else:
