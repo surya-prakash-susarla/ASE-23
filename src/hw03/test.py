@@ -81,7 +81,6 @@ def test_read_data_csv():
     return (len(data.rows)==398) and (data.cols.x[0].at==0) and (len(data.cols.x)==4) and (data.cols.y[0].wt==-1) 
 
 def test_around():
-    print("TODO - IMPLEMENT test_around")
     data = Data(global_options[K_FILE])
     print(data.rows[0])
     A = data.around(data.rows[0])
