@@ -93,7 +93,7 @@ class Data:
         left=[]
         right=[]
         for i in range (len(rows)):
-            if i <= len(rows)//2:
+            if i < len(rows)//2:
                 left.append(rows[i])
                 mid = rows[i]
             else:
