@@ -27,7 +27,8 @@ class Data:
 
     def add_row(self, row):
         if self.cols != None:
-            self.rows.append(row)
+            new_row = row
+            self.rows.append(new_row)
             self.cols.add(row)
         else:
             self.cols = Cols(row)
@@ -58,8 +59,8 @@ class Data:
         y = None
         l = len(ys)
         for col in ys:
-            x = col.norm(row_1.cells[col.at])
-            y = col.norm(row_2.cells[col.at])
+            x = col.norm(row_1[col.at])
+            y = col.norm(row_2[col.at])
             s1 = s1 - (math.exp(col.wt*((x-y)/l)))
             s2 = s2 - (math.exp(col.wt*((y-x)/l)))
         return (s1/l) < (s2/l)
@@ -101,11 +102,12 @@ class Data:
 
     def many(self, row):
         row_len= len(row)
-        sample_size = 512
         temp=[]
         
-        for i in range(sample_size):
+        for i in range(K_DEFAULT_SAMPLE_VALUE):
             j = rint(0,row_len-1)
+            if(j>=row_len):
+                print("j val out of range:", j,i,row_len)
             temp.append(row[j])
         return temp
 
@@ -129,12 +131,13 @@ class Data:
         if rows == None :
             rows = self.rows
         if min == None:
-            min = len(rows)*K_DEFAULT_MIN_VALUE
+            min = len(rows)**K_DEFAULT_MIN_VALUE
         if cols == None:
             cols = self.cols.x
         node = Node()
         node.data =  self.clone(rows)
         if len(rows)> 2*min:
+            
             left,right,node.A,node.B,node.mid,c = self.half(rows,cols,above)
             if (self.better(node.B,node.A)):
                 left,right,node.A,node.B = right,left,node.B,node.A 

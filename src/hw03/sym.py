@@ -35,4 +35,3 @@ class Sym:
         elif symbol_1 == symbol_2:
             return 0
         return 1
-
