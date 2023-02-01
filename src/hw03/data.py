@@ -59,8 +59,8 @@ class Data:
         y = None
         l = len(ys)
         for col in ys:
-            x = col.norm(row_1.cells[col.at])
-            y = col.norm(row_2.cells[col.at])
+            x = col.norm(row_1[col.at])
+            y = col.norm(row_2[col.at])
             s1 = s1 - (math.exp(col.wt*((x-y)/l)))
             s2 = s2 - (math.exp(col.wt*((y-x)/l)))
         return (s1/l) < (s2/l)
