@@ -58,10 +58,10 @@ class Data:
         y = None
         l = len(ys)
         for col in ys:
-            x = col.norm(row_1.cells[col.at])
-            y = col.norm(row_2.cells[col.at])
-            s1 = s1 - (math.exp(col.wt*((x-y)/l)))
-            s2 = s2 - (math.exp(col.wt*((y-x)/l)))
+            x = col.norm(row_1[col.at])
+            y = col.norm(row_2[col.at])
+            s1 = s1 - (math.e**(col.wt*((x-y)/l)))
+            s2 = s2 - (math.e**(col.wt*((y-x)/l)))
         return (s1/l) < (s2/l)
 
     def dist(self, row_1, row_2, cols = None):
@@ -71,8 +71,8 @@ class Data:
         d = 0
         for col in cols:
             n = n + 1
-            d = d + (col.dist(row_1[col.at], row_2[col.at])**global_options[K_DISTANCE_COEF])
-        return (d/n)**(1/global_options[K_DISTANCE_COEF])
+            d = d + (col.dist(row_1[col.at], row_2[col.at])**2)
+        return (d/n)**(1/2)
 
     def around(self, row_1,rows = None ):
         if rows==None:
@@ -85,14 +85,14 @@ class Data:
         some = self.many(rows)
         total_length = len(rows)
         A = above if above != None else some[rint(0,len(some))]
-        far_point = math.floor(total_length*K_DEFAULT_FARAWAY_VALUE)
+        far_point = int(total_length*0.95)
         B = self.around(A,some)[far_point]
-        c = self.dist(A,B,cols)
-        sorted(rows ,key = lambda row: cosine(self.dist(row,A,cols), self.dist(row,B,cols),c))
+        c = self.dist(A,B)
+        rows = sorted(rows ,key = lambda row: cosine(self.dist(row,A), self.dist(row,B),c))
         left=[]
         right=[]
         for i in range (len(rows)):
-            if i <= len(rows)//2:
+            if i < len(rows)//2:
                 left.append(rows[i])
                 mid = rows[i]
             else:
@@ -129,12 +129,13 @@ class Data:
         if rows == None :
             rows = self.rows
         if min == None:
-            min = len(rows)*K_DEFAULT_MIN_VALUE
+            min = len(rows)**K_DEFAULT_MIN_VALUE
         if cols == None:
             cols = self.cols.x
         node = Node()
         node.data =  self.clone(rows)
         if len(rows)> 2*min:
+            
             left,right,node.A,node.B,node.mid,c = self.half(rows,cols,above)
             if (self.better(node.B,node.A)):
                 left,right,node.A,node.B = right,left,node.B,node.A 

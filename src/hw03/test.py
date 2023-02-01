@@ -92,6 +92,13 @@ def test_around():
 def test_half():
     data = Data(global_options[K_FILE])
     left,right,A,B,mid,c = data.half()
+    mini = 1000000
+    for i in range( len(left)):
+        mini = min(mini, left[i][3])
+    for i in range(len(right)):
+        mini = min(mini, right[i][3])
+    print(mini)
+    print(len(left), len(right), len(data.rows))
     print(A,c)
     print(mid)
     print(B)

@@ -17,7 +17,7 @@ class Num:
           self.mu += d/self.n
           self.m2 += d*(value-self.mu)
           self.min = min(value, self.min)
-          self.max = min(value, self.max)
+          self.max = max(value, self.max)
     
     def mid(self):
         return self.mu
