@@ -34,8 +34,6 @@ class Cols:
                     self.y.append(col)
                 else:
                     self.x.append(col)
-        #self.x = sorted(self.x, key = lambda x : x.txt[0])
-        #self.y = sorted(self.y, key = lambda x : x.txt[0])
 
     def add(self, row):
         row_values = extract_entities_from_csv_row(row)

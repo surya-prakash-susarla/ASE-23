@@ -39,7 +39,7 @@ def should_exclude_header(name: str) -> bool:
     return name[-1] == 'X'
 
 def cosine(a, b, c) -> tuple[int, int]:
-    x1 = (a*a + c*c - b*b) / (2*c)
+    x1 = (a*a + c*c - b*b) / (2*c + 0.00001)
     x2 = max(0, min(1, x1))
     y = (abs(a*a - x2*x2))**(0.5)
     return (x2, y)
