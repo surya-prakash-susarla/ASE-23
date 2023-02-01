@@ -81,18 +81,19 @@ def test_read_data_csv():
     return (len(data.rows)==398) and (data.cols.x[0].at==0) and (len(data.cols.x)==4) and (data.cols.y[0].wt==-1) 
 
 def test_around():
-    print("TODO - IMPLEMENT test_around")
     data = Data(global_options[K_FILE])
-    print(data.rows[0])
+    print("0   0 ", data.rows[0])
     A = data.around(data.rows[0])
+    
     for i in range(len(A)):
-        if i%50 == 0 :
-            print(i, rnd( data.dist(A[i],data.rows[0]),2), A[i])
+        if (i+1)%50 == 0 :
+            print(i+1, rnd( data.dist(A[i],data.rows[0]),2), A[i])
     return True
 
 def test_half():
     data = Data(global_options[K_FILE])
     left,right,A,B,mid,c = data.half()
+    print(len(left), len(right), len(data.rows))
     print(A,c)
     print(mid)
     print(B)

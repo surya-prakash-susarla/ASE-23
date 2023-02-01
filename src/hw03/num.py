@@ -17,7 +17,7 @@ class Num:
           self.mu += d/self.n
           self.m2 += d*(value-self.mu)
           self.min = min(value, self.min)
-          self.max = min(value, self.max)
+          self.max = max(value, self.max)
     
     def mid(self):
         return self.mu
@@ -29,12 +29,27 @@ class Num:
           return ((self.m2)/(self.n -1))**0.5
 
     def rnd(self, value, nPlaces):
-        return rnd(value, nPlaces)
+      if value == '?':
+        return value
+      return rnd(value, nPlaces)
     
     def norm(self, n):
-        return (n-self.min)/(self.max - self.min+0.00001)
+      if n == '?':
+        return n
+      return (n-self.min)/(self.max - self.min+0.00001)
 
     def dist(self, n_1, n_2):
-        n1, n2 = self.norm(n_1), self.norm(n_2)
-        return(abs(n_1 - n_2))
-
+      if n_1 == '?' and n_2 == '?':
+        return 1
+      n1, n2 = self.norm(n_1), self.norm(n_2)
+      if n1 =='?':
+        if n2<0.5:
+          n1 = 1
+        else:
+          n1 = 0
+      if n2 == '?':
+        if n1<0.5:
+          n2 = 1
+        else:
+          n2 = 0
+      return abs(n1 - n2)
