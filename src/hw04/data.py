@@ -140,4 +140,9 @@ class Data:
                 left,right,node.A,node.B = right,left,node.B,node.A 
             node.left = self.sway(left,min,cols,node.A)
         return node
+    
+    def furthest(self, row_1, rows=None):
+        if rows == None:
+            rows = copy.deepcopy(self.rows)
+        return self.around(row_1, rows=rows)[-1]
 
