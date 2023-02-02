@@ -77,13 +77,7 @@ class Data:
     def around(self, row_1,rows = None ):
         if rows==None:
             rows = copy.deepcopy(self.rows)
-        temp = sorted(rows, key=lambda row: self.dist(row_1, row))
-        '''
-        print('distances from A: ')
-        for i in temp:
-            print(self.dist(row_1, i))
-        '''
-        return temp
+        return sorted(rows, key=lambda row: self.dist(row_1, row))
 
     def half(self,  rows=None, cols=None, above=None):
         if rows == None:
@@ -92,23 +86,17 @@ class Data:
         total_length = len(rows)
         A = above if above != None else some[rint(0,len(some))]
         far_point = math.floor(total_length*K_DEFAULT_FARAWAY_VALUE)
-        # print("far point : ", far_point)
         B = self.around(A,some)[far_point]
         c = self.dist(A,B,cols)
-        # print('distance when separating rows : ', c)
-        # print("distance between A & B: ", self.dist(A, B))
         rows = sorted(rows ,key = lambda row: cosine(self.dist(row,A,cols), self.dist(row,B,cols), c))
         left=[]
         right=[]
         for i in range (len(rows)):
             if i < len(rows)//2:
                 left.append(rows[i])
-                # mid = rows[i]
             else:
                 right.append(rows[i])
         mid = right[0]
-        # print("distance between a, mid: ", self.dist(A, mid))
-        # print("distance between b, mid: ", self.dist(B, mid))
         return left, right, A,B, mid,c
 
     def many(self, row):
