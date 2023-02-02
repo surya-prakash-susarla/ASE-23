@@ -6,6 +6,8 @@ from csv import get_csv_rows
 from globals import global_options, K_FILE, K_DEFAULT_DATA_FILE
 from collections import OrderedDict
 
+import copy
+
 # _all_ = ['test_global_options', 'test_num', 'test_sym', 'test_get_stats', 'read_from_csv', 'read_data_csv', 'test_around', 'test_half', 'test_cluster', 'test_optimize' ]
 
 def test_global_options() -> bool:
@@ -112,7 +114,11 @@ def test_optimize():
     return True
 
 def test_copy():
-    print("TODO - TEST COPY")
+    table_1 = dict(a=1, b=dict(c=2, d=[3]))
+    table_2 = copy.deepcopy(table_1)
+    table_2['b']['d'][0]=1000
+    print("before: ", table_1)
+    print("after: ", table_2)
     return True
 
 def test_rep_cols():
