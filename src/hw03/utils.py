@@ -42,13 +42,17 @@ def cosine(a, b, c) -> tuple[int, int]:
     x1 = (a*a + c*c - b*b) / (2*c + 0.00001)
     x2 = max(0, min(1, x1))
     y = (abs(a*a - x2*x2))**(0.5)
+    # print("returning : ", (x2, y))
     return (x2, y)
 
 def show(node, cols, nPlaces, level = 0, is_mid=True):
     if node != None:
         print('|'*level, end=' ')
-        if node.left != None or level == 0:
-            print(node.data.stats(nPlaces, node.data.cols.y, is_mid))
+        print(" ", len(node.data.rows), end=' ')
+        if node.left == None or level == 0:
+            stats = node.data.stats(nPlaces, node.data.cols.y, is_mid)
+            # print("stats : ", stats)
+            print(stats)
         else:
             print("")
         show(node.left, cols, nPlaces, level+1, is_mid)

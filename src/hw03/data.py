@@ -17,7 +17,6 @@ class Data:
                 self.add_row(row)
 
         if source_rows != None:
-            
             try:
                 for row in source_rows:
                     self.add_row(row)
@@ -34,7 +33,7 @@ class Data:
             self.cols = Cols(row)
 
     def clone(self, new_rows):
-        new_data = Data(source_rows=[self.cols.original])
+        new_data = Data(source_file=None, source_rows=[self.cols.original])
         for row in new_rows:
             new_data.add_row(row)
         return new_data
@@ -89,15 +88,15 @@ class Data:
         far_point = math.floor(total_length*K_DEFAULT_FARAWAY_VALUE)
         B = self.around(A,some)[far_point]
         c = self.dist(A,B,cols)
-        sorted(rows ,key = lambda row: cosine(self.dist(row,A,cols), self.dist(row,B,cols),c))
+        rows = sorted(rows ,key = lambda row: cosine(self.dist(row,A,cols), self.dist(row,B,cols), c))
         left=[]
         right=[]
         for i in range (len(rows)):
             if i < len(rows)//2:
                 left.append(rows[i])
-                mid = rows[i]
             else:
                 right.append(rows[i])
+        mid = right[0]
         return left, right, A,B, mid,c
 
     def many(self, row):
@@ -119,7 +118,6 @@ class Data:
         if cols == None:
             cols = self.cols.x
         node = Node()
-        
         node.data = self.clone(rows)
         if len(rows) > 2*min:
             left, right, node.A, node.B, node.mid,c = self.half(rows, cols, above)
@@ -129,7 +127,7 @@ class Data:
 
     def sway(self, rows=None,min=None,cols=None,above=None):
         if rows == None :
-            rows = self.rows
+            rows = copy.deepcopy(self.rows)
         if min == None:
             min = len(rows)**K_DEFAULT_MIN_VALUE
         if cols == None:
@@ -137,11 +135,9 @@ class Data:
         node = Node()
         node.data =  self.clone(rows)
         if len(rows)> 2*min:
-            
             left,right,node.A,node.B,node.mid,c = self.half(rows,cols,above)
             if (self.better(node.B,node.A)):
                 left,right,node.A,node.B = right,left,node.B,node.A 
             node.left = self.sway(left,min,cols,node.A)
         return node
-        
 
