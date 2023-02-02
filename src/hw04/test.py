@@ -110,3 +110,32 @@ def test_optimize():
     data = Data(global_options[K_FILE])
     show(data.sway(), cols = data.cols.y, nPlaces = 1, is_mid = True)
     return True
+
+def test_copy():
+    print("TODO - TEST COPY")
+    return True
+
+def test_rep_cols():
+    print("TODO - TEST REP COLS")
+    return True
+
+def test_synonyms():
+    print("TODO - TEST SYNONYMS")
+    return True
+
+def test_rep_rows():
+    print("TODO - TEST REP ROWS")
+    return True
+
+def test_prototypes():
+    print("TODO - TEST PROTOTYPES")
+    return True
+
+def test_position():
+    print("TODO - TEST POSITION")
+    return True
+
+def test_every():
+    print("TODO - TEST EVERY")
+    return True
+

@@ -51,10 +51,24 @@ def show(node, cols, nPlaces, level = 0, is_mid=True):
         print(" ", len(node.data.rows), end=' ')
         if node.left == None or level == 0:
             stats = node.data.stats(nPlaces, node.data.cols.y, is_mid)
-            # print("stats : ", stats)
             print(stats)
         else:
             print("")
         show(node.left, cols, nPlaces, level+1, is_mid)
         show(node.right, cols, nPlaces, level+1, is_mid)
+
+def last(table):
+    return table[-1]
+
+def transpose(original):
+    print("TODO - RETURN TRANSPOSED MATRIX")
+
+def rep_cols(cols):
+    print("TODO - REP COLS DEFINTION")
+
+def rep_place(data):
+    print("TODO - REP PLACE DEFINTION")
+
+def rep_grid(s_file):
+    print("TODO - REP GRID DEFINTION")
 

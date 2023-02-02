@@ -19,7 +19,14 @@ def run_tests() -> int:
         'around': test_around,
         'half': test_half,
         'cluster': test_cluster,
-        'optimize': test_optimize
+        'optimize': test_optimize,
+        'copy': test_copy,
+        'repcols': test_rep_cols,
+        'synonyms': test_synonyms,
+        'reprows': test_rep_rows,
+        'prototypes': test_prototypes,
+        'position': test_position,
+        'every': test_every
     }
 
     test_runner: TestRunner = TestRunner(tests)
