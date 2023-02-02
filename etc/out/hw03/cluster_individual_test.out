@@ -1,0 +1,59 @@
+python main.py -g opt     
+Running test :  opt
+{'seed': 937162211, 'go': 'opt', 'file': '../../../etc/data/auto93.csv', 'help': False, 'faraway': 0.95, 'min': 0.5, 'p': 2, 'sample': 512}
+Result : ✅
+
+python main.py -g num
+Running test :  num
+Result : ✅
+
+python main.py -g sym
+Running test :  sym
+Result : ✅
+
+python main.py -g data_read
+Running test :  data_read
+Result : ✅
+
+python main.py -g csv_read 
+Running test :  csv_read
+Result : ✅
+
+python main.py -g stats   
+Running test :  stats
+x
+x        mid     {'Clndrs': 5.45, 'Model': 76.01, 'Volume': 193.43, 'origin': 1.0}
+         div     {'Clndrs': 1.7, 'Model': 3.7, 'Volume': 104.27, 'origin': 1.3273558482394003}
+y
+y        mid     {'Acc+': 15.57, 'Lbs-': 2970.42, 'Mpg+': 23.84}
+         div     {'Acc+': 2.76, 'Lbs-': 846.84, 'Mpg+': 8.34}
+Result : ✅
+
+python main.py -g half    
+Running test :  half
+199 199 398
+[4.0, 97.0, 46.0, 1835.0, 20.5, 70.0, 2.0, 30.0] 0.7121457353170614
+[4.0, 112.0, 88.0, 2640.0, 18.6, 82.0, 1.0, 30.0]
+[8.0, 318.0, 150.0, 3399.0, 11.0, 73.0, 1.0, 20.0]
+Result : ✅
+
+python main.py -g around
+Running test :  around
+0   0  [8.0, 304.0, 193.0, 4732.0, 18.5, 70.0, 1.0, 10.0]
+50 0.17 [8.0, 318.0, 150.0, 4457.0, 13.5, 74.0, 1.0, 10.0]
+100 0.28 [6.0, 232.0, 100.0, 2901.0, 16.0, 74.0, 1.0, 20.0]
+150 0.38 [8.0, 351.0, 142.0, 4054.0, 14.3, 79.0, 1.0, 20.0]
+200 0.55 [4.0, 122.0, 96.0, 2300.0, 15.5, 77.0, 1.0, 30.0]
+250 0.68 [4.0, 119.0, 82.0, 2720.0, 19.4, 82.0, 1.0, 30.0]
+300 0.71 [4.0, 119.0, 97.0, 2545.0, 17.0, 75.0, 3.0, 20.0]
+350 0.79 [4.0, 146.0, 67.0, 3250.0, 21.8, 80.0, 2.0, 30.0]
+Result : ✅
+
+python main.py -g optimize
+Running test :  optimize
+   398 [['Lbs-', 2970.4], ['Acc+', 15.6], ['Mpg+', 23.8]]
+|   199
+||   99
+|||   49
+||||   24 [['Lbs-', 2066.8], ['Acc+', 17.8], ['Mpg+', 28.8]]
+Result : ✅
