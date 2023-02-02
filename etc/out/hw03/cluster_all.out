@@ -1,18 +1,17 @@
-python  main.py -g all
 Running test :  num
 Result : ✅
 Running test :  sym
 Result : ✅
 Running test :  opt
-{'seed': 937162211, 'go': 'all', 'file': '../../../etc/data/auto93.csv', 'help': False, 'faraway': 0.95, 'min': 0.5, 'p': 2, 'sample': 512}       
+{'seed': 937162211, 'go': 'all', 'file': '../../../etc/data/auto93.csv', 'help': False, 'faraway': 0.95, 'min': 0.5, 'p': 2, 'sample': 512}
 Result : ✅
 Running test :  stats
 x
-x        mid     {'Clndrs': 5.45, 'Model': 76.01, 'Volume': 193.43, 'origin': 1.0}
-         div     {'Clndrs': 1.7, 'Model': 3.7, 'Volume': 104.27, 'origin': 1.3273558482394003}
+x 	 mid 	 {'Clndrs': 5.45, 'Model': 76.01, 'Volume': 193.43, 'origin': 1.0}
+  	 div 	 {'Clndrs': 1.7, 'Model': 3.7, 'Volume': 104.27, 'origin': 1.3273558482394003}
 y
-y        mid     {'Acc+': 15.57, 'Lbs-': 2970.42, 'Mpg+': 23.84}
-         div     {'Acc+': 2.76, 'Lbs-': 846.84, 'Mpg+': 8.34}
+y 	 mid 	 {'Acc+': 15.57, 'Lbs-': 2970.42, 'Mpg+': 23.84}
+  	 div 	 {'Acc+': 2.76, 'Lbs-': 846.84, 'Mpg+': 8.34}
 Result : ✅
 Running test :  csv_read
 Result : ✅
@@ -36,22 +35,41 @@ Running test :  half
 Result : ✅
 Running test :  cluster
    398 [['Lbs-', 2970.4], ['Acc+', 15.6], ['Mpg+', 23.8]]
-|   199
-||   99
-|||   49
+|   199 
+||   99 
+|||   49 
 ||||   24 [['Lbs-', 3876.5], ['Acc+', 14.0], ['Mpg+', 18.8]]
 ||||   25 [['Lbs-', 4248.4], ['Acc+', 13.6], ['Mpg+', 17.2]]
-|||   50
+|||   50 
+||||   25 [['Lbs-', 4099.2], ['Acc+', 12.9], ['Mpg+', 12.0]]
+||||   25 [['Lbs-', 4161.7], ['Acc+', 11.6], ['Mpg+', 13.2]]
+||   100 
+|||   50 
+||||   25 [['Lbs-', 3535.2], ['Acc+', 16.2], ['Mpg+', 18.8]]
+||||   25 [['Lbs-', 3062.0], ['Acc+', 15.9], ['Mpg+', 20.0]]
+|||   50 
+||||   25 [['Lbs-', 3214.1], ['Acc+', 16.3], ['Mpg+', 21.6]]
+||||   25 [['Lbs-', 2789.1], ['Acc+', 16.2], ['Mpg+', 26.8]]
+|   199 
+||   99 
+|||   49 
+||||   24 [['Lbs-', 2260.8], ['Acc+', 17.0], ['Mpg+', 32.9]]
+||||   25 [['Lbs-', 2361.4], ['Acc+', 17.5], ['Mpg+', 34.0]]
+|||   50 
+||||   25 [['Lbs-', 2687.7], ['Acc+', 15.4], ['Mpg+', 24.4]]
+||||   25 [['Lbs-', 2099.2], ['Acc+', 16.6], ['Mpg+', 30.0]]
+||   100 
+|||   50 
 ||||   25 [['Lbs-', 2205.2], ['Acc+', 17.0], ['Mpg+', 26.0]]
 ||||   25 [['Lbs-', 2242.8], ['Acc+', 16.6], ['Mpg+', 25.6]]
-|||   50
+|||   50 
 ||||   25 [['Lbs-', 2611.2], ['Acc+', 15.8], ['Mpg+', 27.6]]
 ||||   25 [['Lbs-', 2080.2], ['Acc+', 16.4], ['Mpg+', 32.8]]
 Result : ✅
 Running test :  optimize
    398 [['Lbs-', 2970.4], ['Acc+', 15.6], ['Mpg+', 23.8]]
-|   199
-||   99
-|||   50
+|   199 
+||   99 
+|||   50 
 ||||   25 [['Lbs-', 2228.5], ['Acc+', 16.1], ['Mpg+', 32.0]]
 Result : ✅
