@@ -6,7 +6,8 @@ from csv import get_csv_rows
 from cols import Cols
 from row import Row
 from utils import rint, cosine 
-from node import Node 
+from node import Node
+
 class Data:
     def __init__(self, source_file = K_DEFAULT_DATA_FILE, source_rows = None):
         self.rows = []
@@ -22,7 +23,6 @@ class Data:
                     self.add_row(row)
             except:
                 print("Error - Could not parse non-source file data for addition to data")
-        
 
     def add_row(self, row):
         if self.cols != None:
@@ -145,4 +145,16 @@ class Data:
         if rows == None:
             rows = copy.deepcopy(self.rows)
         return self.around(row_1, rows=rows)[-1]
+
+def rep_cols(orig_cols):
+    cols = copy.deepcopy(orig_cols)
+    for col in cols:
+        col[-1] = col[0] + ":" + col[-1]
+        del col[0]
+    col_names = []
+    for i in range(1, 11):
+        col_names.append('Num'+str(i))
+    col_names.append('thingX')
+    cols.insert(0, col_names)
+    return Data(source_file=None, source_rows=cols)
 

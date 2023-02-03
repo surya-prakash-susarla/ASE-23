@@ -1,7 +1,9 @@
 import math
+import json
 
 from globals import global_options, K_SEED, K_DEFAULT_SEED_VALUE
 from node import Node
+from pathlib import Path
 
 def rnd(n, nPlaces = 3):
     """
@@ -57,14 +59,19 @@ def show(node, cols, nPlaces, level = 0, is_mid=True):
         show(node.left, cols, nPlaces, level+1, is_mid)
         show(node.right, cols, nPlaces, level+1, is_mid)
 
+def get_repgrid_file_contents(filepath):
+    filepath = (Path(__file__) / filepath).resolve()
+    data = None
+    with open(filepath) as file:
+        data = json.load(file)
+    return data
+
 def last(table):
     return table[-1]
 
 def transpose(original):
     print("TODO - RETURN TRANSPOSED MATRIX")
 
-def rep_cols(cols):
-    print("TODO - REP COLS DEFINTION")
 
 def rep_place(data):
     print("TODO - REP PLACE DEFINTION")

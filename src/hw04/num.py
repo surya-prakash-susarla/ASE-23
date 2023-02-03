@@ -9,6 +9,11 @@ class Num:
         self.at, self.txt = at, txt
         self.n, self.mu, self.m2 =0, 0, 0
         self.max, self.min = -1000000000000000, 1000000000000000
+
+    def print(self):
+        print_st = "Num at : {}, hi : {}, lo : {}, m2 : {}, mu : {}, txt : {}, w : {}, n : {}"
+        print_st = print_st.format(self.at, self.max, self.min, self.m2, self.mu, self.txt, self.wt, self.n)
+        print(print_st)
     
     def add(self, value):
         if type(value) == int or type(value) == float:

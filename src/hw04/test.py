@@ -1,7 +1,7 @@
 from sym import Sym
 from num import Num
-from utils import rand ,rint, rnd, show
-from data import Data
+from utils import rand ,rint, rnd, show, get_repgrid_file_contents
+from data import Data, rep_cols
 from csv import get_csv_rows
 from globals import global_options, K_FILE, K_DEFAULT_DATA_FILE
 from collections import OrderedDict
@@ -122,7 +122,9 @@ def test_copy():
     return True
 
 def test_rep_cols():
-    print("TODO - TEST REP COLS")
+    contents = get_repgrid_file_contents(global_options[K_FILE])
+    rep_data = rep_cols(contents['cols'])
+    rep_data.cols.print_cols()
     return True
 
 def test_synonyms():
