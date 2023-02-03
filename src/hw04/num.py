@@ -12,7 +12,7 @@ class Num:
 
     def print(self):
         print_st = "Num at : {}, hi : {}, lo : {}, m2 : {}, mu : {}, txt : {}, w : {}, n : {}"
-        print_st = print_st.format(self.at, self.max, self.min, self.m2, self.mu, self.txt, self.wt, self.n)
+        print_st = print_st.format(self.at, self.max, self.min, round(self.m2, 2), round(self.mu, 2), self.txt, self.wt, self.n)
         print(print_st)
     
     def add(self, value):
