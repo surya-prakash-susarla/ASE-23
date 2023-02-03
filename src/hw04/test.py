@@ -8,8 +8,6 @@ from collections import OrderedDict
 
 import copy
 
-# _all_ = ['test_global_options', 'test_num', 'test_sym', 'test_get_stats', 'read_from_csv', 'read_data_csv', 'test_around', 'test_half', 'test_cluster', 'test_optimize' ]
-
 def test_global_options() -> bool:
     print(global_options)
     return True
@@ -125,10 +123,14 @@ def test_rep_cols():
     contents = get_repgrid_file_contents(global_options[K_FILE])
     rep_data = rep_cols(contents['cols'])
     rep_data.cols.print_cols()
+    for row in rep_data.rows:
+        print(row)
     return True
 
 def test_synonyms():
-    print("TODO - TEST SYNONYMS")
+    contents = get_repgrid_file_contents(global_options[K_FILE])
+    rep_data = rep_cols(contents['cols'])
+    show(rep_data.cluster(), rep_data.cols, nPlaces=1)
     return True
 
 def test_rep_rows():
