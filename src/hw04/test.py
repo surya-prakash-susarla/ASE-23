@@ -124,7 +124,7 @@ def test_rep_cols():
     rep_data = rep_cols(contents['cols'])
     rep_data.cols.print_cols()
     for row in rep_data.rows:
-        print(row)
+        print(row.cells)
     return True
 
 def test_synonyms():
