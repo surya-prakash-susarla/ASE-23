@@ -40,8 +40,6 @@ class Cols:
                     self.x.append(col)
 
     def add(self, row):
-        print("received row : ", row)
-        print("contents : ", row.cells)
         for col in self.y:
             col.add(row.cells[col.at])
         for col in self.x:

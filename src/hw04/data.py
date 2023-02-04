@@ -18,24 +18,18 @@ class Data:
                 self.add_row(row)
 
         if source_rows != None:
-            print(source_rows)
             for row in source_rows:
-                print("adding row")
                 self.add_row(row)
 
     def add_row(self, row):
         if self.cols != None:
-            print("considering as data row: ", row)
             if type(row) is list:
                 row = Row(row)
             elif not isinstance(row, Row):
                 raise Exception("row being added is not of type list or row, contents: ", row)
             self.rows.append(row)
-            print("sending row for addition in cols")
             self.cols.add(row)
-            print("row sent to col, moving on")
         else:
-            print("adding row for col creation", row)
             self.cols = Cols(row)
 
     def clone(self, new_rows):
@@ -88,13 +82,19 @@ class Data:
     def half(self,  rows=None, cols=None, above=None):
         if rows == None:
             rows = copy.deepcopy(self.rows)
-        some = self.many(rows)
-        total_length = len(rows)
-        A = above if above != None else some[rint(0,len(some))]
-        far_point = math.floor(total_length*K_DEFAULT_FARAWAY_VALUE)
-        B = self.around(A,some)[far_point]
+        A = above if above != None else rows[rint(0,len(rows))]
+        B = self.furthest(A, rows)
         c = self.dist(A,B,cols)
-        rows = sorted(rows ,key = lambda row: cosine(self.dist(row,A,cols), self.dist(row,B,cols), c))
+
+        # project lambda
+        def project(row):
+            x, y = cosine(self.dist(row, A, cols), self.dist(row, B, cols), c)
+            row.x = x if row.x == None else row.x
+            row.y = y if row.y == None else row.y
+            return x
+
+        rows = sorted(rows, key = lambda row: project(row))
+
         left=[]
         right=[]
         for i in range (len(rows)):
@@ -103,7 +103,7 @@ class Data:
             else:
                 right.append(rows[i])
         mid = right[0]
-        return left, right, A,B, mid,c
+        return left, right, A, B, mid, c
 
     def many(self, row):
         row_len= len(row)
@@ -111,8 +111,6 @@ class Data:
         
         for i in range(K_DEFAULT_SAMPLE_VALUE):
             j = rint(0,row_len-1)
-            if(j>=row_len):
-                print("j val out of range:", j,i,row_len)
             temp.append(row[j])
         return temp
 
@@ -125,13 +123,10 @@ class Data:
             cols = self.cols.x
         node = Node()
         node.data = self.clone(rows)
-        print("len of rows : ", len(node.data.rows))
         if len(rows) >= 2:
-            left, right, node.A, node.B, node.mid,c = self.half(rows, cols, above)
+            left, right, node.A, node.B, node.mid, node.c = self.half(rows, cols, above)
             node.left  = self.cluster(left,  min, cols, node.A)
             node.right = self.cluster(right, min, cols, node.B)
-        else:
-            print("returning here")
         return node
 
     def sway(self, rows=None,min=None,cols=None,above=None):

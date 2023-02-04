@@ -44,18 +44,15 @@ def cosine(a, b, c) -> tuple[int, int]:
     x1 = (a*a + c*c - b*b) / (2*c + 0.00001)
     x2 = max(0, min(1, x1))
     y = (abs(a*a - x2*x2))**(0.5)
-    # print("returning : ", (x2, y))
     return (x2, y)
 
 def show(node, cols, nPlaces, level = 0, is_mid=True):
     if node != None:
         print('|'*level, end=' ')
-        print(" ", len(node.data.rows), end=' ')
-        if node.left == None or level == 0:
-            stats = node.data.stats(nPlaces, node.data.cols.y, is_mid)
-            print(stats)
+        if node.left == None:
+            print(last(last(node.data.rows).cells))
         else:
-            print("")
+            print("{c:.1f}".format(c=rnd(100*node.c)))
         show(node.left, cols, nPlaces, level+1, is_mid)
         show(node.right, cols, nPlaces, level+1, is_mid)
 
@@ -66,12 +63,11 @@ def get_repgrid_file_contents(filepath):
         data = json.load(file)
     return data
 
-def last(table):
-    return table[-1]
+def last(list_values):
+    return list_values[-1]
 
 def transpose(original):
     print("TODO - RETURN TRANSPOSED MATRIX")
-
 
 def rep_place(data):
     print("TODO - REP PLACE DEFINTION")
