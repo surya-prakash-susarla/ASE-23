@@ -18,18 +18,24 @@ class Data:
                 self.add_row(row)
 
         if source_rows != None:
-            try:
-                for row in source_rows:
-                    self.add_row(row)
-            except:
-                print("Error - Could not parse non-source file data for addition to data")
+            print(source_rows)
+            for row in source_rows:
+                print("adding row")
+                self.add_row(row)
 
     def add_row(self, row):
         if self.cols != None:
-            new_row = row
-            self.rows.append(new_row)
+            print("considering as data row: ", row)
+            if type(row) is list:
+                row = Row(row)
+            elif not isinstance(row, Row):
+                raise Exception("row being added is not of type list or row, contents: ", row)
+            self.rows.append(row)
+            print("sending row for addition in cols")
             self.cols.add(row)
+            print("row sent to col, moving on")
         else:
+            print("adding row for col creation", row)
             self.cols = Cols(row)
 
     def clone(self, new_rows):
@@ -71,7 +77,7 @@ class Data:
         d = 0
         for col in cols:
             n = n + 1
-            d = d + (col.dist(row_1[col.at], row_2[col.at])**global_options[K_DISTANCE_COEF])
+            d = d + (col.dist(row_1.cells[col.at], row_2.cells[col.at])**global_options[K_DISTANCE_COEF])
         return (d/n)**(1/global_options[K_DISTANCE_COEF])
 
     def around(self, row_1,rows = None ):

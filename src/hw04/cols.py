@@ -40,11 +40,12 @@ class Cols:
                     self.x.append(col)
 
     def add(self, row):
-        row_values = extract_entities_from_csv_row(row)
+        print("received row : ", row)
+        print("contents : ", row.cells)
         for col in self.y:
-            col.add(row_values[col.at])
+            col.add(row.cells[col.at])
         for col in self.x:
-            col.add(row_values[col.at])
+            col.add(row.cells[col.at])
 
     def get_y_value_statistics(self, is_mid):
         result =[]
