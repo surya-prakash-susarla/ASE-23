@@ -45,7 +45,6 @@ class Data:
                 result = self.cols.get_statistic_for_column(col, is_mid)
                 result[1]= col.rnd(result[1],nPlaces)
                 results.append(result)
-                #results.append(col.rnd(self.cols.get_statistic_for_column(col, is_mid)[1], nPlaces))
         else:
             results = self.cols.get_y_value_statistics(is_mid)
         return results
