@@ -6,6 +6,11 @@ class Sym:
         self.n = 0 #total number of elements in the stream
         self.has = collections.defaultdict(int) #the dictionary which stores values of each alphabet in the stream
         self.most, self.mode = 0, "" # self.mode contains the alphabet which is recurring the highest number of times and self.most is its count
+
+    def print(self):
+        has = self.has if len(self.has) > 0 else "{}"
+        print_st = "Sym at : {}, has : {}, most : {}, txt: {}".format(self.at, has, self.most, self.txt)
+        print(print_st)
         
     def add(self, value):
         if value != '?':

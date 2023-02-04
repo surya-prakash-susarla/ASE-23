@@ -11,9 +11,13 @@ class Cols:
         self.x = []
         self.y = []
         self.klass = []
-        self._parse_header_row(header_row)
+        self.parse_header_row(header_row)
 
-    def _parse_header_row(self, header_row):
+    def print_cols(self):
+        for col in self.all:
+            col.print()
+
+    def parse_header_row(self, header_row):
         col_names= extract_entities_from_csv_row (header_row)
         # iterating over the column names
         for i in range(len(col_names)):
@@ -36,11 +40,10 @@ class Cols:
                     self.x.append(col)
 
     def add(self, row):
-        row_values = extract_entities_from_csv_row(row)
         for col in self.y:
-            col.add(row_values[col.at])
+            col.add(row.cells[col.at])
         for col in self.x:
-            col.add(row_values[col.at])
+            col.add(row.cells[col.at])
 
     def get_y_value_statistics(self, is_mid):
         result =[]

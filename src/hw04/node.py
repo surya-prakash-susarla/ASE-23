@@ -7,3 +7,5 @@ class Node:
         self.data = None
         self.A = None
         self.B = None
+        self.c = None
+

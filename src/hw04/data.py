@@ -6,7 +6,8 @@ from csv import get_csv_rows
 from cols import Cols
 from row import Row
 from utils import rint, cosine 
-from node import Node 
+from node import Node
+
 class Data:
     def __init__(self, source_file = K_DEFAULT_DATA_FILE, source_rows = None):
         self.rows = []
@@ -17,17 +18,16 @@ class Data:
                 self.add_row(row)
 
         if source_rows != None:
-            try:
-                for row in source_rows:
-                    self.add_row(row)
-            except:
-                print("Error - Could not parse non-source file data for addition to data")
-        
+            for row in source_rows:
+                self.add_row(row)
 
     def add_row(self, row):
         if self.cols != None:
-            new_row = row
-            self.rows.append(new_row)
+            if type(row) is list:
+                row = Row(row)
+            elif not isinstance(row, Row):
+                raise Exception("row being added is not of type list or row, contents: ", row)
+            self.rows.append(row)
             self.cols.add(row)
         else:
             self.cols = Cols(row)
@@ -45,7 +45,6 @@ class Data:
                 result = self.cols.get_statistic_for_column(col, is_mid)
                 result[1]= col.rnd(result[1],nPlaces)
                 results.append(result)
-                #results.append(col.rnd(self.cols.get_statistic_for_column(col, is_mid)[1], nPlaces))
         else:
             results = self.cols.get_y_value_statistics(is_mid)
         return results
@@ -71,7 +70,7 @@ class Data:
         d = 0
         for col in cols:
             n = n + 1
-            d = d + (col.dist(row_1[col.at], row_2[col.at])**global_options[K_DISTANCE_COEF])
+            d = d + (col.dist(row_1.cells[col.at], row_2.cells[col.at])**global_options[K_DISTANCE_COEF])
         return (d/n)**(1/global_options[K_DISTANCE_COEF])
 
     def around(self, row_1,rows = None ):
@@ -82,13 +81,19 @@ class Data:
     def half(self,  rows=None, cols=None, above=None):
         if rows == None:
             rows = copy.deepcopy(self.rows)
-        some = self.many(rows)
-        total_length = len(rows)
-        A = above if above != None else some[rint(0,len(some))]
-        far_point = math.floor(total_length*K_DEFAULT_FARAWAY_VALUE)
-        B = self.around(A,some)[far_point]
+        A = above if above != None else rows[rint(0,len(rows))]
+        B = self.furthest(A, rows)
         c = self.dist(A,B,cols)
-        rows = sorted(rows ,key = lambda row: cosine(self.dist(row,A,cols), self.dist(row,B,cols), c))
+
+        # project lambda
+        def project(row):
+            x, y = cosine(self.dist(row, A, cols), self.dist(row, B, cols), c)
+            row.x = x if row.x == None else row.x
+            row.y = y if row.y == None else row.y
+            return x
+
+        rows = sorted(rows, key = lambda row: project(row))
+
         left=[]
         right=[]
         for i in range (len(rows)):
@@ -97,7 +102,7 @@ class Data:
             else:
                 right.append(rows[i])
         mid = right[0]
-        return left, right, A,B, mid,c
+        return left, right, A, B, mid, c
 
     def many(self, row):
         row_len= len(row)
@@ -105,8 +110,6 @@ class Data:
         
         for i in range(K_DEFAULT_SAMPLE_VALUE):
             j = rint(0,row_len-1)
-            if(j>=row_len):
-                print("j val out of range:", j,i,row_len)
             temp.append(row[j])
         return temp
 
@@ -119,8 +122,8 @@ class Data:
             cols = self.cols.x
         node = Node()
         node.data = self.clone(rows)
-        if len(rows) > 2*min:
-            left, right, node.A, node.B, node.mid,c = self.half(rows, cols, above)
+        if len(rows) >= 2:
+            left, right, node.A, node.B, node.mid, node.c = self.half(rows, cols, above)
             node.left  = self.cluster(left,  min, cols, node.A)
             node.right = self.cluster(right, min, cols, node.B)
         return node
@@ -145,4 +148,16 @@ class Data:
         if rows == None:
             rows = copy.deepcopy(self.rows)
         return self.around(row_1, rows=rows)[-1]
+
+def rep_cols(orig_cols):
+    cols = copy.deepcopy(orig_cols)
+    for col in cols:
+        col[-1] = col[0] + ":" + col[-1]
+        del col[0]
+    col_names = []
+    for i in range(1, 11):
+        col_names.append('Num'+str(i))
+    col_names.append('thingX')
+    cols.insert(0, col_names)
+    return Data(source_file=None, source_rows=cols)
 
