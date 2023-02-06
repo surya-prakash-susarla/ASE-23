@@ -67,7 +67,13 @@ def last(list_values):
     return list_values[-1]
 
 def transpose(original):
-    print("TODO - RETURN TRANSPOSED MATRIX")
+    rows =[]
+    for i in range (len(original[0])):
+        current_row=[]
+        for j in range (len(original)):
+            current_row.append(original[j][i])
+        rows.append(current_row)
+    return rows
 
 def rep_place(data):
     print("TODO - REP PLACE DEFINTION")
