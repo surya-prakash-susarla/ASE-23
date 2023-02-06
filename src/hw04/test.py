@@ -1,7 +1,7 @@
 from sym import Sym
 from num import Num
-from utils import rand ,rint, rnd, show, get_repgrid_file_contents
-from data import Data, rep_cols
+from utils import rand ,rint, rnd, show, get_repgrid_file_contents, rep_grid ,  transpose , rep_place
+from data import Data, rep_cols , rep_rows
 from csv import get_csv_rows
 from globals import global_options, K_FILE, K_DEFAULT_DATA_FILE
 from collections import OrderedDict
@@ -134,18 +134,24 @@ def test_synonyms():
     return True
 
 def test_rep_rows():
-    print("TODO - TEST REP ROWS")
+
     return True
 
 def test_prototypes():
-    print("TODO - TEST PROTOTYPES")
+    contents = get_repgrid_file_contents(global_options[K_FILE])
+    rows = rep_rows(contents, transpose(contents['cols']))
+    show(rows.cluster(), rows.cols, nPlaces=1)
     return True
 
+
 def test_position():
-    print("TODO - TEST POSITION")
+    contents = get_repgrid_file_contents(global_options[K_FILE])
+    rows = rep_rows(contents, transpose(contents['cols']))
+    rows.cluster()
+    rep_place(rows)
     return True
 
 def test_every():
-    print("TODO - TEST EVERY")
+    rep_grid(global_options[K_FILE])
     return True
 

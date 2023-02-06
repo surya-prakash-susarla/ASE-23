@@ -161,3 +161,16 @@ def rep_cols(orig_cols):
     cols.insert(0, col_names)
     return Data(source_file=None, source_rows=cols)
 
+def rep_rows(orig_data, orig_rows):
+    rows = copy.deepcopy(orig_rows)
+    for i in range(len(rows[-1])):
+        rows[0][i] = rows[0][i]+":"+rows[-1][i]
+    del rows[-1]
+    for i in range(len(rows)):
+        if(i==0):
+            rows[i].append('thingX')
+        else:
+            u = orig_data['rows'][(len(orig_data)-i+1)]
+            rows[i].append(u[-1])
+    return Data(source_file=None, source_rows=rows)
+    
