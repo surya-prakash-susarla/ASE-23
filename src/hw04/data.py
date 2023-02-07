@@ -170,7 +170,8 @@ def rep_rows(orig_data, orig_rows):
         if(i==0):
             rows[i].append('thingX')
         else:
-            u = orig_data['rows'][(len(orig_data)-i+1)]
+            u = orig_data['rows'][(len(orig_data['rows'])-i)]
             rows[i].append(u[-1])
+
     return Data(source_file=None, source_rows=rows)
     
