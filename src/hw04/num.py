@@ -1,6 +1,6 @@
 from utils import rnd
 class Num:
-  
+    
     def __init__(self, at=0, txt = ""):
         if txt and txt[-1] == '-':
           self.wt = -1
