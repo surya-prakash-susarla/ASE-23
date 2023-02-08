@@ -5,9 +5,9 @@ from globals import *
 from csv import get_csv_rows
 from cols import Cols
 from row import Row
-from utils import rint, cosine 
+from utils import rint, cosine, show, get_repgrid_file_contents
 from node import Node
-
+import collections
 class Data:
     def __init__(self, source_file = K_DEFAULT_DATA_FILE, source_rows = None):
         self.rows = []
@@ -175,3 +175,36 @@ def rep_rows(orig_data, orig_rows):
 
     return Data(source_file=None, source_rows=rows)
     
+def transpose(original):
+    rows =[]
+    for i in range (len(original[0])):
+        current_row=[]
+        for j in range (len(original)):
+            current_row.append(original[j][i])
+        rows.append(current_row)
+    return rows
+
+def rep_place(data):
+    n, g = 20, collections.defaultdict(list)
+    for i in range(1, n+1):
+        for _ in range(1, n+1):
+            g[i].append(" ")
+    maxy = 0
+    print("")
+    for r, row in enumerate(data.rows):
+        c = chr(64 + r)
+        print(c, row.cells[-1])
+        x, y = math.floor(row.x*n), math.floor(row.y*n)
+        maxy = max(maxy, y+1)
+        g[y+1][x+1] = c
+    print("")
+    for y in range(1, maxy):
+        print(g[y])
+
+def rep_grid(s_file):
+    t = get_repgrid_file_contents(s_file)
+    rows = rep_rows(t, transpose(t['cols']))
+    cols = rep_cols(t['cols'])
+    show(rows.cluster(), cols.cluster(), nPlaces=2)
+    #show(cols.cluster ())
+    rep_place(rows)

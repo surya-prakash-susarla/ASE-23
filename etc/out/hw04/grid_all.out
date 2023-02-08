@@ -1,0 +1,169 @@
+python  main.py -g all   
+ 
+Running test :  num
+Result : ✅
+
+Running test :  sym
+Result : ✅
+
+Running test :  opt
+{'seed': 937162211, 'go': 'all', 'file': '../../../etc/data/repgrid.json', 'help': False, 'faraway': 0.95, 'min': 0.5, 'p': 2, 'sample': 512}
+Result : ✅
+
+Running test :  copy
+before:  {'a': 1, 'b': {'c': 2, 'd': [3]}}
+after:  {'a': 1, 'b': {'c': 2, 'd': [1000]}}
+Result : ✅
+
+Running test :  repcols
+Num at : 0, hi : 5, lo : 1, m2 : 13.5, mu : 1.75, txt : Num1, w : 1, n : 8
+Num at : 1, hi : 5, lo : 1, m2 : 17.88, mu : 2.38, txt : Num2, w : 1, n : 8
+Num at : 2, hi : 3, lo : 1, m2 : 6.0, mu : 1.5, txt : Num3, w : 1, n : 8
+Num at : 3, hi : 5, lo : 1, m2 : 18.88, mu : 2.12, txt : Num4, w : 1, n : 8
+Num at : 4, hi : 5, lo : 1, m2 : 14.87, mu : 1.87, txt : Num5, w : 1, n : 8
+Num at : 5, hi : 5, lo : 1, m2 : 32.0, mu : 3.0, txt : Num6, w : 1, n : 8
+Num at : 6, hi : 5, lo : 1, m2 : 20.0, mu : 3.5, txt : Num7, w : 1, n : 8
+Num at : 7, hi : 5, lo : 2, m2 : 10.87, mu : 4.12, txt : Num8, w : 1, n : 8
+Num at : 8, hi : 5, lo : 1, m2 : 16.0, mu : 2.5, txt : Num9, w : 1, n : 8
+Num at : 9, hi : 5, lo : 1, m2 : 15.88, mu : 2.38, txt : Num10, w : 1, n : 8
+Sym at : 10, has : {}, most : 0, txt: thingX
+[5, 3, 3, 1, 1, 1, 1, 3, 5, 5, 'DevelopmentTool:Application']
+[2, 1, 1, 5, 5, 5, 5, 5, 1, 2, 'Multimedia:Programming']
+[1, 3, 1, 3, 2, 5, 4, 3, 1, 1, 'CommunicationTechnology:ApplicationTechnology']
+[2, 1, 1, 1, 3, 5, 3, 2, 2, 2, 'HumanOrientedTool:SystemTool']
+[1, 5, 3, 4, 1, 1, 4, 5, 4, 4, 'ConventionalCommunication:NovelCommunication']
+[1, 4, 1, 1, 1, 1, 1, 5, 3, 1, 'OnlyActAsProgrammed:Semi-autonomous']
+[1, 1, 1, 1, 1, 1, 5, 5, 1, 1, 'ConventionalSystem:IntelligentSystem']
+[1, 1, 1, 1, 1, 5, 5, 5, 3, 3, 'TargetedOnInterface:TargetedOnOverallSystem']
+Result : ✅
+
+Running test :  synonyms
+ 70.3
+| 61.3
+|| 42.6
+||| OnlyActAsProgrammed:Semi-autonomous
+||| ConventionalSystem:IntelligentSystem
+|| 54.3
+||| DevelopmentTool:Application
+||| ConventionalCommunication:NovelCommunication
+| 50.6
+|| 48.7
+||| Multimedia:Programming
+||| TargetedOnInterface:TargetedOnOverallSystem
+|| 30.4
+||| HumanOrientedTool:SystemTool
+||| CommunicationTechnology:ApplicationTechnology
+Result : ✅
+
+Running test :  reprows
+Num at : 0, hi : 5, lo : 1, m2 : 27.6, mu : 2.8, txt : DevelopmentTool:Application, w : 1, n : 10
+Num at : 1, hi : 5, lo : 1, m2 : 33.6, mu : 3.2, txt : Multimedia:Programming, w : 1, n : 10
+Num at : 2, hi : 5, lo : 1, m2 : 18.4, mu : 2.4, txt : CommunicationTechnology:ApplicationTechnology, w : 1, n : 10
+Num at : 3, hi : 5, lo : 1, m2 : 13.6, mu : 2.2, txt : HumanOrientedTool:SystemTool, w : 1, n : 10
+Num at : 4, hi : 5, lo : 1, m2 : 23.6, mu : 3.2, txt : ConventionalCommunication:NovelCommunication, w : 1, n : 10
+Num at : 5, hi : 5, lo : 1, m2 : 20.9, mu : 1.9, txt : OnlyActAsProgrammed:Semi-autonomous, w : 1, n : 10
+Num at : 6, hi : 5, lo : 1, m2 : 25.6, mu : 1.8, txt : ConventionalSystem:IntelligentSystem, w : 1, n : 10
+Num at : 7, hi : 5, lo : 1, m2 : 30.4, mu : 2.6, txt : TargetedOnInterface:TargetedOnOverallSystem, w : 1, n : 10
+Sym at : 8, has : {}, most : 0, txt: thingX
+[5, 2, 1, 2, 1, 1, 1, 1, 'KnowledgeBasedSystems']
+[3, 1, 3, 1, 5, 4, 1, 1, 'IntelligentAgents']
+[3, 1, 1, 1, 3, 1, 1, 1, 'InformationHighway']
+[1, 5, 3, 1, 4, 1, 1, 1, 'BroadbandNetworks']
+[1, 5, 2, 3, 1, 1, 1, 1, 'ElectronicPublishing']
+[1, 5, 5, 5, 1, 1, 1, 5, 'VirtualReality']
+[1, 5, 4, 3, 4, 1, 5, 5, 'MultimediaAndHypermedia']
+[3, 5, 3, 2, 5, 5, 5, 5, 'VisualProgramming']
+[5, 1, 1, 2, 4, 3, 1, 3, 'CrossPlatformGUIs']
+[5, 2, 1, 2, 4, 1, 1, 3, 'ObjectOrientedSystems']
+Result : ✅
+
+Running test :  prototypes
+ 74.0
+| 47.6
+|| 47.6
+||| ElectronicPublishing
+||| VirtualReality
+|| 44.2
+||| KnowledgeBasedSystems
+||| 44.2
+|||| BroadbandNetworks
+|||| InformationHighway
+| 65.0
+|| 42.4
+||| VisualProgramming
+||| MultimediaAndHypermedia
+|| 43.3
+||| ObjectOrientedSystems
+||| 34.2
+|||| IntelligentAgents
+|||| CrossPlatformGUIs
+Result : ✅
+Running test :  position
+
+@ KnowledgeBasedSystems
+A IntelligentAgents
+B InformationHighway
+C BroadbandNetworks
+D ElectronicPublishing
+E VirtualReality
+F MultimediaAndHypermedia
+G VisualProgramming
+H CrossPlatformGUIs
+I ObjectOrientedSystems
+
+[' ', 'D', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'G', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', 'C', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'F', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', 'E', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', '@', 'B', ' ', ' ', 'I', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+Result : ✅
+
+Running test :  every
+ 79.5
+| 71.3
+|| 62.5
+||| VisualProgramming
+||| IntelligentAgents
+|| 59.3
+||| VirtualReality
+||| 53.8
+|||| BroadbandNetworks
+|||| MultimediaAndHypermedia
+| 45.9
+|| 37.5
+||| KnowledgeBasedSystems
+||| CrossPlatformGUIs
+|| 55.9
+||| ElectronicPublishing
+||| 29.3
+|||| ObjectOrientedSystems
+|||| InformationHighway
+
+@ KnowledgeBasedSystems
+A IntelligentAgents
+B InformationHighway
+C BroadbandNetworks
+D ElectronicPublishing
+E VirtualReality
+F MultimediaAndHypermedia
+G VisualProgramming
+H CrossPlatformGUIs
+I ObjectOrientedSystems
+
+[' ', 'G', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '@', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'H', 'I', ' ', ' ', 'B', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', 'F', ' ', ' ', ' ', ' ', ' ', ' ', 'C', ' ', ' ', 'D', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+Result : ✅
