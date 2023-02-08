@@ -1,9 +1,10 @@
 import math
 import json
-
-from globals import global_options, K_SEED, K_DEFAULT_SEED_VALUE
+import collections
+from globals import global_options, K_SEED, K_DEFAULT_SEED_VALUE, K_FILE
 from node import Node
 from pathlib import Path
+import copy
 
 def rnd(n, nPlaces = 3):
     """
@@ -66,18 +67,4 @@ def get_repgrid_file_contents(filepath):
 def last(list_values):
     return list_values[-1]
 
-def transpose(original):
-    rows =[]
-    for i in range (len(original[0])):
-        current_row=[]
-        for j in range (len(original)):
-            current_row.append(original[j][i])
-        rows.append(current_row)
-    return rows
-
-def rep_place(data):
-    print("TODO - REP PLACE DEFINTION")
-
-def rep_grid(s_file):
-    print("TODO - REP GRID DEFINTION")
 
