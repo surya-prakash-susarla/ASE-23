@@ -1,6 +1,5 @@
 import copy
 import math
-import numpy as np
 from globals import *
 from csv import get_csv_rows
 from cols import Cols
