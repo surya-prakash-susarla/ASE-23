@@ -253,5 +253,3 @@ def person_3():
        [1,4,3,2,5,4,4, 'Twilight'],
        [4,5,2,5,5,1,4,'Bad boys']]
     return Data(source_file=None, source_rows=person_3)
-    [1,3,1,2,4,1,1, 'The Menu'],
-    [5,3,5,2,2,4,5, 'Titanic'],
