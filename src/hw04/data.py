@@ -1,6 +1,5 @@
 import copy
 import math
-
 from globals import *
 from csv import get_csv_rows
 from cols import Cols
@@ -172,7 +171,8 @@ def rep_rows(orig_data, orig_rows):
         else:
             u = orig_data['rows'][(len(orig_data['rows'])-i)]
             rows[i].append(u[-1])
-
+    for row in rows:
+        print(row)
     return Data(source_file=None, source_rows=rows)
     
 def transpose(original):
@@ -206,5 +206,49 @@ def rep_grid(s_file):
     rows = rep_rows(t, transpose(t['cols']))
     cols = rep_cols(t['cols'])
     show(rows.cluster(), cols.cluster(), nPlaces=2)
-    #show(cols.cluster ())
     rep_place(rows)
+
+def person_1():
+
+    person_1=[['Violence', 'Cringe', 'Romance', 'Fantasy', 'Thriller', 'Gore', 'Strong-Language', 'Comedy', 'thingX'],
+       [5,1,2,1,4,3,4,2,'Fightclub'],
+       [5,1,2,3,5,2,3,2, 'Top Gun'],
+       [3,1,2,5,4,1,2,5, 'Spiderman'],
+       [5,5,1,1,5,5,3,3, 'The Menu'],
+       [2,3,4,3,2,1,5,5, 'Ted'],
+       [3,2,3,1,3,1,5,5, 'Jumpstreet'],
+       [3,5,5,1,1,1,3,5, 'Titanic'],
+       [1,3,1,5,5,2,1,3, 'Martian'],
+       [5,4,5,5,2,3,2,3, 'Twilight'],
+       [4,1,2,1,4,1,5,5,'Bad boys']]
+    
+    return Data(source_file=None, source_rows=person_1)
+
+def person_2():
+
+    person_2=[['Action', 'Drama', 'Family Friendly', 'Comedy', 'Psychotic', 'Budget', 'Romance', 'thingX'],
+       [5,3,2,3,2,3,3,'Fightclub'],
+       [4,4,3,2,1,5,4, 'Top Gun'],
+       [5,2,5,4,1,5,3, 'Spiderman'],
+       [2,5,1,2,5,2,1, 'The Menu'],
+       [1,2,1,5,2,2,4, 'Ted'],
+       [2,2,1,5,1,1,4, 'Jumpstreet'],
+       [2,4,2,3,1,4,5, 'Titanic'],
+       [2,2,4,3,1,5,2, 'Martian'],
+       [5,4,2,4,3,5,5, 'Twilight'],
+       [4,1,2,1,4,1,5,5,'Bad boys']]
+    return Data(source_file=None, source_rows=person_2)
+
+def person_3():
+    person_3=[['Close to reality', 'cast diversity', 'director-popularity', 'Comedy', 'Action', 'Vfx', 'Romance', 'thingX'],
+       [2,3,3,4,5,2,3,'Fightclub'],
+       [3,4,3,2,5,4,2, 'Top Gun'],
+       [1,4,2,5,5,5,3, 'Spiderman'],
+       [1,3,1,2,4,1,1, 'The Menu'],
+       [3,2,3,5,2,2,4, 'Ted'],
+       [5,1,1,5,2,1,4, 'Jumpstreet'],
+       [4,1,5,4,2,5,5, 'Titanic'],
+       [1,2,4,2,2,5,2, 'Martian'],
+       [1,4,3,2,5,4,4, 'Twilight'],
+       [4,5,2,5,5,1,4,'Bad boys']]
+    return Data(source_file=None, source_rows=person_3)

@@ -19,7 +19,8 @@ def run_tests() -> int:
         'reprows': test_rep_rows,
         'prototypes': test_prototypes,
         'position': test_position,
-        'every': test_every
+        'every': test_every,
+        'custom': custom_test
     }
 
     test_runner: TestRunner = TestRunner(tests)
