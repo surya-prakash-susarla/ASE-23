@@ -236,7 +236,7 @@ def person_2():
        [2,4,2,3,1,4,5, 'Titanic'],
        [2,2,4,3,1,5,2, 'Martian'],
        [5,4,2,4,3,5,5, 'Twilight'],
-       [4,1,2,1,4,1,5,5,'Bad boys']]
+       [4,4,2,5,1,3,3, 'Bad boys']]
     return Data(source_file=None, source_rows=person_2)
 
 def person_3():
@@ -252,3 +252,4 @@ def person_3():
        [1,4,3,2,5,4,4, 'Twilight'],
        [4,5,2,5,5,1,4,'Bad boys']]
     return Data(source_file=None, source_rows=person_3)
+    

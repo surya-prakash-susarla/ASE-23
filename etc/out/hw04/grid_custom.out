@@ -1,0 +1,68 @@
+python main.py -g custom
+Running test :  custom
+
+**********PERSON1****************
+ 72.9
+| 55.2
+|| 51.6
+||| Titanic
+||| Twilight
+|| 39.5
+||| Bad boys
+||| 25.0
+|||| Ted
+|||| Jumpstreet
+| 62.4
+|| 38.6
+||| Martian
+||| Spiderman
+|| 44.0
+||| Fightclub
+||| 49.8
+|||| The Menu
+|||| Top Gun
+
+
+**********PERSON2****************
+ 67.5
+| 63.2
+|| 16.4
+||| Ted
+||| Jumpstreet
+|| 45.2
+||| Spiderman
+||| 49.3
+|||| Bad boys
+|||| Martian
+| 65.4
+|| 54.2
+||| The Menu
+||| Fightclub
+|| 37.5
+||| Twilight
+||| 28.0
+|||| Titanic
+|||| Top Gun
+
+
+**********PERSON3****************
+ 78.6
+| 74.4
+|| 57.5
+||| Ted
+||| Jumpstreet
+|| 74.9
+||| Spiderman
+||| 77.2
+|||| Bad boys
+| 70.8
+|| 52.5
+||| The Menu
+||| Fightclub
+|| 68.8
+||| Martian
+||| 26.7
+|||| Twilight
+|||| Top Gun
+
+Result : ✅
