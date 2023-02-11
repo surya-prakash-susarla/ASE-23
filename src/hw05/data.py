@@ -37,7 +37,7 @@ class Data:
             new_data.add_row(row)
         return new_data
 
-    def stats(self, nPlaces: int, cols: [] = None, is_mid = True): 
+    def stats(self, nPlaces: int = 2, cols: [] = None, is_mid = True): 
         results = []
         if cols != None:
             for col in cols:

@@ -32,6 +32,11 @@ class Num:
                     self.has.append(value)
                 else:
                     self.has[pos] = value
+                d = value-self.mu
+                self.mu += d/self.n
+                self.m2 += d*(value-self.mu)
+                self.min = min(value, self.min)
+                self.max = max(value, self.max)
                 self.ok = False
     
     def mid(self):

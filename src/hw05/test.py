@@ -34,7 +34,11 @@ def test_some() -> bool:
     return True
 
 def test_clone() -> bool:
-    print("TODO - implement test for clone")
+    data = Data()
+    data2 = data.clone(data.rows)
+    print("TODO - CHECK VALUES IN STATS NOT MATCHING WITH OUTPUT")
+    print(data.stats())
+    print(data2.stats())
     return True
 
 def test_dist() -> bool:

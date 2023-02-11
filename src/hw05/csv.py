@@ -18,5 +18,4 @@ def get_csv_rows(filepath: str) -> []:
                 row = list(map(coerce, line.strip().split(',')))
                 rows.append(row)
 
-
         return rows
