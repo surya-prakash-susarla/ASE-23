@@ -1,6 +1,6 @@
 from sym import Sym
 from num import Num
-from utils import rand ,rint, rnd, show
+from utils import rand ,rint, rnd, show, show_tree, tree
 from data import Data, rep_cols , rep_rows, rep_grid, rep_place, transpose
 from csv import get_csv_rows
 from collections import OrderedDict
@@ -54,7 +54,7 @@ def test_cliffs() -> bool:
     return True
 
 def test_tree() -> bool:
-    print("TODO - implement test for tree")
+    show_tree(tree(Data()))
     return True
 
 def test_sway() -> bool:

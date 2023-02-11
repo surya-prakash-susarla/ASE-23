@@ -1,7 +1,7 @@
 import math
 import json
 import collections
-from globals import global_options, K_SEED, K_DEFAULT_SEED_VALUE, K_FILE
+from globals import *
 from node import Node
 from pathlib import Path
 import copy
@@ -67,4 +67,24 @@ def get_repgrid_file_contents(filepath):
 def last(list_values):
     return list_values[-1]
 
+
+def tree(data, rows = None, above=None):
+    input_rows = rows if rows != None else data.rows
+    here = {}
+    here['data'] = data.clone(input_rows)
+    if len(input_rows) >= (2*(len(data.rows)))**global_options[K_MIN]:
+        left, right, A, B, _, _ = data.half()
+        here['left'] = tree(data, left, A)
+        here['right'] = tree(data, right, B)
+    return here
+
+def show_tree(tree, lvl=0):
+    if tree:
+         print('|'+'.'*level+len(tree['data'].rows), end=' ')
+         if lvl == 0 or not tree['left']:
+             tree['data'].stats()
+         else:
+             print("")
+         show_tree(tree['left'], lvl+1)
+         show_tree(tree['right'], lvl+1)
 
