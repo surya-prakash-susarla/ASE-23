@@ -1,6 +1,6 @@
 from sym import Sym
 from num import Num
-from utils import rand ,rint, rnd, show, get_repgrid_file_contents
+from utils import rand ,rint, rnd, show
 from data import Data, rep_cols , rep_rows, rep_grid, rep_place, transpose
 from csv import get_csv_rows
 from globals import global_options, K_FILE, K_DEFAULT_DATA_FILE

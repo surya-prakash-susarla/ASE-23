@@ -10,17 +10,17 @@ from globals import global_options, K_HELP, K_START_ACTION
 def run_tests() -> int:
     # List of all test and test bodies. Empty string evaluates to running all tests.
     tests = { 
-        'num': test_num,
-        'sym': test_sym,
-        'opt': test_global_options,
-        'copy': test_copy,
-        'repcols': test_rep_cols,
-        'synonyms': test_synonyms,
-        'reprows': test_rep_rows,
-        'prototypes': test_prototypes,
-        'position': test_position,
-        'every': test_every,
-        'custom': custom_test
+             'the': test_global_options,
+             'rand': test_rand,
+             'some': test_some,
+             'clone': test_clone,
+             'dist': test_dist,
+             'cliffs': test_cliffs,
+             'tree': test_tree,
+             'sway': test_sway,
+             'bins': test_bins,
+             'read': test_read_from_csv,
+             'half': test_half
     }
 
     test_runner: TestRunner = TestRunner(tests)
