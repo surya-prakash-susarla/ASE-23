@@ -42,7 +42,11 @@ def test_clone() -> bool:
     return True
 
 def test_dist() -> bool:
-    print("TODO - implement test for dist")
+    data = Data()
+    num = Num()
+    for row in data.rows:
+        num.add(data.dist(row, data.rows[0]))
+    num.print()
     return True
 
 def test_cliffs() -> bool:

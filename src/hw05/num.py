@@ -7,6 +7,8 @@ class Num:
           self.wt = -1
         elif txt and txt[-1] != '-':
           self.wt = 1
+        else:
+          self.wt = 0
         self.at, self.txt = at, txt
         self.n, self.mu, self.m2 =0, 0, 0
         self.max, self.min = -1000000000000000, 1000000000000000
@@ -14,8 +16,8 @@ class Num:
         self.ok = True
 
     def print(self):
-        print_st = "Num at : {}, hi : {}, lo : {}, m2 : {}, mu : {}, txt : {}, w : {}, n : {}"
-        print_st = print_st.format(self.at, self.max, self.min, round(self.m2, 2), round(self.mu, 2), self.txt, self.wt, self.n)
+        print_st = "Num at : {}, hi : {}, lo : {}, m2 : {}, mu : {}, txt : {}, w : {}, n : {}, mid : {}"
+        print_st = print_st.format(self.at, self.max, self.min, round(self.m2, 2), round(self.mu, 2), self.txt, self.wt, self.n, self.mid())
         print(print_st)
     
     def add(self, value):
