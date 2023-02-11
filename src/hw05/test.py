@@ -3,8 +3,8 @@ from num import Num
 from utils import rand ,rint, rnd, show
 from data import Data, rep_cols , rep_rows, rep_grid, rep_place, transpose
 from csv import get_csv_rows
-from globals import global_options, K_FILE, K_DEFAULT_DATA_FILE, K_SEED
 from collections import OrderedDict
+from globals import *
 
 import copy
 
@@ -25,7 +25,12 @@ def test_rand() -> bool:
     return (t==u)
 
 def test_some() -> bool:
-    print("TODO - implement test for some")
+    global_options[K_MAX] = 32
+    num1 = Num()
+    for i in range(1, 10000):
+        num1.add(i)
+    print(num1.has)
+    print('length : ', len(num1.has))
     return True
 
 def test_clone() -> bool:

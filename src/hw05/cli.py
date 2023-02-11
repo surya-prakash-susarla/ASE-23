@@ -42,19 +42,22 @@ def default_cli_options():
     # initialize 'help' to false.
     global_options[K_HELP] = False
 
-    # cluster options initialization
-    global_options[K_FARAWAY] = K_DEFAULT_FARAWAY_VALUE
-    global_options[K_MIN] = K_DEFAULT_MIN_VALUE
+    global_options[K_FAR] = K_FAR_DEFAULT_VALUE
+    global_options[K_MIN] = K_MIN_DEFAULT_VALUE
+    global_options[K_MAX] = K_MAX_DEFAULT_VALUE
+    global_options[K_HALVES] = K_HALVES_DEFAULT_VALUE
+    global_options[K_REST] = K_REST_DEFAULT_VALUE
+    global_options[K_REUSE] = K_REUSE_DEFAULT_VALUE
     global_options[K_DISTANCE_COEF] = K_DEFAULT_DISTANCE_COEF
-    global_options[K_SAMPLE] = K_DEFAULT_SAMPLE_VALUE
+    global_options[K_CLIFFS] = K_CLIFFS_DEFAULT_VALUE
 
 def initialize_from_cli():
     default_cli_options()
     parse_cli_options()
 
 def get_option_key_and_value_requirement(key) -> tuple[str, bool]:
-    full_options_with_value = [K_SEED, K_START_ACTION, K_FILE, K_FARAWAY, K_MIN, K_DISTANCE_COEF, K_SAMPLE]
-    short_options_with_value = ['s', 'g', 'f', 'F', 'm', 'p', 'S']
+    full_options_with_value = [K_SEED, K_START_ACTION, K_FILE, K_BINS, K_CLIFFS, K_FAR, K_HALVES, K_MIN, K_MAX, K_DISTANCE_COEF, K_REST, K_REUSE]
+    short_options_with_value = ['s', 'g', 'f', 'b', 'c', 'F', 'H', 'm', 'M', 'p', 'r', 'R']
     
     key = key[2:] if key[1] == '-' else key[1:]
     

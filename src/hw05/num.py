@@ -1,6 +1,7 @@
-from utils import rnd
+from utils import rnd, rand, rint
+from globals import *
+
 class Num:
-    
     def __init__(self, at=0, txt = ""):
         if txt and txt[-1] == '-':
           self.wt = -1
@@ -9,6 +10,8 @@ class Num:
         self.at, self.txt = at, txt
         self.n, self.mu, self.m2 =0, 0, 0
         self.max, self.min = -1000000000000000, 1000000000000000
+        self.has = []
+        self.ok = True
 
     def print(self):
         print_st = "Num at : {}, hi : {}, lo : {}, m2 : {}, mu : {}, txt : {}, w : {}, n : {}"
@@ -17,12 +20,19 @@ class Num:
     
     def add(self, value):
         if type(value) == int or type(value) == float:
-          self.n+=1
-          d = value-self.mu
-          self.mu += d/self.n
-          self.m2 += d*(value-self.mu)
-          self.min = min(value, self.min)
-          self.max = max(value, self.max)
+            self.n += 1
+            all_count = len(self.has)
+            pos = -1
+            if all_count < global_options[K_MAX]:
+                pos = -2
+            elif rand() < (global_options[K_MAX]/ self.n):
+                pos = rint(0, all_count)
+            if pos == -2 or pos < all_count:
+                if pos == -2:
+                    self.has.append(value)
+                else:
+                    self.has[pos] = value
+                self.ok = False
     
     def mid(self):
         return self.mu
