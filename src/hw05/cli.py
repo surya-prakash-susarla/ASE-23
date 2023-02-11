@@ -5,8 +5,6 @@ from globals import *
 def get_full_option_for_short_version(option) -> str:
     if option == 's':
         return K_SEED
-    elif option == 'S':
-        return K_SAMPLE
     elif option == 'g':
         return K_START_ACTION
     elif option == 'h':
@@ -14,11 +12,23 @@ def get_full_option_for_short_version(option) -> str:
     elif option == 'f':
         return K_FILE
     elif option == 'F':
-        return K_FARAWAY
+        return K_FAR
     elif option == 'm':
         return K_MIN
+    elif option == 'M':
+        return K_MAX
     elif option == 'p':
         return K_DISTANCE_COEF
+    elif option == 'b':
+        return K_BINS
+    elif option == 'c':
+        return K_CLIFFS
+    elif option == 'H':
+        return K_HALVES
+    elif option == 'r':
+        return K_REST
+    elif option == 'R':
+        return K_REUSE
     print("ERROR - UNKNOWN SHORT OPTION : {}".format(option))
     return None
 
