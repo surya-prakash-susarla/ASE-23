@@ -10,8 +10,7 @@ def rnd(n, nPlaces = 3):
     """
     Rounds of the output to nPlaces places.
     """
-    if nPlaces:
-        mult = 10**nPlaces
+    mult = 10**nPlaces
     return math.floor(n*mult+0.5)/mult
 
 def rand( lo = 0, hi=1, default_seed=math.inf):
@@ -73,18 +72,20 @@ def tree(data, rows = None, above=None):
     here = {}
     here['data'] = data.clone(input_rows)
     if len(input_rows) >= (2*(len(data.rows)))**global_options[K_MIN]:
-        left, right, A, B, _, _ = data.half()
+        left, right, A, B, _, _ = data.half(input_rows)
         here['left'] = tree(data, left, A)
         here['right'] = tree(data, right, B)
     return here
 
 def show_tree(tree, lvl=0):
     if tree:
-         print('|'+'.'*level+len(tree['data'].rows), end=' ')
-         if lvl == 0 or not tree['left']:
-             tree['data'].stats()
+         print('|'+'.'*lvl,len(tree['data'].rows), end=' ')
+         if lvl == 0 or len(tree.keys()) == 1:
+             print(tree['data'].stats())
          else:
              print("")
-         show_tree(tree['left'], lvl+1)
-         show_tree(tree['right'], lvl+1)
+         if 'left' in tree:
+             show_tree(tree['left'], lvl+1)
+         if 'right' in tree:
+             show_tree(tree['right'], lvl+1)
 

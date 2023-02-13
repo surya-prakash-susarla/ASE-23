@@ -42,10 +42,10 @@ class Data:
         if cols != None:
             for col in cols:
                 result = self.cols.get_statistic_for_column(col, is_mid)
-                result[1]= col.rnd(result[1],nPlaces)
+                result[1] = col.rnd(result[1], nPlaces)
                 results.append(result)
         else:
-            results = self.cols.get_y_value_statistics(is_mid)
+            results = self.cols.get_y_value_statistics(is_mid, nPlaces)
         return results
 
     def better(self, row_1: Row, row_2: Row):

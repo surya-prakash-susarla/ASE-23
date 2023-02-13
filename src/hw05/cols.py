@@ -45,18 +45,20 @@ class Cols:
         for col in self.x:
             col.add(row.cells[col.at])
 
-    def get_y_value_statistics(self, is_mid):
+    def get_y_value_statistics(self, is_mid, n_places=None):
         result =[]
         for col in self.y :
-            result.append(self.get_statistic_for_column(col,is_mid))
+            result.append(self.get_statistic_for_column(col, is_mid, n_places))
         return result
 
-    def get_statistic_for_column(self, col, is_mid):
+    def get_statistic_for_column(self, col, is_mid, n_places=None):
         val = None
         if (is_mid):
             val = col.mid()
         else:
             val = col.div()
+        if n_places:
+            val = col.rnd(val, n_places)
         return [col.txt, val]
 
 
