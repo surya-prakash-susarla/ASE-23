@@ -9,7 +9,7 @@ jobs:
       matrix:
         # Do not use python versions below 3.9 since type annotations are only supported in Python >= 3.9
         python-version: ["3.9", "3.10"]
-        script: ["src/hw01/script.py -t all", "src/hw02/main.py -g all", "src/hw03/main.py -g all", "src/hw04/main.py -g all"]
+        script: ["src/hw01/script.py -t all", "src/hw02/main.py -g all", "src/hw03/main.py -g all", "src/hw04/main.py -g all", "src/hw05/main.py -g all"]
 
     steps:
       - uses: actions/checkout@v3
