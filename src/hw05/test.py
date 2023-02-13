@@ -89,8 +89,8 @@ def test_half():
     data = Data(global_options[K_FILE])
     left,right,A,B,mid,c = data.half()
     print(len(left), len(right), len(data.rows))
-    print(A,c)
-    print(mid)
-    print(B)
+    print(A.cells,c)
+    print(mid.cells)
+    print(B.cells)
     return True
 
