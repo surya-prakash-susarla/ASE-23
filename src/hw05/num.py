@@ -14,6 +14,7 @@ class Num:
         self.max, self.min = -1000000000000000, 1000000000000000
         self.has = []
         self.ok = True
+        self.isSym=False 
 
     def print(self):
         print_st = "Num at : {}, hi : {}, lo : {}, m2 : {}, mu : {}, txt : {}, w : {}, n : {}, mid : {}"

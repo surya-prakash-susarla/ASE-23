@@ -4,8 +4,10 @@ from globals import *
 from csv import get_csv_rows
 from cols import Cols
 from row import Row
-from utils import rint, cosine, show, get_repgrid_file_contents
+from utils import rint, cosine, show, get_repgrid_file_contents, many  
 from node import Node
+from range import Range
+
 import collections
 class Data:
     def __init__(self, source_file = K_DEFAULT_DATA_FILE, source_rows = None):
@@ -56,8 +58,8 @@ class Data:
         y = None
         l = len(ys)
         for col in ys:
-            x = col.norm(row_1[col.at])
-            y = col.norm(row_2[col.at])
+            x = col.norm(row_1.cells[col.at])
+            y = col.norm(row_2.cells[col.at])
             s1 = s1 - (math.exp(col.wt*((x-y)/l)))
             s2 = s2 - (math.exp(col.wt*((y-x)/l)))
         return (s1/l) < (s2/l)
@@ -103,20 +105,13 @@ class Data:
         mid = right[0]
         return left, right, A, B, mid, c
 
-    def many(self, row):
-        row_len= len(row)
-        temp=[]
-        
-        for i in range(K_DEFAULT_SAMPLE_VALUE):
-            j = rint(0,row_len-1)
-            temp.append(row[j])
-        return temp
+    
 
     def cluster(self, rows = None, min = None, cols = None, above = None):
         if rows == None:
             rows = self.rows
         if min == None:
-            min = len(rows)**K_DEFAULT_MIN_VALUE
+            min = len(rows)**K_MIN_DEFAULT_VALUE
         if cols == None:
             cols = self.cols.x
         node = Node()
@@ -127,26 +122,84 @@ class Data:
             node.right = self.cluster(right, min, cols, node.B)
         return node
 
+    def worker(self, rows, worse=[],above=None):
+        if(len(rows)<(len(self.rows)**K_MIN_DEFAULT_VALUE)):
+             return rows, many(worse, K_REST_DEFAULT_VALUE*len(rows)) 
+        l,r,A,B,_,__ =self.half(rows=rows,above=above)
+        if self.better(B,A):
+            l,r,A,B = r,l,B,A 
+        for row in r :
+            worse.append(row)
+        return self.worker(l,worse,A)
+
     def sway(self, rows=None,min=None,cols=None,above=None):
         if rows == None :
             rows = copy.deepcopy(self.rows)
-        if min == None:
-            min = len(rows)**K_DEFAULT_MIN_VALUE
-        if cols == None:
-            cols = self.cols.x
-        node = Node()
-        node.data =  self.clone(rows)
-        if len(rows)> 2*min:
-            left,right,node.A,node.B,node.mid,c = self.half(rows,cols,above)
-            if (self.better(node.B,node.A)):
-                left,right,node.A,node.B = right,left,node.B,node.A 
-            node.left = self.sway(left,min,cols,node.A)
-        return node
+        best, rest = self.worker(rows,[])
+        return self.clone(best),self.clone(rest)
     
     def furthest(self, row_1, rows=None):
         if rows == None:
             rows = copy.deepcopy(self.rows)
         return self.around(row_1, rows=rows)[-1]
+
+    def bins(self, cols , rowss):
+        out =[]
+        for col in cols:
+            ranges={}
+            for y in range(len(rowss)):
+                for row in rowss[y]:
+                    x=row.cells[col.at]
+                    if x != '?':
+                        k = self.bin(col,x)
+                        if((k in ranges)==False):
+                            ranges[k]=Range(col.at,col.txt,x)
+                            self.extend(ranges[k],x,y)
+            sorted(ranges , key = lambda k : ranges[k].lo)
+
+            # update ranges here using mergeany
+            if col.isSym :
+                out.append(ranges)
+            return out 
+
+
+    def bin(self, col , x):
+        if x=='?' or col.isSym :
+            return x
+        if col.max == col.min:
+            return 1
+        temp = (col.max - col.min)/(K_BINS_DEFAULT_VALUE-1)
+        return math.floor(x/temp +0.5)*temp
+    
+    def extend(self,range , n,s):
+        range.lo = min(n, range.lo)
+        range.hi = max(n, range.hi)
+        self.add(range.y,s)
+        return 
+    def add(self, col, x):
+        print("TO DO ")
+
+def cliffsDelta(ns1, ns2):
+        if(len(ns1)>256):
+            ns1=many(ns1,256)
+        if(len(ns2)>256):
+            ns2=many(ns2,256)
+        if(len(ns1)> 10*len(ns2)):
+            ns1=many(ns1,10*ns1)
+        if(len(ns2)>10*len(ns1)):
+            ns2=many(ns2,10*len(ns1))
+        n=0
+        gt=0
+        lt=0
+        for x in ns1:
+            for y in ns2:
+                n=n+1
+                if x>y:
+                    gt = gt+1
+                elif  y>x:
+                    lt = lt+1
+        return  ((abs(lt-gt))/n) > K_CLIFFS_DEFAULT_VALUE
+
 
 def rep_cols(orig_cols):
     cols = copy.deepcopy(orig_cols)
