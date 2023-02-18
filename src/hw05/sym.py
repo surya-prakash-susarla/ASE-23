@@ -1,11 +1,13 @@
 import collections
 import math
+from globals import *
 class Sym:
     def __init__(self, at=0, txt = ""):
         self.at, self.txt = at, txt
         self.n = 0 #total number of elements in the stream
         self.has = collections.defaultdict(int) #the dictionary which stores values of each alphabet in the stream
         self.most, self.mode = 0, "" # self.mode contains the alphabet which is recurring the highest number of times and self.most is its count
+        self.isSym = True
 
     def print(self):
         has = self.has if len(self.has) > 0 else "{}"
@@ -40,3 +42,12 @@ class Sym:
         elif symbol_1 == symbol_2:
             return 0
         return 1
+    def value(has , nB=1, nR=1, sGoal=True, b=0,r=0):
+        for i in range(len(has)):
+            if i==sGoal :
+                b=b+has[i]
+            else:
+                r=r+has[i]
+        b=b/(nB + 1/HUGE_VALUE)
+        r=r/(nR + 1/HUGE_VALUE)
+        return (b**2)/(b+r)

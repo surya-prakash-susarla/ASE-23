@@ -1,7 +1,7 @@
 from sym import Sym
 from num import Num
-from utils import rand ,rint, rnd, show, show_tree, tree
-from data import Data, rep_cols , rep_rows, rep_grid, rep_place, transpose
+from utils import rand ,rint, rnd, show, show_tree, tree, value
+from data import Data, rep_cols , rep_rows, rep_grid, rep_place, transpose,cliffsDelta
 from csv import get_csv_rows
 from collections import OrderedDict
 from globals import *
@@ -50,7 +50,42 @@ def test_dist() -> bool:
     return True
 
 def test_cliffs() -> bool:
-    print("TODO - implement test for cliffs")
+    if (False == cliffsDelta([8,7,6,2,5,8,7,3],[8,7,6,2,5,8,7,3])):
+        print("False")
+    else:
+        print("1")
+
+    if (True  == cliffsDelta([8,7,6,2,5,8,7,3], [9,9,7,8,10,9,6])):
+        print("True")
+    else:
+        print("2")
+
+    t1=[]
+    t2=[]
+    for i in range(1000):
+        random_number = rand()
+        t1.append(random_number)
+    for i in range(1000):
+        random_number = rand()
+        t2.append(random_number**0.5)
+    
+    if(cliffsDelta(t1,t1)):
+        print("3")
+    else:
+        print("False")
+    if(cliffsDelta(t1,t2)):
+        print("True")
+    else:
+        print("4")
+    diff=False
+    j=1.0
+    while(diff==False):
+        t3=[]
+        for i in t1 :
+            t3.append(i*j)
+        diff = cliffsDelta(t1,t3)
+        print('>',rnd(j),diff)
+        j=j*1.025
     return True
 
 def test_tree() -> bool:
@@ -62,7 +97,22 @@ def test_sway() -> bool:
     return True
 
 def test_bins() -> bool:
-    print("TODO - implement test for bins")
+    data = Data(global_options[K_FILE])
+    best, rest =data.sway()
+    rowss=[]
+    rowss.append(best.rows)
+    rowss.append(rest.rows)
+    b4=None
+    for t in (data.bins(data.cols.x,rowss)):
+        for range in t:
+            if range.txt != b4 :
+                print(" ")
+            b4=range.txt
+            print(range.txt,range.lo,range.hi,rnd(value(range.y.has, len(best.rows), len(rest.rows),"best")),end='')
+            for col in range.y.has:
+                print(col, end=' ')
+            print("\n")
+
     return True
 
 def test_num() -> bool:

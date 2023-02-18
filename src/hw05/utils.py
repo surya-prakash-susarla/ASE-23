@@ -5,6 +5,8 @@ from globals import *
 from node import Node
 from pathlib import Path
 import copy
+from sym import Sym
+ 
 
 def rnd(n, nPlaces = 3):
     """
@@ -89,3 +91,15 @@ def show_tree(tree, lvl=0):
          if 'right' in tree:
              show_tree(tree['right'], lvl+1)
 
+def many(row, new_size):
+        row_len= len(row)
+        temp=[]
+        
+        for i in range(new_size):
+            j = rint(0,row_len-1)
+            temp.append(row[j])
+        return temp
+
+def value (has ,  nB, nR , sGoal , b,r):
+    print("TO DO")
+    return 0
