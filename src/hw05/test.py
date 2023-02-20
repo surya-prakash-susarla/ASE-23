@@ -34,7 +34,7 @@ def test_some() -> bool:
     return True
 
 def test_clone() -> bool:
-    data = Data()
+    data = Data(global_options[K_FILE])
     data2 = data.clone(data.rows)
     print("TODO - CHECK VALUES IN STATS NOT MATCHING WITH OUTPUT")
     print(data.stats())
@@ -42,7 +42,7 @@ def test_clone() -> bool:
     return True
 
 def test_dist() -> bool:
-    data = Data()
+    data = Data(global_options[K_FILE])
     num = Num()
     for row in data.rows:
         num.add(data.dist(row, data.rows[0]))
@@ -97,19 +97,21 @@ def test_sway() -> bool:
     return True
 
 def test_bins() -> bool:
+    print("bins is runniing")
     data = Data(global_options[K_FILE])
     best, rest =data.sway()
-    rowss=[]
-    rowss.append(best.rows)
-    rowss.append(rest.rows)
+    rowss={}
+    rowss['best']= best.rows
+    rowss['rest']= rest.rows
     b4=None
+    
     for t in (data.bins(data.cols.x,rowss)):
-        for range in t:
-            if range.txt != b4 :
+        for k in t:
+            if k.txt != b4 :
                 print(" ")
-            b4=range.txt
-            print(range.txt,range.lo,range.hi,rnd(value(range.y.has, len(best.rows), len(rest.rows),"best")),end='')
-            for col in range.y.has:
+            b4=k.txt
+            print(k.txt,k.lo,k.hi,rnd(value(k.y.has, len(best.rows), len(rest.rows),"best")),end='')
+            for col in k.y.has:
                 print(col, end=' ')
             print("\n")
 

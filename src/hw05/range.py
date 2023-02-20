@@ -7,5 +7,5 @@ class Range:
         self.hi = self.lo
         
         #SYM object
-        self.y = Sym()
+        self.y = Sym(self.at, self.txt)
 

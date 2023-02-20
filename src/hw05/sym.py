@@ -26,10 +26,10 @@ class Sym:
 
     def div(self, value = 0, entropy =0):
         def fun(x):
-            return x*math.log(x,2)
+            return x*math.log(x + 0.0001,2)
         self.entropy = 0
         keys = list(self.has.values())
-        for i in keys:
+        for i in keys: 
             self.entropy += fun(i/self.n)
         return -self.entropy
     

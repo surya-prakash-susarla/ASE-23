@@ -4,7 +4,7 @@ from globals import *
 from csv import get_csv_rows
 from cols import Cols
 from row import Row
-from utils import rint, cosine, show, get_repgrid_file_contents, many  
+from utils import rint, cosine, show, get_repgrid_file_contents, many , rand
 from node import Node
 from range import Range
 
@@ -123,7 +123,7 @@ class Data:
         return node
 
     def worker(self, rows, worse=[],above=None):
-        if(len(rows)<(len(self.rows)**K_MIN_DEFAULT_VALUE)):
+        if(len(rows)<=(len(self.rows)**K_MIN_DEFAULT_VALUE)):
              return rows, many(worse, K_REST_DEFAULT_VALUE*len(rows)) 
         l,r,A,B,_,__ =self.half(rows=rows,above=above)
         if self.better(B,A):
@@ -145,23 +145,76 @@ class Data:
 
     def bins(self, cols , rowss):
         out =[]
-        for col in cols:
+        
+        for col in cols :
             ranges={}
-            for y in range(len(rowss)):
-                for row in rowss[y]:
-                    x=row.cells[col.at]
+            for y in rowss:
+                rows = rowss[y]
+                for row in rows:
+                    x = row.cells[col.at]
                     if x != '?':
                         k = self.bin(col,x)
                         if((k in ranges)==False):
                             ranges[k]=Range(col.at,col.txt,x)
                             self.extend(ranges[k],x,y)
-            sorted(ranges , key = lambda k : ranges[k].lo)
-
-            # update ranges here using mergeany
+            ranges = list(ranges.values())
+            sorted(ranges , key = lambda range : range.lo)
+        
             if col.isSym :
                 out.append(ranges)
-            return out 
+            else:
+                out.append(self.mergeAny(ranges))
+        return out 
 
+
+    def noGaps(self, t):
+        #print("t",t)
+        if t == []:
+            return
+        for j in range(1, len(t)):
+            t[j].lo = t[j-1].hi
+        t[0].lo = -10000000000
+        t[-1].hi = 10000000000
+        return t
+
+    def mergeAny(self, ranges0):
+        ranges1 = []
+        
+        #keys = list(ranges0.keys())
+        j = 0
+        while j < len(ranges0)-1:
+            left, right = ranges0[j], ranges0[j+1]
+            if right:
+                y = self.merge2(left.y, right.y)
+                
+                if y:
+                    j+=1
+                    left.hi, left.y = right.hi, y
+            ranges1.append(left)
+            j+=1
+        ranges1.append(ranges0[-1])
+        if len(ranges0) == len(ranges1):
+            return self.noGaps(ranges0)
+        else:
+            return self.mergeAny(ranges1)
+        
+    def merge2(self, col1, col2):
+        new = self.merge(col1, col2)
+        if new.div() <= (col1.div()*col1.n + col2.div()*col2.n)/new.n:
+            return new
+        return []
+
+    def merge(self, col1, col2):
+        new = copy.deepcopy(col1)
+        if col1.isSym:
+            for x in col2.has:
+                self.add(new, x)
+        else:
+            for x in col2.has:
+                self.add(new, x)
+            new.lo = min(col1.lo, col2.lo)
+            new.hi = max(col1.hi, col2.hi)
+        return new
 
     def bin(self, col , x):
         if x=='?' or col.isSym :
@@ -175,9 +228,26 @@ class Data:
         range.lo = min(n, range.lo)
         range.hi = max(n, range.hi)
         self.add(range.y,s)
-        return 
-    def add(self, col, x):
-        print("TO DO ")
+        
+    def add(self, col, x, n = 1):
+        if x != '?':
+            col.n += n
+            if col.isSym:
+                col.has[x] = n + col.has[x]
+                if col.has[x] > col.most:
+                    col.most, col.mode = col.has[x], x
+            else:
+                col.min, col.max = min(x, col.min), max(x, col.max)
+        
+                all = len(col.has)
+                pos = 0
+                if all < K_MAX_DEFAULT_VALUE:
+                    pos = all+1
+                elif rand() < K_MAX_DEFAULT_VALUE:
+                    pos = rint(1, all)
+                if pos:
+                    col.has[pos] = x
+                    col.ok = False
 
 def cliffsDelta(ns1, ns2):
         if(len(ns1)>256):
