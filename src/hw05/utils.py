@@ -100,6 +100,20 @@ def many(row, new_size):
             temp.append(row[j])
         return temp
 
-def value (has ,  nB, nR , sGoal , b,r):
-    print("TO DO")
+def value (has ,  nB=None, nR=None , sGoal=None):
+    if(sGoal==None):
+        sGoal=True
+    if nB==None:
+        nB=1
+    if nR==None:
+        nR=1
+    b=0
+    r=0
+    for x in has :
+        if x==sGoal :
+            b+=has[x]
+        else:
+            r+=has[x]
+    b=b/(nB+0.0000000001)
+    r=r/(nR+0.0000000001)
     return 0
