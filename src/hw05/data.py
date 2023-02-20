@@ -271,6 +271,12 @@ def cliffsDelta(ns1, ns2):
         return  ((abs(lt-gt))/n) > K_CLIFFS_DEFAULT_VALUE
 
 
+def diffs(nums1, nums2):
+    out = []
+    for k1, k2 in zip(nums1, nums2):
+        out.append(cliffsDelta(k1.has,k2.has))
+    return out
+
 def rep_cols(orig_cols):
     cols = copy.deepcopy(orig_cols)
     for col in cols:

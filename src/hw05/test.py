@@ -5,6 +5,7 @@ from data import Data, rep_cols , rep_rows, rep_grid, rep_place, transpose,cliff
 from csv import get_csv_rows
 from collections import OrderedDict
 from globals import *
+from data import diffs
 
 import copy
 
@@ -93,7 +94,16 @@ def test_tree() -> bool:
     return True
 
 def test_sway() -> bool:
-    print("TODO - implement test for sway")
+    data = Data(global_options[K_FILE])
+    best, rest = data.sway()
+    print("\n all ", data.stats())
+    print("    ",   data.stats(is_mid = False))
+    print("\nbest", best.stats())
+    print("    ",   best.stats(is_mid = False))
+    print("\nrest", rest.stats()) 
+    print("    ",   rest.stats(is_mid = False))
+    print("\n all ~= best?", diffs(best.cols.y, data.cols.y))
+    print("best ~= rest?", diffs(best.cols.y, rest.cols.y))
     return True
 
 def test_bins() -> bool:
