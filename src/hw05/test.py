@@ -97,7 +97,6 @@ def test_sway() -> bool:
     return True
 
 def test_bins() -> bool:
-    print("bins is runniing")
     data = Data(global_options[K_FILE])
     best, rest =data.sway()
     rowss={}
@@ -110,9 +109,9 @@ def test_bins() -> bool:
             if k.txt != b4 :
                 print(" ")
             b4=k.txt
-            print(k.txt,k.lo,k.hi,rnd(value(k.y.has, len(best.rows), len(rest.rows),"best")),end='')
+            print(k.txt,k.lo,k.hi,rnd(value(k.y.has, len(best.rows), len(rest.rows),"best")),end=' ')
             for col in k.y.has:
-                print(col, end=' ')
+                print(col,":",k.y.has[col],end=' ')
             print("\n")
 
     return True

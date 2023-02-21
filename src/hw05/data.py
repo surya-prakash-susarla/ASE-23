@@ -145,9 +145,9 @@ class Data:
 
     def bins(self, cols , rowss):
         out =[]
-        
         for col in cols :
             ranges={}
+            count=0
             for y in rowss:
                 rows = rowss[y]
                 for row in rows:
@@ -156,19 +156,20 @@ class Data:
                         k = self.bin(col,x)
                         if((k in ranges)==False):
                             ranges[k]=Range(col.at,col.txt,x)
-                            self.extend(ranges[k],x,y)
+                        count+=1
+                        self.extend(ranges[k],x,y)
             ranges = list(ranges.values())
-            sorted(ranges , key = lambda range : range.lo)
-        
+            ranges = sorted(ranges , key = lambda range : range.lo)
             if col.isSym :
                 out.append(ranges)
             else:
                 out.append(self.mergeAny(ranges))
+        
         return out 
 
 
     def noGaps(self, t):
-        #print("t",t)
+
         if t == []:
             return
         for j in range(1, len(t)):
@@ -180,7 +181,6 @@ class Data:
     def mergeAny(self, ranges0):
         ranges1 = []
         
-        #keys = list(ranges0.keys())
         j = 0
         while j < len(ranges0)-1:
             left, right = ranges0[j], ranges0[j+1]
@@ -192,7 +192,8 @@ class Data:
                     left.hi, left.y = right.hi, y
             ranges1.append(left)
             j+=1
-        ranges1.append(ranges0[-1])
+        if(j<len(ranges0)):
+            ranges1.append(ranges0[-1])
         if len(ranges0) == len(ranges1):
             return self.noGaps(ranges0)
         else:
@@ -208,10 +209,10 @@ class Data:
         new = copy.deepcopy(col1)
         if col1.isSym:
             for x in col2.has:
-                self.add(new, x)
+                self.add(new, x,col2.has[x])
         else:
             for x in col2.has:
-                self.add(new, x)
+                self.add(new, n=col2.has[x])
             new.lo = min(col1.lo, col2.lo)
             new.hi = max(col1.hi, col2.hi)
         return new
@@ -233,6 +234,7 @@ class Data:
         if x != '?':
             col.n += n
             if col.isSym:
+                
                 col.has[x] = n + col.has[x]
                 if col.has[x] > col.most:
                     col.most, col.mode = col.has[x], x
@@ -243,7 +245,7 @@ class Data:
                 pos = 0
                 if all < K_MAX_DEFAULT_VALUE:
                     pos = all+1
-                elif rand() < K_MAX_DEFAULT_VALUE:
+                elif rand() < K_MAX_DEFAULT_VALUE/col.n:
                     pos = rint(1, all)
                 if pos:
                     col.has[pos] = x

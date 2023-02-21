@@ -4,8 +4,7 @@ class Range:
         self.at = at
         self.txt = txt
         self.lo = x
-        self.hi = self.lo
-        
+        self.hi = x
         #SYM object
         self.y = Sym(self.at, self.txt)
 

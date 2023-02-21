@@ -116,4 +116,4 @@ def value (has ,  nB=None, nR=None , sGoal=None):
             r+=has[x]
     b=b/(nB+0.0000000001)
     r=r/(nR+0.0000000001)
-    return 0
+    return (b*b)/(b+r)
