@@ -71,15 +71,21 @@ def get_option_key_and_value_requirement(key) -> tuple[str, bool]:
 def print_help():
     print('''
     OPTIONS:
-    -d or --dump            -> on crash, dump stack   = false
+    -b or --bins            -> initial number of bins               = 16
+    -c or --cliffs          -> cliff's delta threshold              = .147
+    -d or --dump            -> on crash, dump stack                 = false
     -h or --help            -> Show this message.
-    -F or --Far             -> distance to "faraway"  = .95
+    -F or --Far             -> distance to "faraway"                = .95
     -f or --file            -> Name of file = 'data/auto93.csv'
     -g or --go              -> Default action = 'data'
-    -m or --min             -> stop clusters at N^min = .5
-    -p or --p               -> distance coefficient   = 2
-    -s or --seed            -> random number seed     = 937162211
-    -S or --Sample          -> sampling data size     = 512
+    -m or --min             -> stop clusters at N^min               = .5
+    -M or --Max             -> numbers                              = 512
+    -p or --p               -> distance coefficient                 = 2
+    -s or --seed            -> random number seed                   = 937162211
+    -S or --Sample          -> sampling data size                   = 512
+    -H or --Halves          -> search space for clustering          = 512
+    -r or --rest            -> how many of rest to sample           = 4
+    -R or --Reuse           -> child splits reuse a parent pole     = true
     ''')
 
 def handle_unknown_cli_option():
