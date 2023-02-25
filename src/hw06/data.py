@@ -136,7 +136,7 @@ class Data:
         if rows == None :
             rows = copy.deepcopy(self.rows)
         best, rest = self.worker(rows,[])
-        return self.clone(best),self.clone(rest)
+        return self.clone(best), self.clone(rest)
     
     def furthest(self, row_1, rows=None):
         if rows == None:

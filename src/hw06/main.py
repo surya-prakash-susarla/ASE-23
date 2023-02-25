@@ -20,7 +20,8 @@ def run_tests() -> int:
              'sway': test_sway,
              'bins': test_bins,
              'read': test_read_from_csv,
-             'half': test_half
+             'half': test_half,
+             'xpln': test_xpln
     }
 
     test_runner: TestRunner = TestRunner(tests)

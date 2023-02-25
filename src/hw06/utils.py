@@ -117,3 +117,83 @@ def value (has ,  nB=None, nR=None , sGoal=None):
     b=b/(nB+0.0000000001)
     r=r/(nR+0.0000000001)
     return (b*b)/(b+r)
+
+def prune(rule, maxSize):
+    n = 0
+    for key in rule.keys():
+        n = n+1
+        if len(rule) == maxSize[key]:
+            n = n+1
+            rule[key] = None
+    if n > 0:
+        return rule
+    else:
+        return None
+
+def rule(ranges, maxSize):
+    t = dict()
+    for r in ranges:
+        t[r[txt]]['lo'] = r['lo']
+        t[r[txt]]['hi'] = r['hi']
+    return prune(t, maxSize)
+
+def show_rule(rule):
+    print("TODO - CHECK TYPE OF RANGE TO UPDATE THESE FUNCTIONS")
+    def pretty(rang):
+        return rang['lo'] if rang['hi'] == rang['lo'] else {'hi': rang['hi'], 'lo': rang['lo']}
+    def merge(t0):
+        t, j, left, right = [], 0
+        while j < len(t0):
+            left, right = t0[j], t0[j+1]
+            if right and left['hi'] == right['lo']:
+                left['hi'] = right['hi']
+                j = j+1
+            t.append({'lo': left['lo'], 'hi': left['hi']})
+            j = j+1
+        return t if len(t0) == len(t) else merge(t)
+
+    def merges(attr, ranges):
+        temp = []
+        for i in merge(sorted(ranges, lambda d: d['lo'])):
+            temp.append(pretty(i))
+        return temp, attr
+
+    temp = []
+    for i in rule:
+        temp.append(merges(rule))
+    return temp
+
+def firstN(sorted_list, scoring_function):
+    print("TODO - implement first N function")
+    print("return rule, most")
+    return None
+
+def xpln(data, best, rest):
+    def v(has):
+        return value(has, len(best.rows), len(rest.rows), "best")
+    
+    def score(ranges):
+        r = rule(ranges, maxSize)
+        if r:
+            print(r)
+            bestr = selects(r, best.rows)
+            restr = selects(r, rest.rows)
+            if len(bestr) + len(restr) > 0:
+                temp = dict()
+                temp['best'] = bestr
+                temp['rest'] = restr
+                return [v(temp), r]
+    
+    tmp, maxSizes = [], dict()
+    print("TODO - reimplement bins function for updated params")
+    for ranges in data.bins(data.cols.x, {'best': best.rows, 'rest': rest.rows}):
+        maxSizes[ranges[1].txt] = len(ranges)
+        print("")
+        for r in ranges:
+            print(r.txt, r.lo, r.hi)
+            temp = {'range': r, 'max': len(ranges), 'val': v(range.y.has)}
+            tmp.append(temp)
+    sorted_list = sorted(tmp, key = lambda d: d['val'], reverse=True)
+    r, most = firstN(sort(tmp, gt, "val"), score)
+    return r, most
+

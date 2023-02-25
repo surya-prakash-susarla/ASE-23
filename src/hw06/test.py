@@ -1,6 +1,6 @@
 from sym import Sym
 from num import Num
-from utils import rand ,rint, rnd, show, show_tree, tree, value
+from utils import rand ,rint, rnd, show, show_tree, tree, value, xpln
 from data import Data, rep_cols , rep_rows, rep_grid, rep_place, transpose,cliffsDelta
 from csv import get_csv_rows
 from collections import OrderedDict
@@ -113,7 +113,7 @@ def test_bins() -> bool:
     rowss['best']= best.rows
     rowss['rest']= rest.rows
     b4=None
-    
+     
     for t in (data.bins(data.cols.x,rowss)):
         for k in t:
             if k.txt != b4 :
@@ -153,5 +153,13 @@ def test_half():
     print(A.cells,c)
     print(mid.cells)
     print(B.cells)
+    return True
+
+def test_xpln():
+    data = Data(global_options[K_FILE])
+    print("TODO : evals return value missing from sway")
+    best, rest = data.sway()
+    rule = xpln(data, best, rest)
+    print(rule)
     return True
 
