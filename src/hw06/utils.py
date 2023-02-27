@@ -68,7 +68,6 @@ def get_repgrid_file_contents(filepath):
 def last(list_values):
     return list_values[-1]
 
-
 def tree(data, rows = None, above=None):
     input_rows = rows if rows != None else data.rows
     here = {}
@@ -137,7 +136,7 @@ def rule(ranges, maxSize):
         t[r[txt]]['hi'] = r['hi']
     return prune(t, maxSize)
 
-def show_rule(rule):
+def showRule(rule):
     print("TODO - CHECK TYPE OF RANGE TO UPDATE THESE FUNCTIONS")
     def pretty(rang):
         return rang['lo'] if rang['hi'] == rang['lo'] else {'hi': rang['hi'], 'lo': rang['lo']}
@@ -164,8 +163,10 @@ def show_rule(rule):
     return temp
 
 def firstN(sorted_list, scoring_function):
-    print("TODO - implement first N function")
-    print("return rule, most")
+    print("")
+    print("TODO - IMPLEMENT FIRST N FUNCTION")
+    def print_range(r):
+        print(r)
     return None
 
 def xpln(data, best, rest):
@@ -175,24 +176,21 @@ def xpln(data, best, rest):
     def score(ranges):
         r = rule(ranges, maxSize)
         if r:
-            print(r)
+            showRule(r)
             bestr = selects(r, best.rows)
             restr = selects(r, rest.rows)
             if len(bestr) + len(restr) > 0:
-                temp = dict()
-                temp['best'] = bestr
-                temp['rest'] = restr
-                return [v(temp), r]
+                return v({'best': len(bestr), 'rest': len(restr)}), r
     
-    tmp, maxSizes = [], dict()
+    tmp, maxSizes = [], []
     print("TODO - reimplement bins function for updated params")
     for ranges in data.bins(data.cols.x, {'best': best.rows, 'rest': rest.rows}):
         maxSizes[ranges[1].txt] = len(ranges)
         print("")
         for r in ranges:
-            print(r.txt, r.lo, r.hi)
-            temp = {'range': r, 'max': len(ranges), 'val': v(range.y.has)}
-            tmp.append(temp)
+            print(r['txt'], " ", r['lo'], " ", r['hi'])
+            print("TODO - FIX RANGES BASED ON BINS OUTPUT")
+            tmp.append({'range': r, 'max': len(ranges), 'val': v(range.y.has)})
     sorted_list = sorted(tmp, key = lambda d: d['val'], reverse=True)
     r, most = firstN(sort(tmp, gt, "val"), score)
     return r, most

@@ -5,6 +5,8 @@ from globals import *
 def get_full_option_for_short_version(option) -> str:
     if option == 's':
         return K_SEED
+    elif option == 'd':
+        return K_D
     elif option == 'g':
         return K_START_ACTION
     elif option == 'h':
@@ -50,14 +52,15 @@ def default_cli_options():
     global_options[K_REUSE] = K_REUSE_DEFAULT_VALUE
     global_options[K_DISTANCE_COEF] = K_DEFAULT_DISTANCE_COEF
     global_options[K_CLIFFS] = K_CLIFFS_DEFAULT_VALUE
+    global_options[K_D] = K_D_DEFAULT_VALUE
 
 def initialize_from_cli():
     default_cli_options()
     parse_cli_options()
 
 def get_option_key_and_value_requirement(key) -> tuple[str, bool]:
-    full_options_with_value = [K_SEED, K_START_ACTION, K_FILE, K_BINS, K_CLIFFS, K_FAR, K_HALVES, K_MIN, K_MAX, K_DISTANCE_COEF, K_REST, K_REUSE]
-    short_options_with_value = ['s', 'g', 'f', 'b', 'c', 'F', 'H', 'm', 'M', 'p', 'r', 'R']
+    full_options_with_value = [K_SEED, K_D, K_START_ACTION, K_FILE, K_BINS, K_CLIFFS, K_FAR, K_HALVES, K_MIN, K_MAX, K_DISTANCE_COEF, K_REST, K_REUSE]
+    short_options_with_value = ['s', 'g', 'd', 'f', 'b', 'c', 'F', 'H', 'm', 'M', 'p', 'r', 'R']
     
     key = key[2:] if key[1] == '-' else key[1:]
     
@@ -73,7 +76,7 @@ def print_help():
     OPTIONS:
     -b or --bins            -> initial number of bins               = 16
     -c or --cliffs          -> cliff's delta threshold              = .147
-    -d or --dump            -> on crash, dump stack                 = false
+    -d or --d               -> different is over sd*d               = .35
     -h or --help            -> Show this message.
     -F or --Far             -> distance to "faraway"                = .95
     -f or --file            -> Name of file = 'data/auto93.csv'

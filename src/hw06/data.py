@@ -80,32 +80,32 @@ class Data:
         return sorted(rows, key=lambda row: self.dist(row_1, row))
 
     def half(self,  rows=None, cols=None, above=None):
+        left = []
+        right = []
+        def gap(r1, r2):
+            return self.dist(r1, r2, cols)
+        def cos(a, b, c):
+            return (a*a + c*c - b*b) / (2*c)
+        def proj(r):
+            return {'row': r, 'x': cos(gap(r, A), gap(r, B), c)}
         if rows == None:
-            rows = copy.deepcopy(self.rows)
-        A = above if above != None else rows[rint(0,len(rows))]
-        B = self.furthest(A, rows)
-        c = self.dist(A,B,cols)
-
-        # project lambda
-        def project(row):
-            x, y = cosine(self.dist(row, A, cols), self.dist(row, B, cols), c)
-            row.x = x if row.x == None else row.x
-            row.y = y if row.y == None else row.y
-            return x
-
-        rows = sorted(rows, key = lambda row: project(row))
-
-        left=[]
-        right=[]
-        for i in range (len(rows)):
-            if i < len(rows)//2:
-                left.append(rows[i])
+            rows = self.rows
+        some = many(rows, global_options[K_HALVES])
+        A = above if global_options[K_REUSE] else some[rint(0, len(some)-1)]
+        tmp = [{'row': r, 'd': gap(r, A)} for r in some]
+        tmp = sorted(tmp, key = lambda d: d['d'])
+        far = tmp[(len(tmp)*global_options[K_FAR])//1]
+        B, c = far['row'], far['d']
+        
+        temp2 = [proj(r) for r in rows]
+        temp2 = sorted(temp2, key=lambda d: d['x'])
+        for i in range(len(temp2)):
+            if i <= len(rows)/2:
+                left.append(temp[i]['row'])
             else:
-                right.append(rows[i])
-        mid = right[0]
-        return left, right, A, B, mid, c
-
-    
+                right.append(temp[i]['row'])
+        evals = 1 if global_options[K_REUSE] and above else 2
+        return left, right, A, B, c, evals
 
     def cluster(self, rows = None, min = None, cols = None, above = None):
         if rows == None:
@@ -122,21 +122,21 @@ class Data:
             node.right = self.cluster(right, min, cols, node.B)
         return node
 
-    def worker(self, rows, worse=[],above=None):
-        if(len(rows)<=(len(self.rows)**K_MIN_DEFAULT_VALUE)):
-             return rows, many(worse, K_REST_DEFAULT_VALUE*len(rows)) 
-        l,r,A,B,_,__ =self.half(rows=rows,above=above)
+    def worker(self, rows, worse=[], evals0=None, above=None):
+        if(len(rows)<=(len(self.rows)**global_options[k_MIN])):
+             return rows, many(worse, global_options[K_REST]*len(rows)), evals0 
+        l,r,A,B, c, evals = self.half(rows=rows,above=above)
         if self.better(B,A):
             l,r,A,B = r,l,B,A 
         for row in r :
             worse.append(row)
-        return self.worker(l,worse,A)
+        return self.worker(l,worse, evals+evals0, A)
 
     def sway(self, rows=None,min=None,cols=None,above=None):
         if rows == None :
             rows = copy.deepcopy(self.rows)
-        best, rest = self.worker(rows,[])
-        return self.clone(best), self.clone(rest)
+        best, rest, evals = self.worker(rows,[], evals0=0)
+        return self.clone(best), self.clone(rest), evals
     
     def furthest(self, row_1, rows=None):
         if rows == None:
@@ -144,32 +144,31 @@ class Data:
         return self.around(row_1, rows=rows)[-1]
 
     def bins(self, cols , rowss):
-        out =[]
-        for col in cols :
-            ranges={}
-            count=0
-            for y in rowss:
-                rows = rowss[y]
-                for row in rows:
-                    x = row.cells[col.at]
-                    if x != '?':
-                        k = self.bin(col,x)
-                        if((k in ranges)==False):
-                            ranges[k]=Range(col.at,col.txt,x)
-                        count+=1
-                        self.extend(ranges[k],x,y)
-            ranges = list(ranges.values())
-            ranges = sorted(ranges , key = lambda range : range.lo)
-            if col.isSym :
-                out.append(ranges)
+        def with1col(col):
+            n, ranges = withAllRows(col)
+            ranges = sorted(ranges, key=lambda d: d['lo'])
+            if isinstance(col, 'Sym'):
+                return ranges
             else:
-                out.append(self.mergeAny(ranges))
-        
-        return out 
-
+                print("TODO - IMPLEMENT MERGES FUNCTION")
+                return merges(ranges, n/global_options[K_BINS], global_options[K_D]*col.div())
+        def withAllRows(col):
+            def xy(x, y):
+                if x:
+                    n = n+1
+                    print("TODO - IMPLEMENT 'BIN'")
+                    k = bin(col, x)
+                    ranges[k] = ranges[k] or range(col.at, col.txt, x)
+                    print("TODO - IMPLEMENT EXTENDS")
+                    extend(ranges[k], x, y)
+            n, ranges = 0, []
+            for y, rows in rowss:
+                for row in rows:
+                    xy(row[col.at], y)
+            return n, ranges
+        return [with1col(col) for col in cols]
 
     def noGaps(self, t):
-
         if t == []:
             return
         for j in range(1, len(t)):
