@@ -123,7 +123,7 @@ class Data:
         return node
 
     def worker(self, rows, worse=[], evals0=None, above=None):
-        if(len(rows)<=(len(self.rows)**global_options[k_MIN])):
+        if(len(rows)<=(len(self.rows)**global_options[K_MIN])):
              return rows, many(worse, global_options[K_REST]*len(rows)), evals0 
         l,r,A,B, c, evals = self.half(rows=rows,above=above)
         if self.better(B,A):

@@ -169,6 +169,10 @@ def firstN(sorted_list, scoring_function):
         print(r)
     return None
 
+def selects(rule, rows):
+    print("TODO - IMPLEMENT SELECTS")
+    return None
+
 def xpln(data, best, rest):
     def v(has):
         return value(has, len(best.rows), len(rest.rows), "best")
