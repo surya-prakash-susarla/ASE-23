@@ -91,19 +91,19 @@ class Data:
         if rows == None:
             rows = self.rows
         some = many(rows, global_options[K_HALVES])
-        A = above if global_options[K_REUSE] else some[rint(0, len(some)-1)]
+        A = above if global_options[K_REUSE] and above != None else some[rint(0, len(some)-1)]
         tmp = [{'row': r, 'd': gap(r, A)} for r in some]
         tmp = sorted(tmp, key = lambda d: d['d'])
-        far = tmp[(len(tmp)*global_options[K_FAR])//1]
+        far = tmp[(int)(len(tmp)*global_options[K_FAR])//1]
         B, c = far['row'], far['d']
         
         temp2 = [proj(r) for r in rows]
         temp2 = sorted(temp2, key=lambda d: d['x'])
         for i in range(len(temp2)):
             if i <= len(rows)/2:
-                left.append(temp[i]['row'])
+                left.append(temp2[i]['row'])
             else:
-                right.append(temp[i]['row'])
+                right.append(temp2[i]['row'])
         evals = 1 if global_options[K_REUSE] and above else 2
         return left, right, A, B, c, evals
 
@@ -153,18 +153,21 @@ class Data:
                 print("TODO - IMPLEMENT MERGES FUNCTION")
                 return merges(ranges, n/global_options[K_BINS], global_options[K_D]*col.div())
         def withAllRows(col):
-            def xy(x, y):
+            n, ranges = 0, []
+            def xy(x, y, n):
                 if x:
                     n = n+1
-                    print("TODO - IMPLEMENT 'BIN'")
-                    k = bin(col, x)
-                    ranges[k] = ranges[k] or range(col.at, col.txt, x)
+                    print("TODO - CHECK IF 'BIN' needs to change")
+                    k = self.bin(col, x)
+                    k = (int)(k)
+                    ranges[k] = ranges[k] if k < len(ranges) else range(col.at, col.txt, x)
                     print("TODO - IMPLEMENT EXTENDS")
                     extend(ranges[k], x, y)
-            n, ranges = 0, []
-            for y, rows in rowss:
-                for row in rows:
-                    xy(row[col.at], y)
+                    return n
+            print("rowss : ", rowss)
+            for key in rowss.keys():
+                for row in rowss[key]:
+                    n = xy(row.cells[col.at], key, n)
             return n, ranges
         return [with1col(col) for col in cols]
 

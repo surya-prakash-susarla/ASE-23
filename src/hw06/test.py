@@ -157,8 +157,7 @@ def test_half():
 
 def test_xpln():
     data = Data(global_options[K_FILE])
-    print("TODO : evals return value missing from sway")
-    best, rest = data.sway()
+    best, rest, evals = data.sway()
     rule = xpln(data, best, rest)
     showRule(rule)
     return True
