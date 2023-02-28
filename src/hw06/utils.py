@@ -199,3 +199,11 @@ def xpln(data, best, rest):
     r, most = firstN(sort(tmp, gt, "val"), score)
     return r, most
 
+def extend(range, n, s):
+    print("TODO - IMPLEMENT EXTEND")
+    return None
+
+def merges(ranges0, nSmall, nFar):
+    print("TODO - IMPLEMENT MERGES")
+    return None
+

@@ -4,9 +4,10 @@ from globals import *
 from csv import get_csv_rows
 from cols import Cols
 from row import Row
-from utils import rint, cosine, show, get_repgrid_file_contents, many , rand
+from utils import rint, cosine, show, get_repgrid_file_contents, many , rand, extend, merges
 from node import Node
 from range import Range
+from sym import Sym
 
 import collections
 class Data:
@@ -146,11 +147,13 @@ class Data:
     def bins(self, cols , rowss):
         def with1col(col):
             n, ranges = withAllRows(col)
-            ranges = sorted(ranges, key=lambda d: d['lo'])
-            if isinstance(col, 'Sym'):
+            ranges = sorted(ranges, key=lambda d: d.lo)
+            if isinstance(col, Sym):
                 return ranges
             else:
                 print("TODO - IMPLEMENT MERGES FUNCTION")
+                print("global options : ")
+                print(global_options)
                 return merges(ranges, n/global_options[K_BINS], global_options[K_D]*col.div())
         def withAllRows(col):
             n, ranges = 0, []
@@ -160,11 +163,13 @@ class Data:
                     print("TODO - CHECK IF 'BIN' needs to change")
                     k = self.bin(col, x)
                     k = (int)(k)
-                    ranges[k] = ranges[k] if k < len(ranges) else range(col.at, col.txt, x)
+                    if k < len(ranges):
+                        ranges[k] = ranges[k]
+                    else:
+                        ranges.append(Range(col.at, col.txt, x))
                     print("TODO - IMPLEMENT EXTENDS")
-                    extend(ranges[k], x, y)
+                    extend(ranges[k] if k < len(ranges) else ranges[-1], x, y)
                     return n
-            print("rowss : ", rowss)
             for key in rowss.keys():
                 for row in rowss[key]:
                     n = xy(row.cells[col.at], key, n)
