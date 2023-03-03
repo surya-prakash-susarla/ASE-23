@@ -147,27 +147,25 @@ class Data:
     def bins(self, cols , rowss):
         def with1col(col):
             n, ranges = withAllRows(col)
-            ranges = sorted(ranges, key=lambda d: d.lo)
+            ranges = sorted(ranges, key=lambda d: d.min)
             if isinstance(col, Sym):
                 return ranges
             else:
-                print("TODO - IMPLEMENT MERGES FUNCTION")
                 print("global options : ")
                 print(global_options)
                 return merges(ranges, n/global_options[K_BINS], global_options[K_D]*col.div())
         def withAllRows(col):
             n, ranges = 0, []
             def xy(x, y, n):
+                print(y)
                 if x:
                     n = n+1
-                    print("TODO - CHECK IF 'BIN' needs to change")
                     k = self.bin(col, x)
                     k = (int)(k)
                     if k < len(ranges):
                         ranges[k] = ranges[k]
                     else:
                         ranges.append(Range(col.at, col.txt, x))
-                    print("TODO - IMPLEMENT EXTENDS")
                     extend(ranges[k] if k < len(ranges) else ranges[-1], x, y)
                     return n
             for key in rowss.keys():
@@ -176,87 +174,17 @@ class Data:
             return n, ranges
         return [with1col(col) for col in cols]
 
-    def noGaps(self, t):
-        if t == []:
-            return
-        for j in range(1, len(t)):
-            t[j].lo = t[j-1].hi
-        t[0].lo = -10000000000
-        t[-1].hi = 10000000000
-        return t
-
-    def mergeAny(self, ranges0):
-        ranges1 = []
-        
-        j = 0
-        while j < len(ranges0)-1:
-            left, right = ranges0[j], ranges0[j+1]
-            if right:
-                y = self.merge2(left.y, right.y)
-                
-                if y:
-                    j+=1
-                    left.hi, left.y = right.hi, y
-            ranges1.append(left)
-            j+=1
-        if(j<len(ranges0)):
-            ranges1.append(ranges0[-1])
-        if len(ranges0) == len(ranges1):
-            return self.noGaps(ranges0)
-        else:
-            return self.mergeAny(ranges1)
-        
-    def merge2(self, col1, col2):
-        new = self.merge(col1, col2)
-        if new.div() <= (col1.div()*col1.n + col2.div()*col2.n)/new.n:
-            return new
-        return []
-
-    def merge(self, col1, col2):
-        new = copy.deepcopy(col1)
-        if col1.isSym:
-            for x in col2.has:
-                self.add(new, x,col2.has[x])
-        else:
-            for x in col2.has:
-                self.add(new, n=col2.has[x])
-            new.lo = min(col1.lo, col2.lo)
-            new.hi = max(col1.hi, col2.hi)
-        return new
-
     def bin(self, col , x):
-        if x=='?' or col.isSym :
+        if x=='?' or isinstance(col, Sym) :
             return x
         if col.max == col.min:
             return 1
         temp = (col.max - col.min)/(K_BINS_DEFAULT_VALUE-1)
         return math.floor(x/temp +0.5)*temp
     
-    def extend(self,range , n,s):
-        range.lo = min(n, range.lo)
-        range.hi = max(n, range.hi)
-        self.add(range.y,s)
+    
         
-    def add(self, col, x, n = 1):
-        if x != '?':
-            col.n += n
-            if col.isSym:
-                
-                col.has[x] = n + col.has[x]
-                if col.has[x] > col.most:
-                    col.most, col.mode = col.has[x], x
-            else:
-                col.min, col.max = min(x, col.min), max(x, col.max)
-        
-                all = len(col.has)
-                pos = 0
-                if all < K_MAX_DEFAULT_VALUE:
-                    pos = all+1
-                elif rand() < K_MAX_DEFAULT_VALUE/col.n:
-                    pos = rint(1, all)
-                if pos:
-                    col.has[pos] = x
-                    col.ok = False
+    
 
 def cliffsDelta(ns1, ns2):
         if(len(ns1)>256):
