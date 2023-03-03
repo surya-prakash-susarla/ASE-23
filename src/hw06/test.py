@@ -160,6 +160,7 @@ def test_xpln():
     best, rest, evals = data.sway()
     #rule = xpln(data, best, rest)
     #showRule(rule)
+    
     print("TODO: debug xpln ")
     return True
 
