@@ -140,6 +140,7 @@ def showRule(rule):
     def pretty(rang):
         return rang.min if rang.max == rang.min else {'max': rang.max, 'min': rang.min}
     def merge(t0):
+        
         t, j, left, right = [], 0,None,None
         
         while j+1 < len(t0):
