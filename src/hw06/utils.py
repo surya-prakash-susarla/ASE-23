@@ -119,11 +119,11 @@ def value (has ,  nB=None, nR=None , sGoal=None):
 
 def prune(rule, maxSize):
     n = 0
-    for key in rule.keys():
+    for txt in rule:
         n = n+1
-        if len(rule) == maxSize[key]:
+        if len(rule[txt]) == maxSize[txt]:
             n = n+1
-            rule[key] = None
+            rule[txt] = None
     if n > 0:
         return rule
     else:
@@ -132,30 +132,37 @@ def prune(rule, maxSize):
 def rule(ranges, maxSize):
     t = dict()
     for r in ranges:
-        t[r[txt]]['lo'] = r['lo']
-        t[r[txt]]['hi'] = r['hi']
+        t[r.txt] = {'max': r.max, 'min': r.min,'at':r.at}
     return prune(t, maxSize)
 
 def showRule(rule):
-    print("TODO - CHECK TYPE OF RANGE TO UPDATE THESE FUNCTIONS")
+    print("inside show rule",rule)
     def pretty(rang):
-        return rang['lo'] if rang['hi'] == rang['lo'] else {'hi': rang['hi'], 'lo': rang['lo']}
+        return rang.min if rang.max == rang.min else {'max': rang.max, 'min': rang.min}
     def merge(t0):
-        t, j, left, right = [], 0
-        while j < len(t0):
+        
+        t, j, left, right = [], 0,None,None
+        
+        while j+1 < len(t0):
             left, right = t0[j], t0[j+1]
-            if right and left['hi'] == right['lo']:
-                left['hi'] = right['hi']
+            if right and left.max == right.min:
+                left.max = right.max
                 j = j+1
-            t.append({'lo': left['lo'], 'hi': left['hi']})
+            t.append({'min': left.min, 'max': left.max})
             j = j+1
+        if j< len(t0):
+            t.append({'min': t0[j].min, 'max': t0[j].max})
         return t if len(t0) == len(t) else merge(t)
 
-    def merges(attr, ranges):
+    def merges( ranges):
+        print("TODO: resolve attr")
         temp = []
-        for i in merge(sorted(ranges, lambda d: d['lo'])):
+        print("\n\n ranges in merges:", ranges)
+        if (len(ranges)>=2):
+            ranges = sorted(ranges, lambda d: d['min'])
+        for i in merge(ranges):
             temp.append(pretty(i))
-        return temp, attr
+        return temp
 
     temp = []
     for i in rule:
@@ -164,21 +171,59 @@ def showRule(rule):
 
 def firstN(sorted_list, scoring_function):
     print("")
-    print("TODO - IMPLEMENT FIRST N FUNCTION")
     def print_range(r):
         print(r)
-    return None
+    print_range(sorted_list)
+    
+    first  = sorted_list[0]['val']
+    
+    def useful(ranges):
+        if ranges['val'] >0.05 and ranges['val'] > first/10 :
+            return ranges
+    sorted_ranges= []
+    for ranges in sorted_list:
+        if(useful(ranges)):
+            sorted_ranges.append(ranges) 
+    most,out =-1,None
+    n= 1
+    new_sorted_range=[]
+    while n <= len(sorted_ranges):
+        new_sorted_range.append(sorted_ranges[n-1]['range'])
+        tmp,rule = scoring_function(new_sorted_range), None 
+        if tmp and tmp>most :
+            out , most  = rule, tmp
+        n+=1
+    return out, most
 
 def selects(rule, rows):
-    print("TODO - IMPLEMENT SELECTS")
-    return None
+    def disjunction(ranges, row):
+        for range in ranges:
+            lo,hi,at = range.min,range.max,range.at
+            x = row[at]
+            if x=='?':
+                return True
+            if lo == hi and lo == x :
+                return True
+            if lo<=x and x<hi:
+                return True
+        return False
+    def conjunction(row):
+        for ranges in rule :
+            if not disjunction(ranges,row) :
+                return False
+        return True
+    selected_rows=[]
+    for row in rows :
+        if(conjunction(row)):
+            selected_rows.append(row)
+    return selected_rows
 
 def xpln(data, best, rest):
     def v(has):
         return value(has, len(best.rows), len(rest.rows), "best")
     
     def score(ranges):
-        r = rule(ranges, maxSize)
+        r = rule(ranges, maxSizes)
         if r:
             showRule(r)
             bestr = selects(r, best.rows)
@@ -186,24 +231,90 @@ def xpln(data, best, rest):
             if len(bestr) + len(restr) > 0:
                 return v({'best': len(bestr), 'rest': len(restr)}), r
     
-    tmp, maxSizes = [], []
-    print("TODO - reimplement bins function for updated params")
+    tmp, maxSizes = [], {}
     for ranges in data.bins(data.cols.x, {'best': best.rows, 'rest': rest.rows}):
-        maxSizes[ranges[1].txt] = len(ranges)
+        maxSizes[ranges[0].txt] = len(ranges)
         print("")
         for r in ranges:
-            print(r['txt'], " ", r['lo'], " ", r['hi'])
-            print("TODO - FIX RANGES BASED ON BINS OUTPUT")
-            tmp.append({'range': r, 'max': len(ranges), 'val': v(range.y.has)})
+            print(r.txt, " ", r.min, " ", r.max)
+            tmp.append({'range': r, 'max': len(ranges), 'val': v(r.y.has)})
     sorted_list = sorted(tmp, key = lambda d: d['val'], reverse=True)
-    r, most = firstN(sort(tmp, gt, "val"), score)
+    r, most = firstN(sorted_list, score)
     return r, most
 
-def extend(range, n, s):
-    print("TODO - IMPLEMENT EXTEND")
-    return None
+def add(col, x, n = 1):
+        def sym_(col,x,n):
+            col.has[x]+=n
+            if(col.has[x]>col.most):
+                col.most = col.has[x]
+                col.mode = x
+            return col
+        def num_(col,x):
+            col.min = min(x,col.min)
+            col.max = max(x,col.max)
+            if( len(col.has)< K_MAX_DEFAULT_VALUE):
+                col.ok= False 
+                col.has.append(x)
+            elif(rand() < K_MAX_DEFAULT_VALUE/col.n) :
+                col.ok= False
+                col.has[rint(0,len(col.has))]=x
+        if x!='?':
+            col.n +=n
+            if isinstance(col, Sym):
+                return sym_(col,x,n)
+            else:
+                return num_(col,x)
+
+def extend(range , n,s):
+        range.min = min(n, range.min)
+        range.max = max(n, range.max)
+        add(range.y,s)
+
+def merge(col1, col2):
+        new = copy.deepcopy(col1)
+        if isinstance(col1, Sym):
+            for x in col2.has:
+                add(new, x,col2.has[x])
+        else:
+            for x in col2.has:
+                add(new, col2.has[x])
+            new.min = min(col1.min, col2.min)
+            new.max = max(col1.max, col2.max)
+        return new
+
+def merged(col1, col2 ,nSmall , nFar):
+    new  = merge(col1, col2)
+    if (nSmall and col1.n< nSmall) or col2.n < nSmall :
+        return new
+    if nFar and (not isinstance(col1, Sym)) and abs(col1.mid-col2.mid)<nFar :
+        return new
+    if new.div() <= (col1.div()*col1.n + col2.div()*col2.n)/new.n:
+        return new
 
 def merges(ranges0, nSmall, nFar):
-    print("TODO - IMPLEMENT MERGES")
-    return None
+    def noGaps(t):
+        if t == []:
+            return
+        for j in range(1, len(t)):
+            t[j].min = t[j-1].max
+        t[0].min = -10000000000
+        t[-1].max = 10000000000
+        return t
+    def try2merge(left, right,j):
+        y = merged(left.y,right.y,nSmall,nFar)
+        if y :
+            j+=1
+            left.max  = right.max
+            left.y = y
+        return j,left
+    ranges1,j,here = [],0,None
+    while j< len(ranges0):
+        here = ranges0[j]
+        if j+1< len(ranges0):
+            j, here = try2merge(here, ranges0[j+1],j)
+        j+=1
+        ranges1.append(here)
+    if len(ranges0) == len(ranges1):
+        return noGaps(ranges0)
+    return merges(ranges1,nSmall,nFar)
 
