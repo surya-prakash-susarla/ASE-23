@@ -95,7 +95,7 @@ def test_tree() -> bool:
 
 def test_sway() -> bool:
     data = Data(global_options[K_FILE])
-    best, rest = data.sway()
+    best, rest, evals = data.sway()
     print("\n all ", data.stats())
     print("    ",   data.stats(is_mid = False))
     print("\nbest", best.stats())
@@ -108,7 +108,7 @@ def test_sway() -> bool:
 
 def test_bins() -> bool:
     data = Data(global_options[K_FILE])
-    best, rest =data.sway()
+    best, rest, evals =data.sway()
     rowss={}
     rowss['best']= best.rows
     rowss['rest']= rest.rows
@@ -119,7 +119,7 @@ def test_bins() -> bool:
             if k.txt != b4 :
                 print(" ")
             b4=k.txt
-            print(k.txt,k.lo,k.hi,rnd(value(k.y.has, len(best.rows), len(rest.rows),"best")),end=' ')
+            print(k.txt,k.min,k.max,rnd(value(k.y.has, len(best.rows), len(rest.rows),"best")),end=' ')
             for col in k.y.has:
                 print(col,":",k.y.has[col],end=' ')
             print("\n")
@@ -158,9 +158,11 @@ def test_half():
 def test_xpln():
     data = Data(global_options[K_FILE])
     best, rest, evals = data.sway()
-    #rule = xpln(data, best, rest)
-    #showRule(rule)
+    rule, most = xpln(data, best, rest)
+    print('*'*10)
+    print("rule from xpln : ", rule)
+    showRule(rule)
     
-    print("TODO: debug xpln ")
+    #print("TODO: debug xpln ")
     return True
 

@@ -151,13 +151,13 @@ class Data:
             if isinstance(col, Sym):
                 return ranges
             else:
-                print("global options : ")
-                print(global_options)
+                # print("global options : ")
+                # print(global_options)
                 return merges(ranges, n/global_options[K_BINS], global_options[K_D]*col.div())
         def withAllRows(col):
             n, ranges = 0, []
             def xy(x, y, n):
-                print(y)
+                # print(y)
                 if x:
                     n = n+1
                     k = self.bin(col, x)
