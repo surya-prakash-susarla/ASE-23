@@ -1,0 +1,212 @@
+python  main.py -g the
+Running test :  the
+{'seed': 937162211, 'go': 'the', 'file': '../../../etc/data/auto93.csv', 'help': False, 'far': 0.95, 'min': 0.5, 'max': 512, 'halves': 512, 'rest': 4, 'reuse': True, 'p': 2, 'cliffs': 0.147, 'd': 0.35, 'bins': 16}
+Result : ✅
+
+
+
+python  main.py -g rand
+Running test :  rand
+Result : ✅
+
+
+
+python  main.py -g some
+Running test :  some
+[940, 7228, 3299, 3247, 5863, 4570, 3494, 6147, 3290, 8311, 7517, 2228, 9189, 9052, 1964, 3061, 7574, 7955, 6440, 4168, 5957, 4882, 3722, 9323, 4495, 8379, 2324, 5030, 8505, 8538, 1545, 9999]
+length :  32
+Result : ✅
+
+
+
+python  main.py -g clone
+Running test :  clone
+[['Lbs-', 2970.42], ['Acc+', 15.57], ['Mpg+', 23.84]]
+[['Lbs-', 2970.42], ['Acc+', 15.57], ['Mpg+', 23.84]]
+Result : ✅
+
+
+
+python  main.py -g dist 
+Running test :  dist
+Num at : 0, hi : 0.8746488290766207, lo : 0.0, m2 : 24.49, mu : 0.5, txt : , w : 0, n : 398, mid : 0.5005987126678597
+Result : ✅
+
+
+
+python  main.py -g cliffs
+Running test :  cliffs
+False
+True
+False
+True
+> 1.0 False
+> 1.025 False
+> 1.051 False
+> 1.077 False
+> 1.104 False
+> 1.131 True
+Result : ✅
+
+
+
+python  main.py -g tree
+Running test :  tree
+| 398 [['Lbs-', 2970.42], ['Acc+', 15.57], ['Mpg+', 23.84]]
+|. 200 
+|.. 101 
+|... 51 
+|.... 26 [['Lbs-', 2018.73], ['Acc+', 16.87], ['Mpg+', 35.0]]
+|.... 25 [['Lbs-', 2408.88], ['Acc+', 15.52], ['Mpg+', 30.0]]
+|... 50 
+|.... 26 [['Lbs-', 2223.0], ['Acc+', 16.15], ['Mpg+', 25.77]]
+|.... 24 [['Lbs-', 2377.58], ['Acc+', 15.79], ['Mpg+', 29.17]]
+|.. 99 
+|... 50 
+|.... 26 [['Lbs-', 2350.54], ['Acc+', 17.06], ['Mpg+', 25.38]]
+|.... 24 [['Lbs-', 2367.17], ['Acc+', 16.94], ['Mpg+', 25.42]]
+|... 49 
+|.... 25 [['Lbs-', 2238.64], ['Acc+', 17.21], ['Mpg+', 33.6]]
+|.... 24 [['Lbs-', 2700.29], ['Acc+', 16.12], ['Mpg+', 25.83]]
+|. 198 
+|.. 100 
+|... 51 
+|.... 26 [['Lbs-', 4187.12], ['Acc+', 12.92], ['Mpg+', 12.69]]
+|.... 25 [['Lbs-', 4286.92], ['Acc+', 11.0], ['Mpg+', 12.4]]
+|... 49
+|.... 25 [['Lbs-', 3976.56], ['Acc+', 13.84], ['Mpg+', 19.6]]
+|.... 24 [['Lbs-', 4082.25], ['Acc+', 13.52], ['Mpg+', 14.58]]
+|.. 98
+|... 50
+|.... 26 [['Lbs-', 3202.73], ['Acc+', 16.28], ['Mpg+', 21.92]]
+|.... 24 [['Lbs-', 2607.13], ['Acc+', 16.49], ['Mpg+', 30.0]]
+|... 48
+|.... 25 [['Lbs-', 3398.44], ['Acc+', 17.54], ['Mpg+', 20.0]]
+|.... 23 [['Lbs-', 3118.78], ['Acc+', 15.83], ['Mpg+', 20.0]]
+Result : ✅
+
+
+
+python  main.py -g sway  
+Running test :  sway
+
+ all  [['Lbs-', 2970.42], ['Acc+', 15.57], ['Mpg+', 23.84]]
+     [['Lbs-', 846.84], ['Acc+', 2.76], ['Mpg+', 8.34]]
+
+best [['Lbs-', 2128.93], ['Acc+', 16.12], ['Mpg+', 34.29]]
+     [['Lbs-', 186.2], ['Acc+', 1.34], ['Mpg+', 5.14]]
+
+rest [['Lbs-', 2885.71], ['Acc+', 15.36], ['Mpg+', 24.11]]
+     [['Lbs-', 828.71], ['Acc+', 2.73], ['Mpg+', 8.69]]
+
+ all ~= best? [True, False, True]
+best ~= rest? [True, True, True]
+Result : ✅
+
+
+
+python  main.py -g bins
+Running test :  bins
+ 
+Clndrs -10000000000 6.0 0.629 best : 14 rest : 33
+
+Clndrs 6.0 10000000000 0.0 rest : 23
+
+
+Volume -10000000000 91.0 0.151 rest : 5 best : 3
+
+Volume 91.0 97.0 0.311 best : 5 rest : 3
+
+Volume 97.0 98.0 0.0 rest : 8
+
+Volume 98.0 108.0 0.229 rest : 4 best : 4
+
+Volume 108.0 120.0 0.082 rest : 6 best : 2
+
+Volume 120.0 10000000000 0.0 rest : 30
+
+
+Model -10000000000 79.0 0.0 rest : 48
+
+Model 79.0 81.0 0.311 rest : 3 best : 5
+
+Model 81.0 82.0 0.151 best : 3 rest : 5
+
+Model 82.0 10000000000 0.429 best : 6
+
+
+origin 1.0 3.0 0.009 best : 1 rest : 28
+
+origin 2.0 3.0 0.014 best : 1 rest : 16
+
+origin 3.0 3.0 0.071 best : 1
+
+origin 3.0 3.0 0.617 best : 11 rest : 12
+
+Result : ✅
+
+
+
+python  main.py -g read  
+Running test :  read
+Result : ✅
+
+
+
+python  main.py -g half
+Running test :  half
+200 198 398
+[4.0, 90.0, 71.0, 2223.0, 16.5, 75.0, 2.0, 30.0] 2
+0.765074957732613
+[8.0, 350.0, 105.0, 3725.0, 19.0, 81.0, 1.0, 30.0]
+Result : ✅
+
+
+
+python  main.py -g xpln
+Running test :  xpln
+
+Clndrs   -10000000000   6.0
+Clndrs   6.0   10000000000
+
+Volume   -10000000000   91.0
+Volume   91.0   97.0
+Volume   97.0   98.0
+Volume   98.0   108.0
+Volume   108.0   120.0
+Volume   120.0   10000000000
+
+Model   -10000000000   79.0
+Model   79.0   81.0
+Model   81.0   82.0
+Model   82.0   10000000000
+
+origin   1.0   3.0
+origin   2.0   3.0
+origin   3.0   3.0
+origin   3.0   3.0
+
+Clndrs -10000000000 6.0 0.629
+origin 3.0 3.0 0.617
+Model 82.0 10000000000 0.429
+Volume 91.0 97.0 0.311
+Model 79.0 81.0 0.311
+Volume 98.0 108.0 0.229
+Volume -10000000000 91.0 0.151
+Model 81.0 82.0 0.151
+Volume 108.0 120.0 0.082
+origin 3.0 3.0 0.071
+origin 2.0 3.0 0.014
+origin 1.0 3.0 0.009
+Clndrs 6.0 10000000000 0.0
+Volume 97.0 98.0 0.0
+Volume 120.0 10000000000 0.0
+Model -10000000000 79.0 0.0
+returning out :  [{'Clndrs': {'max': 6.0, 'min': -10000000000, 'at': 0}}]
+returning most :  0.3428571428543265
+
+
+**********
+rule from xpln :  [{'Clndrs': {'max': 6.0, 'min': -10000000000, 'at': 0}}]
+[[{'max': 6.0, 'min': -10000000000}]]
+Result : ✅

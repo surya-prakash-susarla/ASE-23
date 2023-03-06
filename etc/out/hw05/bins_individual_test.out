@@ -25,7 +25,7 @@ Result : ✅
 python  main.py -g clone
 
 Running test :  clone
-TODO - CHECK VALUES IN STATS NOT MATCHING WITH OUTPUT
+
 [['Lbs-', 2970.42], ['Acc+', 15.57], ['Mpg+', 23.84]]
 [['Lbs-', 2970.42], ['Acc+', 15.57], ['Mpg+', 23.84]]
 Result : ✅

@@ -130,7 +130,7 @@ def rule(ranges, maxSize):
     return prune(t, maxSize)
 
 def showRule(rule):
-    print("inside show rule", rule)
+    #print("inside show rule", rule)
     def pretty(rang):
         return rang['min'] if rang['max'] == rang['min'] else {'max': rang['max'], 'min': rang['min']}
     def merge(t0):
@@ -158,9 +158,7 @@ def showRule(rule):
         # print("TODO: resolve attr")
         # print("\n\n ranges in merges:", ranges)
         if (len(ranges)>=2):
-            # print("ranges before sorted : ", ranges)
             ranges = sorted(ranges.items(), key = lambda d: d[1]['min'])
-        # print('ranges after sorting  : ', ranges)
         if type(ranges) != dict:
             temp = {}
             for x in ranges:
@@ -180,11 +178,10 @@ def showRule(rule):
 def firstN(sorted_list, scoring_function):
     print("")
     def print_range(r):
-        print(r)
+        for i in r :
+            print(i['range'].txt,i['range'].min,i['range'].max, rnd(i['val']))
     print_range(sorted_list)
-    
     first  = sorted_list[0]['val']
-    
     def useful(ranges):
         if ranges['val'] >0.05 and ranges['val'] > first/10 :
             return ranges
@@ -192,7 +189,8 @@ def firstN(sorted_list, scoring_function):
     for ranges in sorted_list:
         if(useful(ranges)):
             sorted_ranges.append(ranges) 
-    most,out =-1,None
+    out = []
+    most = -1
     n= 1
     new_sorted_range=[]
     while n <= len(sorted_ranges):
@@ -201,7 +199,8 @@ def firstN(sorted_list, scoring_function):
         # print('tmp : ', tmp)
         # print('most : ', most) 
         if tmp and tmp[0]>most :
-            out , most  = tmp[1], tmp[0]
+            most = tmp[0]
+            out.append(tmp[1])
         n+=1
     print("returning out : ", out)
     print("returning most : " , most)
@@ -256,15 +255,12 @@ def xpln(data, best, rest):
             print(r.txt, " ", r.min, " ", r.max)
             tmp.append({'range': r, 'max': len(ranges), 'val': v(r.y.has)})
     sorted_list = sorted(tmp, key = lambda d: d['val'], reverse=True)
-    print("sorted list : ", sorted_list)
-    print('*'*10)
+    # print("sorted list : ", sorted_list)
+    # print('*'*10)
     r, most = firstN(sorted_list, score)
 
-    print("*"*10)
-    print("sorted list after first N : ")
-    print(sorted_list)
-
-    print("returning rule from xpln  : ", r)
+    print("\n")
+    #print("returning rule from xpln  : ", r)
     return r, most
 
 def add(col, x, n = 1):

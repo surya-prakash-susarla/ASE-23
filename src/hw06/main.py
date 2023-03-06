@@ -9,7 +9,7 @@ from globals import global_options, K_HELP, K_START_ACTION
 
 def run_tests() -> int:
     # List of all test and test bodies. Empty string evaluates to running all tests.
-    tests = { 
+    tests = { 'xpln': test_xpln,
              'the': test_global_options,
              'rand': test_rand,
              'some': test_some,
@@ -20,8 +20,8 @@ def run_tests() -> int:
              'sway': test_sway,
              'bins': test_bins,
              'read': test_read_from_csv,
-             'half': test_half,
-             'xpln': test_xpln
+             'half': test_half
+             
     }
 
     test_runner: TestRunner = TestRunner(tests)
