@@ -99,13 +99,7 @@ def many(row, new_size):
             temp.append(row[j])
         return temp
 
-def value (has ,  nB=None, nR=None , sGoal=None):
-    if(sGoal==None):
-        sGoal=True
-    if nB==None:
-        nB=1
-    if nR==None:
-        nR=1
+def value (has, nB=1, nR=1 , sGoal=True):
     b=0
     r=0
     for x in has :
@@ -136,30 +130,42 @@ def rule(ranges, maxSize):
     return prune(t, maxSize)
 
 def showRule(rule):
-    print("inside show rule",rule)
+    #print("inside show rule", rule)
     def pretty(rang):
-        return rang.min if rang.max == rang.min else {'max': rang.max, 'min': rang.min}
+        return rang['min'] if rang['max'] == rang['min'] else {'max': rang['max'], 'min': rang['min']}
     def merge(t0):
-        
+        # print('t0 : ', t0)
+
+        # print("len of t0 : ", len(t0))
         t, j, left, right = [], 0,None,None
         
         while j+1 < len(t0):
-            left, right = t0[j], t0[j+1]
-            if right and left.max == right.min:
-                left.max = right.max
+            left, right = list(t0.values())[j], list(t0.values())[j+1]
+            # print('t0 :', t0)
+            # print('left : ', left)
+            # print('right : ', right)
+            if right and left['max'] == right['min']:
+                left['max'] = right['max']
                 j = j+1
-            t.append({'min': left.min, 'max': left.max})
+            t.append({'min': left['min'], 'max': left['max']})
             j = j+1
-        if j< len(t0):
-            t.append({'min': t0[j].min, 'max': t0[j].max})
+        if j < len(t0):
+            keys = list(t0.keys())
+            t.append({'min': t0[keys[j]]['min'], 'max': t0[keys[j]]['max']})
         return t if len(t0) == len(t) else merge(t)
 
     def merges( ranges):
-        print("TODO: resolve attr")
-        temp = []
-        print("\n\n ranges in merges:", ranges)
+        # print("TODO: resolve attr")
+        # print("\n\n ranges in merges:", ranges)
         if (len(ranges)>=2):
-            ranges = sorted(ranges, lambda d: d['min'])
+            ranges = sorted(ranges.items(), key = lambda d: d[1]['min'])
+        if type(ranges) != dict:
+            temp = {}
+            for x in ranges:
+                temp[x[0]] = x[1]
+            ranges = temp
+        # print('ranges  : ', ranges)
+        temp = []
         for i in merge(ranges):
             temp.append(pretty(i))
         return temp
@@ -172,11 +178,10 @@ def showRule(rule):
 def firstN(sorted_list, scoring_function):
     print("")
     def print_range(r):
-        print(r)
+        for i in r :
+            print(i['range'].txt,i['range'].min,i['range'].max, rnd(i['val']))
     print_range(sorted_list)
-    
     first  = sorted_list[0]['val']
-    
     def useful(ranges):
         if ranges['val'] >0.05 and ranges['val'] > first/10 :
             return ranges
@@ -184,22 +189,30 @@ def firstN(sorted_list, scoring_function):
     for ranges in sorted_list:
         if(useful(ranges)):
             sorted_ranges.append(ranges) 
-    most,out =-1,None
+    out = []
+    most = -1
     n= 1
     new_sorted_range=[]
     while n <= len(sorted_ranges):
         new_sorted_range.append(sorted_ranges[n-1]['range'])
-        tmp,rule = scoring_function(new_sorted_range), None 
-        if tmp and tmp>most :
-            out , most  = rule, tmp
+        tmp,rule = scoring_function(new_sorted_range), None
+        # print('tmp : ', tmp)
+        # print('most : ', most) 
+        if tmp and tmp[0]>most :
+            most = tmp[0]
+            out.append(tmp[1])
         n+=1
+    print("returning out : ", out)
+    print("returning most : " , most)
     return out, most
 
 def selects(rule, rows):
     def disjunction(ranges, row):
+        # print('ranges : ', ranges)
         for range in ranges:
-            lo,hi,at = range.min,range.max,range.at
-            x = row[at]
+            # print("range : ", range)
+            lo,hi,at = range['min'], range['max'], range['at']
+            x = rows.index(row)
             if x=='?':
                 return True
             if lo == hi and lo == x :
@@ -208,8 +221,11 @@ def selects(rule, rows):
                 return True
         return False
     def conjunction(row):
-        for ranges in rule :
-            if not disjunction(ranges,row) :
+        # print('in conjuction')
+        # print('rule : ', rule)
+        for ranges in rule.values():
+            # print('conjunction range : ', ranges)
+            if not disjunction([ranges],row) :
                 return False
         return True
     selected_rows=[]
@@ -239,7 +255,12 @@ def xpln(data, best, rest):
             print(r.txt, " ", r.min, " ", r.max)
             tmp.append({'range': r, 'max': len(ranges), 'val': v(r.y.has)})
     sorted_list = sorted(tmp, key = lambda d: d['val'], reverse=True)
+    # print("sorted list : ", sorted_list)
+    # print('*'*10)
     r, most = firstN(sorted_list, score)
+
+    print("\n")
+    #print("returning rule from xpln  : ", r)
     return r, most
 
 def add(col, x, n = 1):
