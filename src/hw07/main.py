@@ -1,4 +1,5 @@
 import math
+import random
 
 options = {
     'bootstrap': 512,
@@ -26,14 +27,14 @@ def erf(x):
 def gaussian(mu = None,sd = None):
   mu = 0 if mu == None else mu
   sd = 1 if sd == None else sd
-  sq,pi,log,cos,r = math.sqrt,math.pi,math.log,math.cos,math.random
-  return  mu + sd * sq(-2*log(r())) * cos(2*pi*r())
+  sq,pi,log,cos = math.sqrt,math.pi,math.log,math.cos
+  return  mu + sd * sq(-2*log(random.random())) * cos(2*pi*random.random())
 
 def samples(t,n = None):
   length = n if n != None else len(t)
   u = [0 for i in range(0, length)]
   for i in range(0, n if n != None else len(t)):
-      u[i] = t[math.random(len(t))]
+      u[i] = t[random.randrange(len(t))]
   return u
 
 def cliffsDelta(ns1,ns2):
@@ -49,14 +50,14 @@ def cliffsDelta(ns1,ns2):
               gt = gt + 1
           if x < y:
               lt = lt + 1
-  return math.abs(lt - gt)/n <= options['cliff']
+  return abs(lt - gt)/n <= options['cliff']
 
 def add(i,x):
-  i.n  = i.n+1
-  d    = x-i.mu
-  i.mu = i.mu + d/i.n
-  i.m2 = i.m2 + d*(x-i.mu)
-  i.sd = i.n<2 and 0 or (i.m2/(i.n - 1))^.5
+  i['n']  = i['n']+1
+  d    = x-i['mu']
+  i['mu'] = i['mu'] + d/i['n']
+  i['m2'] = i['m2'] + d*(x-i['mu'])
+  i['sd'] = i['n']<2 and 0 or (i['m2']/(i['n'] - 1+0.00000001))**.5
   return i
 
 def NUM(t=None):
@@ -67,10 +68,9 @@ def NUM(t=None):
 
 def delta(i, other):
   e, y, z= 1E-32, i, other
-  return math.abs(y.mu - z.mu) / ((e + y.sd^2/y.n + z.sd^2/z.n)^.5)
+  return abs(y['mu'] - z['mu']) / ((e + (y['sd']**2)/y['n'] + (z['sd']**2)/z['n'])**.5)
 
 def bootstrap(y0,z0):
-  n, x,y,z,xmu,ymu,zmu,yhat,zhat,tobs = None
   x, y, z, yhat, zhat = NUM(), NUM(), NUM(), [], []
   for y1 in y0:
       x = add(x, y1)
@@ -78,7 +78,7 @@ def bootstrap(y0,z0):
   for z1 in z0:
       x = add(x, z1)
       z = add(z, z1)
-  xmu, ymu, zmu = x.mu, y.mu, z.mu
+  xmu, ymu, zmu = x['mu'], y['mu'], z['mu']
   for y1 in y0:
       yhat.append(y1 - ymu + xmu)
   for z1 in z0:
@@ -91,7 +91,7 @@ def bootstrap(y0,z0):
   return n / options['bootstrap'] >= options['conf']
 
 def RX(t,s=None):
-  sort(t)
+  sorted(t)
   return {'name': "" if s == None else s, 'rank': 0, 'n': len(t), 'show': "", 'has': t}
 
 def mid(t):
@@ -156,19 +156,19 @@ def scottKnot(rxs):
     return rxs
 
 def tiles(rxs):
-  huge,min,max,floor = math.inf,math.min,math.max,math.floor
+  huge,floor = math.inf,math.floor
   lo,hi = huge, -huge
   for rx in rxs:
-    lo,hi = min(lo,rx['has'][0]), max(hi, rx['has'][len(rx['has'])])
+    lo,hi = min(lo,rx['has'][0]), max(hi, rx['has'][len(rx['has'])-1])
   for rx in rxs:
     t,u = rx['has'], []
     def of(x,most):
-        return max(1, min(most, x))
+        return int (max(1, min(most, x)))
     def at(x):
         return t[of(len(t)*x//1, len(t))]
     def pos(x):
         return floor(of(options['width']*(x-lo)/(hi-lo+1E-32)//1, options['width']))
-    for i in range(0, the['width']):
+    for i in range(0, options['width']):
         u.append(" ")
     a,b,c,d,e= at(.1), at(.3), at(.5), at(.7), at(.9) 
     A,B,C,D,E= pos(a), pos(b), pos(c), pos(d), pos(e)
@@ -178,7 +178,7 @@ def tiles(rxs):
         u[i]="-"
     u[options['width']//2] = "|" 
     u[C] = "*"
-    rx.show = ' '.join(u) + " {" + "{0:6.2f}".format(a)
+    rx['show'] = ' '.join(u) + " {" + "{0:6.2f}".format(a)
     for x in [b,c,d,e]:
         rx['show'] = rx['show'] + ", " + "{0:6.2f}".format(x)
     rx['show'] = rx['show'] + "}"
@@ -195,6 +195,7 @@ def test_num():
   print("",n['n'], n['mu'], n['sd'])
 
 def test_gauss():
+  print("Gaussian test ")
   t,n =[], None
   for i in range(1, 1000):
       t.append(gaussian(10,2))
@@ -203,49 +204,55 @@ def test_gauss():
 
 def test_bootmu():
     print("Convert bootmu")
-    '''
-  a,b={},{}
-  for i=1,100 do a[1+#a]= gaussian(10,1) end
-  print("","mu","sd","cliffs","boot","both")
-  print("","--","--","------","----","----")
-  for mu=10,11,.1 do
-    b={}
-    for i=1,100 do b[1+#b]= gaussian(mu,1) end
-    cl=cliffsDelta(a,b)
-    bs=bootstrap(a,b)
-    print("",mu,1,cl,bs,cl and bs) end end
-    '''
+    a,b=[],[]
+    for i in range(100):
+        a.append(gaussian(10,1))
+    print("","mu","sd","cliffs","boot","both")
+    print("","--","--","------","----","----")
+    MU = [10,11,0.1]
+    for mu in MU :
+        b=[]
+        for i in range(100):
+            b.append(gaussian(mu,1))
+        cl = cliffsDelta(a,b)
+        bs = bootstrap(a,b)
+        print("",mu,1,cl,bs,(cl and bs))
 
 def test_basic():
     print("Convert basic")
-    '''
-  print("\t\ttruee", bootstrap( {8, 7, 6, 2, 5, 8, 7, 3}, 
-                                {8, 7, 6, 2, 5, 8, 7, 3}),
-              cliffsDelta( {8, 7, 6, 2, 5, 8, 7, 3}, 
-                           {8, 7, 6, 2, 5, 8, 7, 3}))
-  print("\t\tfalse", bootstrap(  {8, 7, 6, 2, 5, 8, 7, 3},  
-                                 {9, 9, 7, 8, 10, 9, 6}),
-             cliffsDelta( {8, 7, 6, 2, 5, 8, 7, 3},  
-                          {9, 9, 7, 8, 10, 9, 6})) 
+    
+    print("\t\ttruee", bootstrap( [8, 7, 6, 2, 5, 8, 7, 3], 
+                                [8, 7, 6, 2, 5, 8, 7, 3]),
+              cliffsDelta( [8, 7, 6, 2, 5, 8, 7, 3], 
+                           [8, 7, 6, 2, 5, 8, 7, 3]))
+    print("\t\tfalse", bootstrap(  [8, 7, 6, 2, 5, 8, 7, 3],  
+                                 [9, 9, 7, 8, 10, 9, 6]),
+             cliffsDelta( [8, 7, 6, 2, 5, 8, 7, 3],  
+                          [9, 9, 7, 8, 10, 9, 6])) 
     print("\t\tfalse", 
-                    bootstrap({0.34, 0.49, 0.51, 0.6,   .34,  .49,  .51, .6}, 
-                               {0.6,  0.7,  0.8,  0.9,   .6,   .7,   .8,  .9}),
-                  cliffsDelta({0.34, 0.49, 0.51, 0.6,   .34,  .49,  .51, .6}, 
-                              {0.6,  0.7,  0.8,  0.9,   .6,   .7,   .8,  .9})
-   ) end
-   '''
+                    bootstrap([0.34, 0.49, 0.51, 0.6,   .34,  .49,  .51, .6], 
+                               [0.6,  0.7,  0.8,  0.9,   .6,   .7,   .8,  .9]),
+                  cliffsDelta([0.34, 0.49, 0.51, 0.6,   .34,  .49,  .51, .6], 
+                              [0.6,  0.7,  0.8,  0.9,   .6,   .7,   .8,  .9])
+   ) 
+   
 
 def test_pre():
     print("Convert pre")
-    '''
-  print("\neg3")
-  local d=1
-  for i=1,10 do
-    local t1,t2={},{}
-    for j=1,32 do t1[1+#t1]=gaussian(10,1); t2[1+#t2]=gaussian(d*10,1) end
-    print("\t",d,d<1.1 and "true" or "false",bootstrap(t1,t2),bootstrap(t1,t1))
-    d=d+0.05 end end
-    '''
+    d=1
+    for i in range(10):
+        t1,t2=[],[]
+        for j in range(32):
+            t1.append(gaussian(10,1))
+            t2.append(gaussian(d*10,1))
+        print("\t",d, end=' ')
+        if(d<1.1):
+            print("true", end=' ')
+        else:
+            print("false", end=' ')
+        print(bootstrap(t1,t2), end=' ')
+        print(bootstrap(t1,t1))
+        d +=0.5
 
 def test_five():
     print("Convert five")
@@ -272,23 +279,35 @@ def test_six():
 
 def test_tiles():
     print("Convert tiles")
-    '''
-  rxs,a,b,c,d,e,f,g,h,j,k={},{},{},{},{},{},{},{},{},{},{}
-  for i=1,1000 do a[1+#a] = gaussian(10,1) end
-  for i=1,1000 do b[1+#b] = gaussian(10.1,1) end
-  for i=1,1000 do c[1+#c] = gaussian(20,1) end
-  for i=1,1000 do d[1+#d] = gaussian(30,1) end
-  for i=1,1000 do e[1+#e] = gaussian(30.1,1) end
-  for i=1,1000 do f[1+#f] = gaussian(10,1) end
-  for i=1,1000 do g[1+#g] = gaussian(10,1) end
-  for i=1,1000 do h[1+#h] = gaussian(40,1) end
-  for i=1,1000 do j[1+#j] = gaussian(40,3) end
-  for i=1,1000 do k[1+#k] = gaussian(10,1) end
-  for k,v in pairs{a,b,c,d,e,f,g,h,j,k} do rxs[k] =  RX(v,"rx"..k) end
-  table.sort(rxs,function(a,b) return mid(a) < mid(b) end)
-  for _,rx in pairs(tiles(rxs)) do
-    print("",rx.name,rx.show) end end
-    '''
+    rxs,a,b,c,d,e,f,g,h,j,k = [],[],[],[],[],[],[],[],[],[],[]
+    for i in range(1000):
+        a.append(gaussian(10,1))
+    for i in range(1000):
+        b.append(gaussian(10.1,1))
+    for i in range(1000):
+        c.append(gaussian(20,1))
+    for i in range(1000):
+        d.append(gaussian(30,1))
+    for i in range(1000):
+        e.append(gaussian(30.1,1))
+    for i in range(1000):
+        f.append(gaussian(10,1))
+    for i in range(1000):
+        g.append(gaussian(10,1))
+    for i in range(1000):
+        h.append(gaussian(40.1,1))
+    for i in range(1000):
+        j.append(gaussian(40,3))
+    for i in range(1000):
+        k.append(gaussian(10,1))
+    temp = [a,b,c,d,e,f,g,h,j,k]
+    for i in range(len(temp)):
+        rxs.append(RX(temp[i] , "rx"+str(i)))
+    temp = tiles(rxs)
+
+    for rx in temp:
+        print(" ", rx['name'], rx['show'])
+
 
 def test_sk():
     print("Convert sk")
